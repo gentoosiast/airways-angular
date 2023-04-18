@@ -19,7 +19,14 @@
     "target": "ES2022",
     "module": "ES2022",
     "useDefineForClassFields": false,
-    "lib": ["ES2022", "dom"]
+    "lib": ["ES2022", "dom"],
+    "paths": {
+      "@core/*": ["./src/app/core/*"],
+      "@flight-search/*": ["./src/app/flight-search/*"],
+      "@booking/*": ["./src/app/booking/*"],
+      "@shared/*": ["./src/app/shared/*"],
+      "@user/*": ["./src/app/user/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
