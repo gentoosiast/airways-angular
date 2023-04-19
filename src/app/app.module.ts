@@ -1,8 +1,9 @@
 import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TuiRootModule, TuiDialogModule } from '@taiga-ui/core';
+import { TuiRootModule, TuiDialogModule, TUI_SANITIZER } from '@taiga-ui/core';
 import { TuiMobileCalendarModule } from '@taiga-ui/addon-mobile';
+import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
 import { AppRoutingModule } from './app-routing.module';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -24,7 +25,12 @@ import { AppComponent } from './app.component';
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     CoreModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: TUI_SANITIZER,
+      useClass: NgDompurifySanitizer,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
