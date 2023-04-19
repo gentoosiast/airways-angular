@@ -1,0 +1,44 @@
+@use '../../../shared/styles/_colors' as *;
+
+.page-not-found {
+  height: 85vh;
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/1/1c/Astronaut-in-space.jpg');
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $color-secondary-100;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 40%;
+  margin: 0 5vw;
+  line-height: 1;
+
+  @media (width <=1080px) {
+    gap: 20%;
+  }
+
+  @media (width <=768px) {
+    flex-direction: column-reverse;
+    gap: 10%;
+  }
+}
+
+.error {
+  font-size: 140px;
+  font-weight: 900;
+}
+
+.error-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 30px;
+
+  @media (width <=768px) {
+    color: $color-primary;
+  }
+}
