@@ -39,7 +39,8 @@
               "src/taiga-global.less",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": ["text-mask-core", "dompurify"]
           },
           "configurations": {
             "production": {
