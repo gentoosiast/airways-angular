@@ -1,0 +1,19 @@
+<form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <air-social-buttons
+    (facebookButtonClick)="onFacebookButtonClick($event)"
+    (googleButtonClick)="onGoogleButtonClick($event)"
+  ></air-social-buttons>
+
+  <p class="divider">or log in with your email</p>
+
+  <tui-input formControlName="email"> Email </tui-input>
+  <tui-error *ngIf="email?.touched && email?.hasError('required')" error="Email is required"></tui-error>
+  <tui-error *ngIf="email?.touched && email?.hasError('email')" error="Email should be valid"></tui-error>
+
+  <tui-input-password formControlName="password"> Password </tui-input-password>
+  <tui-error *ngIf="password?.touched && password?.hasError('required')" error="Password is required"></tui-error>
+
+  <a class="link-reminder" tuiLink href="javascript:void">Forgot password?</a>
+
+  <button tuiButton [disabled]="!loginForm.valid" type="submit">Log in</button>
+</form>
