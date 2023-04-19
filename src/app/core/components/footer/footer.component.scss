@@ -1,0 +1,112 @@
+@use '../../../shared/styles/_colors' as *;
+
+.footer {
+  width: 100%;
+  border-top: 1px solid $color-secondary-40;
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 1040px;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem auto;
+  row-gap: 1rem;
+
+  @media (width <= 1080px) {
+    margin: 20px;
+  }
+
+  @media (width <= 768px) {
+    margin: 15px;
+  }
+
+  @media (width <= 640px) {
+    margin: 10px;
+  }
+}
+
+.top-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  column-gap: 1.5rem;
+
+  @media (width <= 640px) {
+    flex-direction: column;
+    row-gap: 1rem;
+  }
+}
+
+.copy {
+  color: $color-primary;
+}
+
+.payment-methods {
+  display: flex;
+  align-items: center;
+  column-gap: 1rem;
+
+  @media (width <= 640px) {
+    flex-direction: column;
+  }
+}
+
+.icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 0.5rem;
+  padding: 0;
+  margin: 0.25rem;
+}
+
+.icon-item {
+  list-style-type: none;
+  height: fit-content;
+  width: fit-content;
+  margin: 0;
+  padding: 0;
+}
+
+.bottom-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 2rem;
+
+  @media (width <= 640px) {
+    flex-direction: column;
+  }
+}
+
+li {
+  list-style-type: none;
+}
+
+.devs {
+  display: flex;
+  column-gap: 1rem;
+  padding: 0;
+
+  @media (width <= 640px) {
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+}
+
+.avatar {
+  vertical-align: middle;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.link {
+  text-decoration: none;
+  color: $color-primary;
+}
