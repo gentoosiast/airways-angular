@@ -6,11 +6,11 @@
 
   <p class="divider">or log in with your email</p>
 
-  <tui-input formControlName="email"> Email </tui-input>
+  <tui-input formControlName="email"> Email&nbsp;<span class="tui-required"></span> </tui-input>
   <tui-error *ngIf="email?.touched && email?.hasError('required')" error="Email is required"></tui-error>
   <tui-error *ngIf="email?.touched && email?.hasError('email')" error="Email should be valid"></tui-error>
 
-  <tui-input-password formControlName="password"> Password </tui-input-password>
+  <tui-input-password formControlName="password"> Password&nbsp;<span class="tui-required"></span> </tui-input-password>
   <tui-error *ngIf="password?.touched && password?.hasError('required')" error="Password is required"></tui-error>
 
   <a class="link-reminder" tuiLink href="javascript:void">Forgot password?</a>

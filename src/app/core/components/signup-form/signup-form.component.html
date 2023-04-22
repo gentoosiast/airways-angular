@@ -7,26 +7,26 @@
 
   <p class="divider">or sign up with your email</p>
 
-  <tui-input formControlName="email">Email</tui-input>
+  <tui-input formControlName="email">Email&nbsp;<span class="tui-required"></span></tui-input>
   <tui-error *ngIf="email?.touched && email?.hasError('required')" error="Email is required"></tui-error>
   <tui-error *ngIf="email?.touched && email?.hasError('email')" error="Email should be valid"></tui-error>
 
-  <tui-input-password formControlName="password">Password</tui-input-password>
+  <tui-input-password formControlName="password">Password&nbsp;<span class="tui-required"></span></tui-input-password>
   <tui-error *ngIf="password?.touched && password?.hasError('required')" error="Password is required"></tui-error>
   <tui-error
     *ngIf="password?.touched && password?.hasError('minlength')"
     error="Password should be at least {{ minPasswordLength }} characters long"
   ></tui-error>
 
-  <tui-input formControlName="firstName">First name</tui-input>
+  <tui-input formControlName="firstName">First name&nbsp;<span class="tui-required"></span></tui-input>
   <tui-error *ngIf="firstName?.touched && firstName?.hasError('required')" error="First name is required"></tui-error>
 
-  <tui-input formControlName="lastName">Last name</tui-input>
+  <tui-input formControlName="lastName">Last name&nbsp;<span class="tui-required"></span></tui-input>
   <tui-error *ngIf="lastName?.touched && lastName?.hasError('required')" error="Last name is required"></tui-error>
 
   <tui-input-date formControlName="birthDate" [min]="minAllowedDate" [max]="maxAllowedDate"
-    >Date of birth</tui-input-date
-  >
+    >Date of birth&nbsp;<span class="tui-required"></span
+  ></tui-input-date>
   <tui-error *ngIf="birthDate?.touched && birthDate?.hasError('required')" error="Birth date is required"></tui-error>
 
   <div class="gender-group" tuiGroup>
@@ -42,8 +42,8 @@
     formControlName="phone"
     [countries]="(countries | tuiSortCountries | async) || []"
     [countryIsoCode]="countryIsoCode"
-    >Mobile phone number</tui-input-phone-international
-  >
+    >Mobile phone number&nbsp;<span class="tui-required"></span
+  ></tui-input-phone-international>
   <tui-error *ngIf="phone?.touched && phone?.hasError('required')" error="Phone number is required"></tui-error>
 
   <tui-select formControlName="citizenship">
