@@ -33,12 +33,7 @@
               "src/assets",
               "src/netlify.toml"
             ],
-            "styles": [
-              "node_modules/@taiga-ui/core/styles/taiga-ui-theme.less",
-              "node_modules/@taiga-ui/core/styles/taiga-ui-fonts.less",
-              "src/taiga-global.less",
-              "src/styles.scss"
-            ],
+            "styles": ["src/taiga-global.less", "src/styles.scss"],
             "scripts": [],
             "allowedCommonJsDependencies": ["text-mask-core", "dompurify"]
           },
