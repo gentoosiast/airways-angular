@@ -1,1 +1,124 @@
-<p>flight-search-page works!</p>
+<form class="form" [formGroup]="airportForm">
+  <div class="flight-radios">
+    <tui-radio-labeled class="flight-radio" formControlName="flightType" item="roundtrip" size="l"
+      >Round Trip</tui-radio-labeled
+    >
+    <tui-radio-labeled class="flight-radio" formControlName="flightType" item="oneway" size="l"
+      >One Way</tui-radio-labeled
+    >
+  </div>
+
+  <div class="cities">
+    <div class="cities-combo-boxes">
+      <tui-combo-box
+        *tuiLet="airportsDeparture$ | async as airportsDeparture"
+        [tuiTextfieldCleaner]="true"
+        [valueContent]="labelContent"
+        [stringify]="stringifyAirport"
+        (searchChange)="onDepartureSearchChange($event)"
+        formControlName="departure"
+        >From
+        <input
+          tuiTextfield
+          placeholder="Type a city name"
+          (input)="onDepartureSearchChange(extractValueFromEvent($event))"
+        />
+        <tui-data-list-wrapper
+          *tuiDataList
+          [items]="airportsDeparture"
+          [itemContent]="itemContent"
+        ></tui-data-list-wrapper>
+      </tui-combo-box>
+
+      <tui-combo-box
+        *tuiLet="airportsArrival$ | async as airportsArrival"
+        [tuiTextfieldCleaner]="true"
+        [valueContent]="labelContent"
+        [stringify]="stringifyAirport"
+        (searchChange)="onArrivalSearchChange($event)"
+        formControlName="arrival"
+        >Destination
+        <input
+          tuiTextfield
+          placeholder="Type a city name"
+          (input)="onArrivalSearchChange(extractValueFromEvent($event))"
+        />
+        <tui-data-list-wrapper
+          *tuiDataList
+          [items]="airportsArrival"
+          [itemContent]="itemContent"
+        ></tui-data-list-wrapper>
+      </tui-combo-box>
+
+      <button
+        class="cities-swapbutton"
+        tuiIconButton
+        type="button"
+        icon="tuiIconRefreshCwLarge"
+        size="m"
+        appearance="outline"
+        (click)="swapDepartureArrival()"
+      ></button>
+    </div>
+
+    <tui-error *ngIf="departure?.touched && departure?.invalid" error="Departure airport is required"></tui-error>
+    <tui-error *ngIf="arrival?.touched && arrival?.invalid" error="Arrival airport is required"></tui-error>
+  </div>
+
+  <div class="date-passengers-block">
+    <div class="date-block">
+      <tui-input-date-range formControlName="date" [min]="todayDate">Dates</tui-input-date-range>
+      <tui-error *ngIf="date?.touched && date?.invalid" error="Date is required"></tui-error>
+    </div>
+
+    <tui-select class="passengers-block" formControlName="passengers" [stringify]="stringifyPassengers">
+      <tui-data-list *tuiDataList>
+        <button tuiOption *ngFor="let item of passengerItems">
+          <div class="passengers-item">
+            <div class="passengers-label">
+              <span class="passengers-label-category">{{ item.category | titlecase }}</span>
+              <span class="passengers-label-description">{{ item.description }}</span>
+            </div>
+            <div class="passengers-select-controls">
+              <button
+                tuiIconButton
+                type="button"
+                appearance="icon"
+                icon="tuiIconMinusCircleLarge"
+                (click)="modifyPassengers(item.category, -1)"
+              ></button>
+              <span class="passengers-quantity">
+                {{ passengers?.value?.[item.category] }}
+              </span>
+              <button
+                tuiIconButton
+                type="button"
+                appearance="icon"
+                icon="tuiIconPlusCircleLarge"
+                (click)="modifyPassengers(item.category, 1)"
+              ></button>
+            </div>
+          </div>
+        </button>
+      </tui-data-list>
+    </tui-select>
+  </div>
+
+  <div class="tui-form__buttons tui-form__buttons_align_end">
+    <button tuiButton type="submit" [disabled]="!airportForm.valid" (click)="onSubmit()">Search</button>
+  </div>
+</form>
+
+<ng-template #labelContent let-data>
+  <div class="airport-label">
+    <span class="airport-city">{{ data.city }}</span>
+    <span class="airport-code">{{ data.iata_code }}</span>
+  </div>
+</ng-template>
+
+<ng-template #itemContent let-data>
+  <div class="airport-item">
+    <span class="airport-item-heading">{{ data.city }} ({{ data.iata_code }})</span>
+    <span class="airport-item-subheading">{{ data.name }}, {{ data.country }} </span>
+  </div>
+</ng-template>
