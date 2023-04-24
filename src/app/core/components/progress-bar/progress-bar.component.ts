@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-
-// const enum
+import { Component } from '@angular/core';
+import { /* NavigationEnd, */ Router } from '@angular/router';
 
 const enum BookingSteps {
   STEP_FLIGHTS = 0,
@@ -18,7 +16,7 @@ export class ProgressBarComponent {
   bookingStep: BookingSteps = 0;
 
   constructor(private router: Router) {
-    this.router.events.subscribe((value) => {
+    this.router.events.subscribe((/* value */) => {
       // if (!(value instanceof NavigationEnd)) return;
       switch (this.router.url) {
         case '/booking/step-flights':
