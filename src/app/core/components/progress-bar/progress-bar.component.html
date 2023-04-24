@@ -1,0 +1,17 @@
+<div class="wrapper">
+  <div class="step">
+    <tui-marker-icon new mode="primary" size="xxs" [src]="iconForFlightsStep()"> </tui-marker-icon>
+    <div class="step-name">Flights</div>
+  </div>
+  <div class="divider"></div>
+  <div class="step">
+    <tui-marker-icon new [mode]="modeForPassengersStepIcon()" size="xxs" [src]="iconForPassengersStep()">
+    </tui-marker-icon>
+    <div class="step-name">Passengers</div>
+  </div>
+  <div class="divider"></div>
+  <div class="step">
+    <tui-marker-icon new [mode]="modeForSummaryStepIcon()" size="xxs" [src]="iconForSummaryStep()"> </tui-marker-icon>
+    <div class="step-name">Review & Payment</div>
+  </div>
+</div>
