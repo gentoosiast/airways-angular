@@ -13,10 +13,9 @@ import {
 } from '@taiga-ui/kit';
 import { FlightSearchRoutingModule } from './flight-search-routing.module';
 import { FlightSearchPageComponent } from './pages/flight-search-page/flight-search-page.component';
-import { PassengersSelectComponent } from './components/passengers-select/passengers-select.component';
 
 @NgModule({
-  declarations: [FlightSearchPageComponent, PassengersSelectComponent],
+  declarations: [FlightSearchPageComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
