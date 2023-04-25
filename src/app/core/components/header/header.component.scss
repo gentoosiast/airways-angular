@@ -30,10 +30,15 @@
   height: min-content;
 }
 
-.currency-form {
-  width: 115px;
+.form {
+  display: flex;
+  gap: 0.5rem;
 }
 
-.date-format-form {
-  width: 170px;
+.date-format {
+  width: 160px;
+}
+
+.currency {
+  width: 115px;
 }

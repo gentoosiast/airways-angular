@@ -5,15 +5,13 @@
     </a>
     <air-progress-bar *ngIf="showProgressBar"></air-progress-bar>
     <div class="buttons-wrapper">
-      <form class="date-format-form">
-        <tui-select tuiTextfieldSize="s" [formControl]="dateFormatControl">
+      <form class="form" [formGroup]="userSettingsForm">
+        <tui-select tuiTextfieldSize="s" formControlName="dateFormat" class="date-format">
           Date format
           <tui-data-list-wrapper *tuiDataList [items]="dateFormats"></tui-data-list-wrapper>
         </tui-select>
-      </form>
 
-      <form class="currency-form">
-        <tui-select tuiTextfieldSize="s" [formControl]="currencyControl">
+        <tui-select tuiTextfieldSize="s" formControlName="currency" class="currency">
           Currency
           <tui-data-list-wrapper *tuiDataList [items]="currencies"></tui-data-list-wrapper>
         </tui-select>
