@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
+import { map, startWith } from 'rxjs';
+import { UserSettingsService } from '@core/services/user-settings.service';
 
 @Component({
   selector: 'air-header',
@@ -15,10 +17,14 @@ export class HeaderComponent {
     currency: new FormControl('USD'),
   });
 
+  userSettings$ = this.userSettingsForm.valueChanges
+    .pipe(startWith(this.userSettingsForm.value))
+    .subscribe((value) => this.userSettingsService.saveUserSettings(value));
+
   dateFormats = ['MM/DD/YYYY', 'DD/MM/YYYY', 'YYYY/DD/MM', 'YYYY/MM/DD'];
   currencies = ['USD', 'EUR', 'CHF', 'RUB'];
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private userSettingsService: UserSettingsService) {
     this.router.events.subscribe((value) => {
       if (!(value instanceof NavigationEnd)) return;
       if (['/booking/step-flights', '/booking/step-passengers', '/booking/step-summary'].includes(this.router.url)) {
@@ -27,9 +33,5 @@ export class HeaderComponent {
         this.showProgressBar = false;
       }
     });
-  }
-
-  onSubmit() {
-    console.log(`form submitted`);
   }
 }
