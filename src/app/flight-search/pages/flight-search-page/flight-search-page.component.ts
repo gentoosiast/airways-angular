@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Observable, Subject, debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs';
+import { Observable, Subject, Subscription, debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs';
 import { TuiDay } from '@taiga-ui/cdk';
 import plur from 'plur';
 import { AirportsService } from '@core/services/airports.service';
@@ -14,7 +14,7 @@ import { FLIGHT_SEARCH_MINIMUM_QUERY_LENGTH, FLIGHT_SEARCH_DEBOUNCE_TIME } from 
   templateUrl: './flight-search-page.component.html',
   styleUrls: ['./flight-search-page.component.scss'],
 })
-export class FlightSearchPageComponent {
+export class FlightSearchPageComponent implements OnInit, OnDestroy {
   airportForm = this.fb.group({
     flightType: this.fb.control<FlightType | null>('roundtrip', [Validators.required]),
     departure: this.fb.control<string | null>('', [Validators.required]),
@@ -32,8 +32,21 @@ export class FlightSearchPageComponent {
   private searchArrival$$ = new Subject<string | null>();
   airportsDeparture$ = this.getAirports(this.searchDeparture$$);
   airportsArrival$ = this.getAirports(this.searchArrival$$);
+  private sub = new Subscription();
 
   constructor(private fb: FormBuilder, private airportsService: AirportsService) {}
+
+  ngOnInit(): void {
+    this.monitorFlightTypeChanges();
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
+
+  get flightType() {
+    return this.airportForm.get('flightType');
+  }
 
   get departure() {
     return this.airportForm.get('departure');
@@ -109,6 +122,18 @@ export class FlightSearchPageComponent {
       debounceTime(FLIGHT_SEARCH_DEBOUNCE_TIME),
       distinctUntilChanged(),
       switchMap((search) => this.airportsService.search(search)),
+    );
+  }
+
+  private monitorFlightTypeChanges(): void {
+    // we need to reset 'date' value if `flightType` was switched
+    this.sub.add(
+      this.flightType?.valueChanges.subscribe(() => {
+        this.airportForm.patchValue({
+          date: null,
+        });
+        this.date?.markAsUntouched();
+      }),
     );
   }
 }

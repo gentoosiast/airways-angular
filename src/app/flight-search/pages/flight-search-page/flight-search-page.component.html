@@ -67,7 +67,12 @@
 
   <div class="date-passengers-block">
     <div class="date-block">
-      <tui-input-date-range formControlName="date" [min]="todayDate">Dates</tui-input-date-range>
+      <tui-input-date-range *ngIf="flightType?.value === 'roundtrip'" formControlName="date" [min]="todayDate"
+        >Dates</tui-input-date-range
+      >
+      <tui-input-date *ngIf="flightType?.value === 'oneway'" formControlName="date" [min]="todayDate"
+        >Date</tui-input-date
+      >
       <tui-error *ngIf="date?.touched && date?.invalid" error="Date is required"></tui-error>
     </div>
 
