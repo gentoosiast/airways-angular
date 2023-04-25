@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { /* NavigationEnd, */ Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 
 const enum BookingSteps {
   STEP_FLIGHTS = 0,
@@ -13,25 +13,12 @@ const enum BookingSteps {
   styleUrls: ['./progress-bar.component.scss'],
 })
 export class ProgressBarComponent {
-  bookingStep: BookingSteps = 0;
+  bookingStep: BookingSteps = this.getBookingStepFromUrl();
 
   constructor(private router: Router) {
-    this.router.events.subscribe((/* value */) => {
-      // if (!(value instanceof NavigationEnd)) return;
-      switch (this.router.url) {
-        case '/booking/step-flights':
-          this.bookingStep = BookingSteps.STEP_FLIGHTS;
-          break;
-        case '/booking/step-passengers':
-          this.bookingStep = BookingSteps.STEP_PASSENGERS;
-          break;
-        case '/booking/step-summary':
-          this.bookingStep = BookingSteps.STEP_SUMMARY;
-          break;
-        default:
-          break;
-      }
-      console.log(this.bookingStep);
+    this.router.events.subscribe((value) => {
+      if (!(value instanceof NavigationEnd)) return;
+      this.bookingStep = this.getBookingStepFromUrl();
     });
   }
 
@@ -60,5 +47,18 @@ export class ProgressBarComponent {
   modeForSummaryStepIcon() {
     if (this.bookingStep >= BookingSteps.STEP_SUMMARY) return 'primary';
     else return 'white';
+  }
+
+  private getBookingStepFromUrl() {
+    switch (this.router.url) {
+      case '/booking/step-flights':
+        return BookingSteps.STEP_FLIGHTS;
+      case '/booking/step-passengers':
+        return BookingSteps.STEP_PASSENGERS;
+      case '/booking/step-summary':
+        return BookingSteps.STEP_SUMMARY;
+      default:
+        return BookingSteps.STEP_FLIGHTS;
+    }
   }
 }
