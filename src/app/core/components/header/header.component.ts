@@ -11,10 +11,10 @@ export class HeaderComponent {
   showProgressBar = false;
 
   currencyControl = new FormControl('USD');
-  dateFormatControl = new FormControl('MM/DD/YY');
+  dateFormatControl = new FormControl('MM/DD/YYYY');
 
   currencies = ['USD', 'EUR', 'CHF', 'RUB'];
-  dateFormats = ['MM/DD/YY', 'DD/MM/YY', 'YY/MM/DD'];
+  dateFormats = ['MM/DD/YYYY', 'DD/MM/YYYY', 'YYYY/DD/MM', 'YYYY/MM/DD'];
 
   constructor(private router: Router) {
     this.router.events.subscribe((value) => {
