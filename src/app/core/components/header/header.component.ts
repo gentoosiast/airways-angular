@@ -3,6 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import { map, startWith, Subscription } from 'rxjs';
 import { UserSettingsService } from '@core/services/user-settings.service';
+import { Currency, DateFormat } from '@core/constants/user-settings.constant';
 
 @Component({
   selector: 'air-header',
@@ -12,19 +13,18 @@ import { UserSettingsService } from '@core/services/user-settings.service';
 export class HeaderComponent implements OnDestroy {
   sub = new Subscription();
   showProgressBar = false;
+  dateFormats = Object.values(DateFormat);
+  currencies = Object.values(Currency);
 
   userSettingsForm = new FormGroup({
-    dateFormat: new FormControl('MM/DD/YYYY'),
-    currency: new FormControl('USD'),
+    dateFormat: new FormControl(this.dateFormats[0]),
+    currency: new FormControl(this.currencies[0]),
   });
 
   userSettings$ = this.userSettingsForm.valueChanges.pipe(
     startWith(this.userSettingsForm.value),
-    map((value) => this.userSettingsService.saveUserSettings(value)),
+    map((value) => this.userSettingsService.setUserSettings(value)),
   );
-
-  dateFormats = ['MM/DD/YYYY', 'DD/MM/YYYY', 'YYYY/DD/MM', 'YYYY/MM/DD'];
-  currencies = ['USD', 'EUR', 'CHF', 'RUB'];
 
   constructor(private router: Router, private userSettingsService: UserSettingsService) {
     this.sub.add(
