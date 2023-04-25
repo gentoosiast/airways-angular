@@ -4,5 +4,31 @@
       <img src="assets/logo.svg" alt="Logo" class="logo" />
     </a>
     <air-progress-bar *ngIf="showProgressBar"></air-progress-bar>
+    <div class="buttons-wrapper">
+      <form class="date-format-form">
+        <tui-select tuiTextfieldSize="s" [formControl]="dateFormatControl">
+          Date format
+          <tui-data-list-wrapper *tuiDataList [items]="dateFormats"></tui-data-list-wrapper>
+        </tui-select>
+      </form>
+
+      <form class="currency-form">
+        <tui-select tuiTextfieldSize="s" [formControl]="currencyControl">
+          Currency
+          <tui-data-list-wrapper *tuiDataList [items]="currencies"></tui-data-list-wrapper>
+        </tui-select>
+      </form>
+
+      <button tuiButton size="s" type="button" icon="tuiIconUser">Sign in</button>
+      <button
+        tuiIconButton
+        routerLink="/user/cart"
+        size="xs"
+        type="button"
+        appearance="icon"
+        icon="tuiIconShoppingBag"
+        class="shopping-bag"
+      ></button>
+    </div>
   </div>
 </header>

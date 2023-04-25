@@ -4,14 +4,27 @@ import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.com
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { RouterModule } from '@angular/router';
-import { TuiButtonModule , TuiSvgModule, TUI_SANITIZER } from '@taiga-ui/core';
+import { TuiButtonModule, TuiSvgModule, TUI_SANITIZER , TuiDataListModule } from '@taiga-ui/core';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
-import { TuiMarkerIconModule } from '@taiga-ui/kit';
+import { TuiMarkerIconModule , TuiDataListWrapperModule, TuiSelectModule } from '@taiga-ui/kit';
+
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [NotFoundPageComponent, FooterComponent, HeaderComponent, ProgressBarComponent],
-  imports: [CommonModule, RouterModule, TuiButtonModule, TuiSvgModule, TuiMarkerIconModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    TuiButtonModule,
+    TuiSvgModule,
+    TuiMarkerIconModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TuiSelectModule,
+    TuiDataListModule,
+    TuiDataListWrapperModule,
+  ],
   exports: [HeaderComponent, FooterComponent],
   providers: [
     {

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'air-header',
@@ -8,6 +9,12 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class HeaderComponent {
   showProgressBar = false;
+
+  currencyControl = new FormControl('USD');
+  dateFormatControl = new FormControl('MM/DD/YY');
+
+  currencies = ['USD', 'EUR', 'CHF', 'RUB'];
+  dateFormats = ['MM/DD/YY', 'DD/MM/YY', 'YY/MM/DD'];
 
   constructor(private router: Router) {
     this.router.events.subscribe((value) => {
@@ -18,5 +25,9 @@ export class HeaderComponent {
         this.showProgressBar = false;
       }
     });
+  }
+
+  onSubmit() {
+    console.log(`form submitted`);
   }
 }
