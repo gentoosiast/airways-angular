@@ -35,7 +35,7 @@ export class ProgressBarComponent {
 
   modeForPassengersStepIcon() {
     if (this.bookingStep >= BookingSteps.STEP_PASSENGERS) return 'primary';
-    else return 'white';
+    else return 'link';
   }
 
   iconForSummaryStep() {
@@ -46,7 +46,7 @@ export class ProgressBarComponent {
 
   modeForSummaryStepIcon() {
     if (this.bookingStep >= BookingSteps.STEP_SUMMARY) return 'primary';
-    else return 'white';
+    else return 'link';
   }
 
   private getBookingStepFromUrl() {
