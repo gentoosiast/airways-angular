@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
-import { map, startWith } from 'rxjs';
+import { startWith } from 'rxjs';
 import { UserSettingsService } from '@core/services/user-settings.service';
 
 @Component({
