@@ -1,6 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 @use './app/shared/styles/_colors' as *;
 
+:root {
+  --tui-font-text: 'Roboto', sans-serif;
+  --tui-font-heading: 'Roboto', sans-serif;
+}
+
 body {
   background: $color-neutral-80;
 }
