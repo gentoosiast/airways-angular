@@ -1,0 +1,35 @@
+<div class="selector">
+  <button
+    class="step-button step-button-prev"
+    tuiIconButton
+    icon="tuiIconChevronLeft"
+    size="xs"
+    appearance="outline"
+    type="button"
+    title="Previous"
+    (click)="carousel.prev()"
+  ></button>
+
+  <tui-carousel #carousel [duration]="0" [itemsCount]="displayItemsCount" [(index)]="index">
+    <ng-container *ngFor="let flight of flights; index as i">
+      <air-flight-card
+        *tuiItem
+        [flight]="flight"
+        [index]="i"
+        [selected]="i === selectedIndex"
+        (cardSelect)="switchSelectedCard($event)"
+      ></air-flight-card>
+    </ng-container>
+  </tui-carousel>
+
+  <button
+    class="step-button step-button-next"
+    tuiIconButton
+    icon="tuiIconChevronRight"
+    size="xs"
+    appearance="outline"
+    type="button"
+    title="Next"
+    (click)="carousel.next()"
+  ></button>
+</div>

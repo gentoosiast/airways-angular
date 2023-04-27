@@ -1,0 +1,11 @@
+<ng-container *ngIf="flight">
+  <div class="card" [ngClass]="{ 'no-flight': !flight.availableSeats, selected: selected }" (click)="onSelectCard()">
+    <span class="date">{{ flight.departureDate | date : 'dd MMM' : 'Z' }}</span>
+    <span class="weekday">Monday</span>
+    <span *ngIf="flight.availableSeats; else noflight" class="price">{{ flight.price | currency : 'EUR' }}</span>
+  </div>
+
+  <ng-template #noflight>
+    <tui-svg src="/assets/icons/no-flight.svg"></tui-svg>
+  </ng-template>
+</ng-container>
