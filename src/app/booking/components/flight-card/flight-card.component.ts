@@ -9,7 +9,7 @@ import { Flight } from '@booking/interfaces/flight';
 export class FlightCardComponent {
   @Input() flight?: Flight;
   @Input() index = 0;
-  @Input() selected = false;
+  @Input() isSelected = false;
 
   @Output() cardSelect = new EventEmitter<number>();
 

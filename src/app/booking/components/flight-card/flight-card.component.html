@@ -2,7 +2,7 @@
   <div
     class="card"
     [airSeats]="[flight.seats, flight.availableSeats]"
-    [ngClass]="{ 'no-flight': !flight.availableSeats, selected: selected }"
+    [ngClass]="{ 'no-flight': !flight.availableSeats, selected: isSelected }"
     (click)="onSelectCard()"
   >
     <span class="date">{{ flight.departureDate | date : 'dd MMM' : 'Z' }}</span>
