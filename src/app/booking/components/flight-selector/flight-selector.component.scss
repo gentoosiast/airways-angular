@@ -1,11 +1,17 @@
 @use 'src/app/shared/styles/colors';
 
+:host {
+  --tui-carousel-padding: 'null';
+
+  & ::ng-deep .t-items {
+    align-items: flex-end;
+  }
+}
+
 .selector {
+  max-width: 1130px;
   margin: 0 auto;
   position: relative;
-  max-width: 1130px;
-  display: flex;
-  background-color: colors.$color-neutral-100;
 }
 
 .step-button {
