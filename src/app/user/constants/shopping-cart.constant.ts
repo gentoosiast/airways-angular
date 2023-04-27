@@ -43,4 +43,21 @@ export const mockBookingsData: Array<BookingModel> = [
     },
     price: 20.96,
   },
+  {
+    flightNumber: 'AR 1936',
+    flightType: 'oneway',
+    fligthsData: [
+      {
+        departure: 'Paris',
+        arrival: 'Berlin',
+        departureDate: { date: new TuiDay(2023, 5, 28), time: new TuiTime(10, 20) },
+        arrivalDate: { date: new TuiDay(2023, 5, 28), time: new TuiTime(12, 15) },
+      },
+    ],
+    passengers: {
+      adults: 1,
+      children: 2,
+    },
+    price: 30.96,
+  },
 ];
