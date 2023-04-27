@@ -50,6 +50,18 @@
   border-bottom: 4px solid transparent;
 }
 
+.selected.seats-almost-full {
+  border-bottom-color: colors.$color-error;
+}
+
+.selected.seats-less-than-half {
+  border-bottom-color: colors.$color-highlight-yellow0;
+}
+
+.selected.seats-more-than-half {
+  border-bottom-color: colors.$color-highlight-green0;
+}
+
 .selected > .date {
   font-size: 20px;
   font-weight: 700;
