@@ -8,6 +8,7 @@ import { TuiTableModule } from '@taiga-ui/addon-table';
 import { TuiCheckboxModule } from '@taiga-ui/kit';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TuiLetModule } from '@taiga-ui/cdk';
+import { TuiDataListModule, TuiHostedDropdownModule, TuiButtonModule } from '@taiga-ui/core';
 
 @NgModule({
   declarations: [ShoppingCartPageComponent, UserAccountPageComponent, BookingsTableComponent],
@@ -19,6 +20,9 @@ import { TuiLetModule } from '@taiga-ui/cdk';
     ReactiveFormsModule,
     TuiCheckboxModule,
     TuiLetModule,
+    TuiDataListModule,
+    TuiHostedDropdownModule,
+    TuiButtonModule,
   ],
 })
 export class UserModule {}
