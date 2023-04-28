@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
-import { FooterComponent } from './components/footer/footer.component';
-import { HeaderComponent } from './components/header/header.component';
 import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   TuiButtonModule,
   TuiSvgModule,
@@ -11,11 +9,12 @@ import {
   TuiDataListModule,
   TuiTextfieldControllerModule,
 } from '@taiga-ui/core';
-import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
-import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
 import { TuiMarkerIconModule, TuiDataListWrapperModule, TuiSelectModule } from '@taiga-ui/kit';
-
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
+import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
+import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 
 @NgModule({
   declarations: [NotFoundPageComponent, FooterComponent, HeaderComponent, ProgressBarComponent],

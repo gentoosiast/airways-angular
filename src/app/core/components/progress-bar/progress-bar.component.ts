@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { Subscription, map } from 'rxjs';
 
 const enum BookingSteps {
   STEP_FLIGHTS = 0,
@@ -12,41 +13,51 @@ const enum BookingSteps {
   templateUrl: './progress-bar.component.html',
   styleUrls: ['./progress-bar.component.scss'],
 })
-export class ProgressBarComponent {
+export class ProgressBarComponent implements OnInit, OnDestroy {
   bookingStep: BookingSteps = this.getBookingStepFromUrl();
+  private sub = new Subscription();
+  private bookingStep$ = this.router.events.pipe(
+    map((value) => {
+      if (value instanceof NavigationEnd) {
+        this.bookingStep = this.getBookingStepFromUrl();
+      }
+    }),
+  );
 
-  constructor(private router: Router) {
-    this.router.events.subscribe((value) => {
-      if (!(value instanceof NavigationEnd)) return;
-      this.bookingStep = this.getBookingStepFromUrl();
-    });
+  constructor(private router: Router) {}
+
+  ngOnInit(): void {
+    this.sub.add(this.bookingStep$.subscribe());
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
   iconForFlightsStep() {
-    if (this.bookingStep === BookingSteps.STEP_FLIGHTS) return 'tuiIconEdit3';
-    else return 'tuiIconCheck';
+    return this.bookingStep === BookingSteps.STEP_FLIGHTS ? 'tuiIconEdit3' : 'tuiIconCheck';
   }
 
   iconForPassengersStep() {
-    if (this.bookingStep === BookingSteps.STEP_PASSENGERS) return 'tuiIconEdit3';
-    if (this.bookingStep > BookingSteps.STEP_PASSENGERS) return 'tuiIconCheck';
-    else return '';
+    if (this.bookingStep === BookingSteps.STEP_PASSENGERS) {
+      return 'tuiIconEdit3';
+    }
+    if (this.bookingStep > BookingSteps.STEP_PASSENGERS) {
+      return 'tuiIconCheck';
+    }
+    return '';
   }
 
   modeForPassengersStepIcon() {
-    if (this.bookingStep >= BookingSteps.STEP_PASSENGERS) return 'primary';
-    else return 'link';
+    return this.bookingStep >= BookingSteps.STEP_PASSENGERS ? 'primary' : 'link';
   }
 
   iconForSummaryStep() {
-    if (this.bookingStep === BookingSteps.STEP_SUMMARY) return 'tuiIconEdit3';
-    if (this.bookingStep > BookingSteps.STEP_PASSENGERS) return 'tuiIconCheck';
-    else return '';
+    return this.bookingStep === BookingSteps.STEP_SUMMARY ? 'tuiIconEdit3' : '';
   }
 
   modeForSummaryStepIcon() {
-    if (this.bookingStep >= BookingSteps.STEP_SUMMARY) return 'primary';
-    else return 'link';
+    return this.bookingStep >= BookingSteps.STEP_SUMMARY ? 'primary' : 'link';
   }
 
   private getBookingStepFromUrl() {
