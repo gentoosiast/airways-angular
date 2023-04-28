@@ -1,18 +1,19 @@
-import { Directive, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, Input, OnChanges, Renderer2 } from '@angular/core';
 
+const CSS_CLASSES = ['seats-almost-full', 'seats-less-than-half', 'seats-more-than-half'] as const;
 const ALMOST_FULL_SEATS_THRESHOLD = 10;
 
-type PlaneSeatsCSSClasses = 'seats-almost-full' | 'seats-less-than-half' | 'seats-more-than-half';
+type PlaneSeatsCSSClasses = (typeof CSS_CLASSES)[number];
 
 @Directive({
   selector: '[airSeats]',
 })
-export class SeatsDirective implements OnInit {
+export class SeatsDirective implements OnChanges {
   @Input() airSeats?: [number, number]; // [seats, availableSeats]
 
   constructor(private el: ElementRef, private renderer: Renderer2) {}
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
     this.setSeatsClass();
   }
 
@@ -20,10 +21,16 @@ export class SeatsDirective implements OnInit {
     this.renderer.addClass(this.el.nativeElement, className);
   }
 
+  private removeSeatsClass(className: PlaneSeatsCSSClasses): void {
+    this.renderer.removeClass(this.el.nativeElement, className);
+  }
+
   private setSeatsClass(): void {
     if (!this.airSeats) {
       return;
     }
+
+    CSS_CLASSES.forEach((cssClass) => this.removeSeatsClass(cssClass));
 
     if (this.airSeats[1] < ALMOST_FULL_SEATS_THRESHOLD) {
       this.addSeatsClass('seats-almost-full');
