@@ -7,14 +7,16 @@ export interface FligthsData {
   arrivalDate: { date: TuiDay; time: TuiTime };
 }
 
+export interface Passengers {
+  adults: number;
+  children?: number;
+  infants?: number;
+}
+
 export interface BookingModel {
   flightNumber: string;
   flightType: 'oneway' | 'roundtrip';
   fligthsData: Array<FligthsData>;
-  passengers: {
-    adults: number;
-    children?: number;
-    infants?: number;
-  };
+  passengers: Passengers;
   price: number;
 }

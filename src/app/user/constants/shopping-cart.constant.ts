@@ -60,4 +60,22 @@ export const mockBookingsData: Array<BookingModel> = [
     },
     price: 30.96,
   },
+  {
+    flightNumber: 'LL 9012',
+    flightType: 'oneway',
+    fligthsData: [
+      {
+        departure: 'Warsaw',
+        arrival: 'Oslo',
+        departureDate: { date: new TuiDay(2023, 2, 1), time: new TuiTime(23, 0) },
+        arrivalDate: { date: new TuiDay(2023, 2, 2), time: new TuiTime(1, 10) },
+      },
+    ],
+    passengers: {
+      adults: 2,
+      children: 1,
+      infants: 2,
+    },
+    price: 273.92,
+  },
 ];

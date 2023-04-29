@@ -10,9 +10,9 @@ import { mockBookingsData } from '@user/constants/shopping-cart.constant';
   styleUrls: ['./bookings-table.component.scss'],
 })
 export class BookingsTableComponent {
-  selectAll = false;
+  selectAll = true;
   bookings: Array<BookingModel & { state?: boolean }> = mockBookingsData.map((value) => {
-    const newValue = { ...value, state: false };
+    const newValue = { ...value, state: true };
     return newValue;
   });
   readonly columns = ['select', 'number', 'flight', 'triptype', 'dates', 'passengers', 'price', 'actions'];
@@ -38,5 +38,13 @@ export class BookingsTableComponent {
   checkAll(event: Event) {
     if (!event || !event.target) return;
     this.bookings.forEach((x) => (x.state = this.selectAll));
+  }
+
+  priceOfSelectedBookings() {
+    return this.bookings.filter((value) => value.state).reduce((acc, cur) => acc + cur.price, 0);
+  }
+
+  countOfSelectedBookings() {
+    return this.bookings.filter((value) => value.state).length;
   }
 }
