@@ -5,4 +5,6 @@ import { Component } from '@angular/core';
   templateUrl: './user-account-page.component.html',
   styleUrls: ['./user-account-page.component.scss'],
 })
-export class UserAccountPageComponent {}
+export class UserAccountPageComponent {
+  title = 'Account';
+}

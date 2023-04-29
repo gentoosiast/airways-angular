@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 // import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BookingModel } from '@shared/models/booking-data.model';
@@ -10,12 +10,13 @@ import { mockBookingsData } from '@user/constants/shopping-cart.constant';
   styleUrls: ['./bookings-table.component.scss'],
 })
 export class BookingsTableComponent {
+  @Input() title = '';
   selectAll = true;
   bookings: Array<BookingModel & { state?: boolean }> = mockBookingsData.map((value) => {
     const newValue = { ...value, state: true };
     return newValue;
   });
-  readonly columns = ['select', 'number', 'flight', 'triptype', 'dates', 'passengers', 'price', 'actions'];
+  readonly columns = [/* 'select', */ 'number', 'flight', 'triptype', 'dates', 'passengers', 'price', 'actions'];
 
   constructor(private router: Router) {}
 
@@ -28,6 +29,12 @@ export class BookingsTableComponent {
     console.log(`Edit button flight=${item.flightNumber}`);
     this.router.navigateByUrl('/booking');
     // TODO: pre-fill data on booking page via a service
+  }
+
+  details(item: BookingModel): void {
+    console.log(`Details button flight=${item.flightNumber}`);
+    this.router.navigateByUrl('/booking/step-summary');
+    // TODO: pre-fill data on booking summary page via a service
   }
 
   isAllChecked() {

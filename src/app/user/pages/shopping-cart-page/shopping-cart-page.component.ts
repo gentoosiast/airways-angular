@@ -5,4 +5,6 @@ import { Component } from '@angular/core';
   templateUrl: './shopping-cart-page.component.html',
   styleUrls: ['./shopping-cart-page.component.scss'],
 })
-export class ShoppingCartPageComponent {}
+export class ShoppingCartPageComponent {
+  title = 'Cart';
+}

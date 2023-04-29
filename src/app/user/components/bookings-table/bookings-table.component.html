@@ -1,13 +1,18 @@
 <table tuiTable [columns]="columns" class="table">
   <thead>
-    <h1 class="title">Cart</h1>
+    <h1 class="title">{{ title }}</h1>
   </thead>
   <thead>
     <tr tuiThGroup>
-      <th *tuiHead="'select'" [sorter]="null" tuiTh [sticky]="true">
+      <!-- <th *tuiHead="'select'" [sorter]="null" tuiTh [sticky]="true">
         <tui-checkbox [(ngModel)]="selectAll" (change)="checkAll($event)"></tui-checkbox>
+      </th> -->
+      <th *tuiHead="'number'" tuiTh>
+        <div class="flex">
+          <tui-checkbox *ngIf="title === 'Cart'" [(ngModel)]="selectAll" (change)="checkAll($event)"></tui-checkbox>
+          <span>No.</span>
+        </div>
       </th>
-      <th *tuiHead="'number'" tuiTh>No.</th>
       <th *tuiHead="'flight'" tuiTh>Flight</th>
       <th *tuiHead="'triptype'" tuiTh>Type trip</th>
       <th *tuiHead="'dates'" tuiTh>Data & Time</th>
@@ -18,11 +23,14 @@
   </thead>
   <tbody *tuiLet="bookings | tuiTableSort as sortedBookings" tuiTbody [data]="sortedBookings">
     <tr *ngFor="let item of sortedBookings; let index = index" tuiTr>
-      <td *tuiCell="'select'" tuiTd>
+      <!-- <td *tuiCell="'select'" tuiTd>
         <tui-checkbox [(ngModel)]="item.state" (change)="isAllChecked()"></tui-checkbox>
-      </td>
+      </td> -->
       <td *tuiCell="'number'" tuiTd class="flight-number">
-        {{ item.flightNumber }}
+        <div class="flex">
+          <tui-checkbox *ngIf="title === 'Cart'" [(ngModel)]="item.state" (change)="isAllChecked()"></tui-checkbox>
+          <a (click)="details(item)">{{ item.flightNumber }}</a>
+        </div>
       </td>
       <td *tuiCell="'flight'" tuiTd [innerHTML]="item.fligthsData | endpoints"></td>
       <td *tuiCell="'triptype'" tuiTd>
@@ -56,13 +64,14 @@
         </tui-hosted-dropdown>
         <ng-template #dropdown let-close="close">
           <tui-data-list>
-            <button tuiOption (click)="edit(item)">Edit</button>
-            <button tuiOption (click)="remove(item)">Remove</button>
+            <button *ngIf="title === 'Cart'" tuiOption (click)="edit(item)">Edit</button>
+            <button *ngIf="title === 'Cart'" tuiOption (click)="remove(item)">Remove</button>
+            <button *ngIf="title === 'Account'" tuiOption (click)="details(item)">Details</button>
           </tui-data-list>
         </ng-template>
       </td>
     </tr>
-    <tr class="tui-table__tr">
+    <tr *ngIf="title === 'Cart'" class="tui-table__tr">
       <td colspan="8" class="tui-table__td">
         <div class="total">
           <button tuiButton appearance="secondary" size="s" routerLink="/">+ Add new trip</button>
@@ -73,7 +82,7 @@
         </div>
       </td>
     </tr>
-    <tr class="tui-table__tr">
+    <tr *ngIf="title === 'Cart'" class="tui-table__tr">
       <td colspan="8" class="tui-table__td">
         <div class="total">
           <div class="promo">
