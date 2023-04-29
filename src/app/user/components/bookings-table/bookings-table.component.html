@@ -7,15 +7,15 @@
       <!-- <th *tuiHead="'select'" [sorter]="null" tuiTh [sticky]="true">
         <tui-checkbox [(ngModel)]="selectAll" (change)="checkAll($event)"></tui-checkbox>
       </th> -->
-      <th *tuiHead="'number'" tuiTh>
+      <th *tuiHead="'number'" [sorter]="flightNumberSorter" tuiTh>
         <div class="flex">
           <tui-checkbox *ngIf="title === 'Cart'" [(ngModel)]="selectAll" (change)="checkAll($event)"></tui-checkbox>
           <span>No.</span>
         </div>
       </th>
-      <th *tuiHead="'flight'" tuiTh>Flight</th>
-      <th *tuiHead="'triptype'" tuiTh>Type trip</th>
-      <th *tuiHead="'dates'" tuiTh>Data & Time</th>
+      <th *tuiHead="'flight'" [sorter]="endpointsSorter" tuiTh>Flight</th>
+      <th *tuiHead="'triptype'" [sorter]="tripTypeSorter" tuiTh>Type trip</th>
+      <th *tuiHead="'dates'" [sorter]="dateSorter" tuiTh>Data & Time</th>
       <th *tuiHead="'passengers'" [sorter]="null" tuiTh>Passengers</th>
       <th *tuiHead="'price'" tuiTh>Price</th>
       <th *tuiHead="'actions'" tuiTh [sorter]="null"></th>

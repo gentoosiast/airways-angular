@@ -54,4 +54,47 @@ export class BookingsTableComponent {
   countOfSelectedBookings() {
     return this.bookings.filter((value) => value.state).length;
   }
+
+  dateSorter(a: BookingModel, b: BookingModel): number {
+    if (a.fligthsData[0].departureDate.date.toString('YMD') > b.fligthsData[0].departureDate.date.toString('YMD')) {
+      return 1;
+    }
+    if (a.fligthsData[0].departureDate.date.toString('YMD') < b.fligthsData[0].departureDate.date.toString('YMD')) {
+      return -1;
+    }
+    return (
+      a.fligthsData[0].departureDate.time.toAbsoluteMilliseconds() -
+      b.fligthsData[0].departureDate.time.toAbsoluteMilliseconds()
+    );
+  }
+
+  tripTypeSorter(a: BookingModel, b: BookingModel): number {
+    if (a.flightType > b.flightType) {
+      return 1;
+    }
+    if (a.flightType < b.flightType) {
+      return -1;
+    }
+    return 0;
+  }
+
+  flightNumberSorter(a: BookingModel, b: BookingModel): number {
+    if (a.flightNumber > b.flightNumber) {
+      return 1;
+    }
+    if (a.flightNumber < b.flightNumber) {
+      return -1;
+    }
+    return 0;
+  }
+
+  endpointsSorter(a: BookingModel, b: BookingModel): number {
+    if (a.fligthsData[0].departure > b.fligthsData[0].departure) {
+      return 1;
+    }
+    if (b.fligthsData[0].departure > a.fligthsData[0].departure) {
+      return -1;
+    }
+    return 0;
+  }
 }
