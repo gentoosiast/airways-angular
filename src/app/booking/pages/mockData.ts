@@ -1,10 +1,36 @@
 import { Flight } from '@booking/interfaces/flight';
 
+const warsawAirport = {
+  name: 'Warsaw Modlin',
+  city: 'Warsaw',
+  country: 'Poland',
+  iata_code: 'WMI',
+  _geoloc: {
+    lat: 52.451111,
+    lng: 20.651667,
+  },
+  links_count: 52,
+  objectID: '8414',
+};
+
+const dublinAirport = {
+  name: 'Dublin',
+  city: 'Dublin',
+  country: 'Ireland',
+  iata_code: 'DUB',
+  _geoloc: {
+    lat: 53.421333,
+    lng: -6.270075,
+  },
+  links_count: 414,
+  objectID: '599',
+};
+
 export const flights: Flight[] = [
   {
     flightNumber: 'FR 1925',
-    departureAirport: 'WMI',
-    arrivalAirport: 'DUB',
+    departureAirport: warsawAirport,
+    arrivalAirport: dublinAirport,
     departureDate: '2023-04-27T14:30:00.000Z',
     arrivalDate: '2023-04-27T17:50:00.000Z',
     flightDuration: 170,
@@ -15,8 +41,8 @@ export const flights: Flight[] = [
   },
   {
     flightNumber: 'FR 2080',
-    departureAirport: 'WMI',
-    arrivalAirport: 'DUB',
+    departureAirport: warsawAirport,
+    arrivalAirport: dublinAirport,
     departureDate: '2023-04-28T17:00:00.000Z',
     arrivalDate: '2023-04-28T20:20:00.000Z',
     flightDuration: 170,
@@ -27,8 +53,8 @@ export const flights: Flight[] = [
   },
   {
     flightNumber: 'FR 2031',
-    departureAirport: 'WMI',
-    arrivalAirport: 'DUB',
+    departureAirport: warsawAirport,
+    arrivalAirport: dublinAirport,
     departureDate: '2023-04-29T09:30:00.000Z',
     arrivalDate: '2023-04-29T18:10:00.000Z',
     flightDuration: 490,
@@ -39,8 +65,8 @@ export const flights: Flight[] = [
   },
   {
     flightNumber: 'FR 1949',
-    departureAirport: 'WMI',
-    arrivalAirport: 'DUB',
+    departureAirport: warsawAirport,
+    arrivalAirport: dublinAirport,
     departureDate: '2023-04-30T11:45:00.000Z',
     arrivalDate: '2023-04-30T15:05:00.000Z',
     flightDuration: 170,
@@ -51,8 +77,8 @@ export const flights: Flight[] = [
   },
   {
     flightNumber: 'FR 2031',
-    departureAirport: 'WMI',
-    arrivalAirport: 'DUB',
+    departureAirport: warsawAirport,
+    arrivalAirport: dublinAirport,
     departureDate: '2023-05-01T17:15:00.000Z',
     arrivalDate: '2023-05-02T00:00:00.000Z',
     flightDuration: 375,
@@ -63,8 +89,8 @@ export const flights: Flight[] = [
   },
   {
     flightNumber: 'FR 1984',
-    departureAirport: 'WMI',
-    arrivalAirport: 'DUB',
+    departureAirport: warsawAirport,
+    arrivalAirport: dublinAirport,
     departureDate: '2023-05-02T23:40:00.000Z',
     arrivalDate: '2023-05-03T03:00:00.000Z',
     flightDuration: 170,
@@ -75,8 +101,8 @@ export const flights: Flight[] = [
   },
   {
     flightNumber: 'FR 2090',
-    departureAirport: 'WMI',
-    arrivalAirport: 'DUB',
+    departureAirport: warsawAirport,
+    arrivalAirport: dublinAirport,
     departureDate: '2023-05-03T17:00:00.000Z',
     arrivalDate: '2023-05-03T20:20:00.000Z',
     flightDuration: 170,

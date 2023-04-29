@@ -9,12 +9,14 @@
 }
 
 .selector {
-  max-width: 1130px;
   height: 83px;
-  margin: 0 auto;
   position: relative;
   display: flex;
   align-items: flex-end;
+
+  &.hidden {
+    display: none;
+  }
 }
 
 .step-button {

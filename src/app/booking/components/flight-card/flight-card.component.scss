@@ -1,4 +1,5 @@
 @use 'src/app/shared/styles/colors';
+@use 'src/app/shared/styles/typography';
 
 .card {
   width: 225px;
@@ -14,24 +15,21 @@
 }
 
 .date {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
+  @extend %typo-label-medium;
+
   color: colors.$color-secondary-0;
 }
 
 .weekday {
+  @extend %typo-body-small;
+
   margin-bottom: 6px;
-  font-size: 12px;
-  font-weight: 100;
-  line-height: 12px;
   color: colors.$color-neutral-30;
 }
 
 .price {
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 20px;
+  @extend %typo-subtitle-medium;
+
   color: colors.$color-primary;
 }
 
@@ -63,20 +61,17 @@
 }
 
 .selected > .date {
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 20px;
+  @extend %typo-subtitle-medium;
+
   color: colors.$color-primary;
 }
 
 .selected > .weekday {
+  @extend %typo-body-medium;
+
   margin-bottom: 0;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 20px;
 }
 
 .selected > .price {
-  font-size: 30px;
-  line-height: 36px;
+  @extend %typo-subtitle-large;
 }

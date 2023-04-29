@@ -8,4 +8,14 @@ import { flights } from '../mockData';
 })
 export class BookingFlightsPageComponent {
   flights = flights;
+  switchedFlightIdx = 0;
+  isSelected = false;
+
+  onSelectFlight(state: boolean) {
+    this.isSelected = state;
+  }
+
+  onSwitchFlight(flightIdx: number) {
+    this.switchedFlightIdx = flightIdx;
+  }
 }
