@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
-import { map, startWith, Subscription } from 'rxjs';
+import { filter, startWith, Subscription, tap } from 'rxjs';
 import { UserSettingsService } from '@core/services/user-settings.service';
 import { Currency, DateFormat } from '@core/constants/user-settings.constant';
 
@@ -23,11 +23,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private sub = new Subscription();
   private userSettings$ = this.userSettingsForm.valueChanges.pipe(
     startWith(this.userSettingsForm.value),
-    map((value) => this.userSettingsService.setUserSettings(value)),
+    tap((value) => this.userSettingsService.setUserSettings(value)),
   );
   private showProgressBar$ = this.router.events.pipe(
-    map((value) => {
-      if (!(value instanceof NavigationEnd)) return;
+    filter((event) => event instanceof NavigationEnd),
+    tap(() => {
       if (['/booking/step-flights', '/booking/step-passengers', '/booking/step-summary'].includes(this.router.url)) {
         this.showProgressBar = true;
       } else {

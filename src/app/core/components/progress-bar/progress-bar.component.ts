@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { Subscription, map } from 'rxjs';
+import { Subscription, filter, tap } from 'rxjs';
 
 const enum BookingSteps {
   STEP_FLIGHTS = 0,
@@ -17,11 +17,8 @@ export class ProgressBarComponent implements OnInit, OnDestroy {
   bookingStep: BookingSteps = this.getBookingStepFromUrl();
   private sub = new Subscription();
   private bookingStep$ = this.router.events.pipe(
-    map((value) => {
-      if (value instanceof NavigationEnd) {
-        this.bookingStep = this.getBookingStepFromUrl();
-      }
-    }),
+    filter((event) => event instanceof NavigationEnd),
+    tap(() => (this.bookingStep = this.getBookingStepFromUrl())),
   );
 
   constructor(private router: Router) {}
