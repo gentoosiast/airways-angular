@@ -8,28 +8,24 @@
   margin: 20px auto;
 }
 
-td,
 th {
   white-space: nowrap;
-}
-
-th {
   background: var(--tui-base-03);
   border: none;
 }
 
 td {
-  padding: 0.5rem 0.75rem !important;
-  vertical-align: middle !important;
+  white-space: nowrap;
   border-left: none;
   border-right: none;
   border-top: none;
-  font-weight: 600;
-}
-
-tr {
   border-bottom: 1px solid var(--tui-base-03);
-  border-collapse: collapse;
+  font-weight: 600;
+
+  &.td {
+    padding: 0.5rem 0.75rem;
+    vertical-align: middle;
+  }
 }
 
 .flight-number {
@@ -57,20 +53,10 @@ tr {
   background: linear-gradient(90deg, #11397e 0%, #005abc 100%);
   -webkit-text-fill-color: transparent;
   background-clip: text;
-
-  // text-fill-color: transparent;
 }
 
-.continue {
+.flexbox {
   display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-
-.flex {
-  display: flex;
-
-  // justify-content: space-between;
   align-items: center;
   gap: 1rem;
 }

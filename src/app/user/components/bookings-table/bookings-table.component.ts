@@ -11,12 +11,12 @@ import { mockBookingsData } from '@user/constants/shopping-cart.constant';
 })
 export class BookingsTableComponent {
   @Input() title = '';
-  selectAll = true;
+  allSelected = true;
   bookings: Array<BookingModel & { state?: boolean }> = mockBookingsData.map((value) => {
     const newValue = { ...value, state: true };
     return newValue;
   });
-  readonly columns = [/* 'select', */ 'number', 'flight', 'triptype', 'dates', 'passengers', 'price', 'actions'];
+  readonly columns = ['number', 'flight', 'triptype', 'dates', 'passengers', 'price', 'actions'];
 
   constructor(private router: Router) {}
 
@@ -37,14 +37,14 @@ export class BookingsTableComponent {
     // TODO: pre-fill data on booking summary page via a service
   }
 
-  isAllChecked() {
-    this.selectAll = this.bookings.every((x) => x.state);
-    return this.selectAll;
+  isAllSelected() {
+    this.allSelected = this.bookings.every((value) => value.state);
+    return this.allSelected;
   }
 
-  checkAll(event: Event) {
+  selectAll(event: Event) {
     if (!event || !event.target) return;
-    this.bookings.forEach((x) => (x.state = this.selectAll));
+    this.bookings.forEach((value) => (value.state = this.allSelected));
   }
 
   priceOfSelectedBookings() {
@@ -53,29 +53,6 @@ export class BookingsTableComponent {
 
   countOfSelectedBookings() {
     return this.bookings.filter((value) => value.state).length;
-  }
-
-  dateSorter(a: BookingModel, b: BookingModel): number {
-    if (a.fligthsData[0].departureDate.date.toString('YMD') > b.fligthsData[0].departureDate.date.toString('YMD')) {
-      return 1;
-    }
-    if (a.fligthsData[0].departureDate.date.toString('YMD') < b.fligthsData[0].departureDate.date.toString('YMD')) {
-      return -1;
-    }
-    return (
-      a.fligthsData[0].departureDate.time.toAbsoluteMilliseconds() -
-      b.fligthsData[0].departureDate.time.toAbsoluteMilliseconds()
-    );
-  }
-
-  tripTypeSorter(a: BookingModel, b: BookingModel): number {
-    if (a.flightType > b.flightType) {
-      return 1;
-    }
-    if (a.flightType < b.flightType) {
-      return -1;
-    }
-    return 0;
   }
 
   flightNumberSorter(a: BookingModel, b: BookingModel): number {
@@ -96,5 +73,28 @@ export class BookingsTableComponent {
       return -1;
     }
     return 0;
+  }
+
+  tripTypeSorter(a: BookingModel, b: BookingModel): number {
+    if (a.flightType > b.flightType) {
+      return 1;
+    }
+    if (a.flightType < b.flightType) {
+      return -1;
+    }
+    return 0;
+  }
+
+  dateSorter(a: BookingModel, b: BookingModel): number {
+    if (a.fligthsData[0].departureDate.date.toString('YMD') > b.fligthsData[0].departureDate.date.toString('YMD')) {
+      return 1;
+    }
+    if (a.fligthsData[0].departureDate.date.toString('YMD') < b.fligthsData[0].departureDate.date.toString('YMD')) {
+      return -1;
+    }
+    return (
+      a.fligthsData[0].departureDate.time.toAbsoluteMilliseconds() -
+      b.fligthsData[0].departureDate.time.toAbsoluteMilliseconds()
+    );
   }
 }

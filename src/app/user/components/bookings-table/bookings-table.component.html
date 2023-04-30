@@ -4,12 +4,9 @@
   </thead>
   <thead>
     <tr tuiThGroup>
-      <!-- <th *tuiHead="'select'" [sorter]="null" tuiTh [sticky]="true">
-        <tui-checkbox [(ngModel)]="selectAll" (change)="checkAll($event)"></tui-checkbox>
-      </th> -->
-      <th *tuiHead="'number'" [sorter]="flightNumberSorter" tuiTh>
-        <div class="flex">
-          <tui-checkbox *ngIf="title === 'Cart'" [(ngModel)]="selectAll" (change)="checkAll($event)"></tui-checkbox>
+      <th *tuiHead="'number'" [sorter]="null" tuiTh>
+        <div class="flexbox">
+          <tui-checkbox *ngIf="title === 'Cart'" [(ngModel)]="allSelected" (change)="selectAll($event)"></tui-checkbox>
           <span>No.</span>
         </div>
       </th>
@@ -23,21 +20,18 @@
   </thead>
   <tbody *tuiLet="bookings | tuiTableSort as sortedBookings" tuiTbody [data]="sortedBookings">
     <tr *ngFor="let item of sortedBookings; let index = index" tuiTr>
-      <!-- <td *tuiCell="'select'" tuiTd>
-        <tui-checkbox [(ngModel)]="item.state" (change)="isAllChecked()"></tui-checkbox>
-      </td> -->
-      <td *tuiCell="'number'" tuiTd class="flight-number">
-        <div class="flex">
-          <tui-checkbox *ngIf="title === 'Cart'" [(ngModel)]="item.state" (change)="isAllChecked()"></tui-checkbox>
+      <td *tuiCell="'number'" tuiTd class="flight-number td">
+        <div class="flexbox">
+          <tui-checkbox *ngIf="title === 'Cart'" [(ngModel)]="item.state" (change)="isAllSelected()"></tui-checkbox>
           <a (click)="details(item)">{{ item.flightNumber }}</a>
         </div>
       </td>
-      <td *tuiCell="'flight'" tuiTd [innerHTML]="item.fligthsData | endpoints"></td>
-      <td *tuiCell="'triptype'" tuiTd>
+      <td *tuiCell="'flight'" tuiTd [innerHTML]="item.fligthsData | endpoints" class="td"></td>
+      <td *tuiCell="'triptype'" tuiTd class="td">
         {{ item.flightType === 'oneway' ? 'One way' : 'Round trip' }}
       </td>
-      <td *tuiCell="'dates'" tuiTd [innerHTML]="item.fligthsData | flightsDates"></td>
-      <td *tuiCell="'passengers'" tuiTd>
+      <td *tuiCell="'dates'" tuiTd [innerHTML]="item.fligthsData | flightsDates" class="td"></td>
+      <td *tuiCell="'passengers'" tuiTd class="td">
         <div class="passenger">
           {{ 'adults' | passengersData : item.passengers.adults }}
         </div>
@@ -48,7 +42,7 @@
           {{ 'infants' | passengersData : item.passengers.infants }}
         </div>
       </td>
-      <td *tuiCell="'price'" tuiTd class="price">
+      <td *tuiCell="'price'" tuiTd class="price td">
         {{ item.price | currency }}
       </td>
       <td *tuiCell="'actions'" tuiTd>
@@ -88,7 +82,7 @@
           <div class="promo">
             <!-- TODO: add promocode-input -->
           </div>
-          <div class="continue">
+          <div class="flexbox">
             <div class="tui-text_body-m"><span [innerHTML]="countOfSelectedBookings()"></span> selected</div>
             <button tuiButton size="m">Continue</button>
           </div>
