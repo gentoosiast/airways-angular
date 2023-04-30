@@ -17,7 +17,7 @@
         [flight]="flight"
         [index]="i"
         [isSelected]="i === selectedIndex"
-        (cardSelect)="switchSelectedCard($event)"
+        (flightSelect)="onSelectFlight($event)"
       ></air-flight-card>
     </ng-container>
   </tui-carousel>

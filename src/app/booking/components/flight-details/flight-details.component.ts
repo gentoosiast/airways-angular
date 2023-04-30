@@ -9,9 +9,14 @@ import { Flight } from '@booking/interfaces/flight';
 export class FlightDetailsComponent {
   @Input() flight?: Flight;
   @Input() isFlightSelected = false;
-  @Output() selectFlight = new EventEmitter<boolean>();
+  @Input() isDeparture = true;
+  @Output() confirmFlight = new EventEmitter<boolean>();
 
-  onSelectFlight(isSelected: boolean) {
-    this.selectFlight.emit(isSelected);
+  getFlightIcon(): string {
+    return this.isDeparture ? '/assets/icons/flight-type-right.svg' : '/assets/icons/flight-type-left.svg';
+  }
+
+  onConfirmFlight(isConfirmed: boolean): void {
+    this.confirmFlight.emit(isConfirmed);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { Flight } from '@booking/interfaces/flight';
 
 @Component({
@@ -6,14 +6,25 @@ import { Flight } from '@booking/interfaces/flight';
   templateUrl: './flight-card.component.html',
   styleUrls: ['./flight-card.component.scss'],
 })
-export class FlightCardComponent {
+export class FlightCardComponent implements OnInit {
   @Input() flight?: Flight;
   @Input() index = 0;
   @Input() isSelected = false;
+  @Output() flightSelect = new EventEmitter<number>();
+  isDisabled = false;
+  private todayDate = new Date();
 
-  @Output() cardSelect = new EventEmitter<number>();
+  ngOnInit(): void {
+    this.setDisabledStatus();
+  }
 
-  onSelectCard() {
-    this.cardSelect.emit(this.index);
+  onSelectFlight(): void {
+    this.flightSelect.emit(this.index);
+  }
+
+  private setDisabledStatus(): void {
+    if (!this.flight || this.flight.availableSeats === 0 || new Date(this.flight.departureDate) < this.todayDate) {
+      this.isDisabled = true;
+    }
   }
 }

@@ -9,13 +9,13 @@ import { Flight } from '@booking/interfaces/flight';
 export class FlightCarouselComponent {
   @Input() flights: Flight[] = [];
   @Input() isVisible = true;
-  @Output() switchFlight = new EventEmitter<number>();
+  @Output() selectFlight = new EventEmitter<number>();
   displayItemsCount = 5; // TODO: value will depend on available screen space
   index = 0;
   selectedIndex?: number;
 
-  switchSelectedCard(index: number) {
+  onSelectFlight(index: number): void {
     this.selectedIndex = index;
-    this.switchFlight.emit(index);
+    this.selectFlight.emit(index);
   }
 }

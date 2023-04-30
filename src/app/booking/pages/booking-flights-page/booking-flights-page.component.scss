@@ -1,7 +1,39 @@
-.flight {
+@use 'src/app/shared/styles/colors';
+@use 'src/app/shared/styles/typography';
+
+.page {
   max-width: 1130px;
-  margin: 0 auto;
+  margin: 50px auto 20px;
+}
+
+.flights {
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.heading {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.heading-text {
+  @extend %typo-title-large;
+
+  color: colors.$color-primary;
+}
+
+.flight-select {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 40px;
 }

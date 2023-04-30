@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./date-time-widget.component.scss'],
 })
 export class DateTimeWidgetComponent {
-  @Input() isDeparture = true;
-  @Input() date = '';
   @Input() airportName = '';
+  @Input() date = '';
+  @Input() isDeparture = true;
 }

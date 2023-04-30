@@ -2,12 +2,12 @@
   <div
     class="card"
     [airSeats]="[flight.seats, flight.availableSeats]"
-    [ngClass]="{ 'no-flight': !flight.availableSeats, selected: isSelected }"
-    (click)="onSelectCard()"
+    [ngClass]="{ 'no-flight': isDisabled, selected: isSelected }"
+    (click)="onSelectFlight()"
   >
     <span class="date">{{ flight.departureDate | date : 'dd MMM' : 'Z' }}</span>
     <span class="weekday">Monday</span>
-    <span *ngIf="flight.availableSeats; else noflight" class="price">{{ flight.price | currency : 'EUR' }}</span>
+    <span *ngIf="!isDisabled; else noflight" class="price">{{ flight.price | currency : 'EUR' }}</span>
   </div>
 
   <ng-template #noflight>

@@ -2,7 +2,6 @@
 @use 'src/app/shared/styles/typography';
 
 .flight-details {
-  padding: 27px 40px;
   display: flex;
   border-radius: 5px;
   background-color: colors.$color-neutral-100;
@@ -10,18 +9,22 @@
 }
 
 .flight-details-left {
-  padding-right: 35px;
+  padding: 27px 35px 27px 40px;
   display: flex;
   align-items: center;
   gap: 30px;
 }
 
 .flight-details-right {
-  padding-left: 28px;
+  padding: 27px 40px 27px 28px;
   display: flex;
   align-items: center;
   gap: 32px;
   border-left: 2px dashed colors.$color-secondary-40;
+}
+
+.selected > .flight-details-right {
+  border-left: 2px solid transparent;
 }
 
 .flight-duration {
@@ -75,7 +78,7 @@
 }
 
 .seats {
-  width: 100%;
+  align-self: stretch;
   padding: 4px 8px;
   display: flex;
   justify-content: flex-end;
@@ -119,10 +122,10 @@
   @extend %typo-subtitle-large;
 
   color: colors.$color-primary;
+}
 
-  &.selected {
-    color: colors.$color-neutral-black;
-  }
+.selected .price-value {
+  color: colors.$color-neutral-black;
 }
 
 .select-button,
