@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { TuiDay } from '@taiga-ui/cdk';
 import { TuiCountryIsoCode, TUI_ENGLISH_LANGUAGE_COUNTRIES } from '@taiga-ui/i18n';
-import { Gender, SocialData } from '@core/interfaces/social-data';
+import { Gender, User } from '@core/models/user.model';
 import { MINIMUM_PASSWORD_LENGTH } from '@core/constants/signup.constants';
 
 @Component({
@@ -58,11 +58,11 @@ export class SignupFormComponent {
     return this.signupForm.get('citizenship');
   }
 
-  onFacebookButtonClick(data: SocialData) {
+  onFacebookButtonClick(data: User) {
     this.setFormData(data);
   }
 
-  onGoogleButtonClick(data: SocialData) {
+  onGoogleButtonClick(data: User) {
     this.setFormData(data);
   }
 
@@ -70,9 +70,10 @@ export class SignupFormComponent {
     this.formSubmit.emit();
   }
 
-  private setFormData(data: SocialData) {
+  private setFormData(data: User) {
     this.signupForm.patchValue({
       ...data,
+      birthDate: TuiDay.fromUtcNativeDate(new Date(data.birthDate)),
     });
   }
 }

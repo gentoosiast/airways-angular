@@ -1,12 +1,11 @@
-import { TuiDay } from '@taiga-ui/cdk';
-
 export type Gender = 'male' | 'female';
 
-export interface SocialData {
+export interface User {
+  id: number;
   email: string;
   firstName: string;
   lastName: string;
-  birthDate: TuiDay;
+  birthDate: string;
   gender: Gender;
   phone: string;
   citizenship: string;

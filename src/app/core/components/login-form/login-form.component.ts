@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { SocialData } from '@core/interfaces/social-data';
+import { User } from '@core/models/user.model';
 
 @Component({
   selector: 'air-login-form',
@@ -24,11 +24,11 @@ export class LoginFormComponent {
     return this.loginForm.get('password');
   }
 
-  onFacebookButtonClick(data: SocialData) {
+  onFacebookButtonClick(data: User) {
     this.setFormData(data);
   }
 
-  onGoogleButtonClick(data: SocialData) {
+  onGoogleButtonClick(data: User) {
     this.setFormData(data);
   }
 
@@ -36,7 +36,7 @@ export class LoginFormComponent {
     this.formSubmit.emit();
   }
 
-  private setFormData(data: SocialData) {
+  private setFormData(data: User) {
     this.loginForm.patchValue({
       ...data,
     });

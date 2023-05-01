@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { SocialData } from '@core/interfaces/social-data';
+import { User } from '@core/models/user.model';
 import { mockSocialData } from './mockSocialData';
 
 @Component({
@@ -8,8 +8,8 @@ import { mockSocialData } from './mockSocialData';
   styleUrls: ['./social-buttons.component.scss'],
 })
 export class SocialButtonsComponent {
-  @Output() private facebookButtonClick = new EventEmitter<SocialData>();
-  @Output() private googleButtonClick = new EventEmitter<SocialData>();
+  @Output() private facebookButtonClick = new EventEmitter<User>();
+  @Output() private googleButtonClick = new EventEmitter<User>();
 
   onFacebookButtonClick() {
     this.facebookButtonClick.emit(mockSocialData);

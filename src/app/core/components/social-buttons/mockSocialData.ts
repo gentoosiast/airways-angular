@@ -1,11 +1,11 @@
-import { TuiDay } from '@taiga-ui/cdk';
-import { SocialData } from '@core/interfaces/social-data';
+import { User } from '@core/models/user.model';
 
-export const mockSocialData: SocialData = {
+export const mockSocialData: User = {
+  id: 42,
   email: 'johndoe@gmail.com',
   firstName: 'John',
   lastName: 'Doe',
-  birthDate: new TuiDay(2001, 0, 3),
+  birthDate: '2001-01-03',
   gender: 'male',
   phone: '+19383559323',
   citizenship: 'USA',
