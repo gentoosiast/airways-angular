@@ -3,7 +3,7 @@ import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { TuiDay } from '@taiga-ui/cdk';
 import { TuiCountryIsoCode, TUI_ENGLISH_LANGUAGE_COUNTRIES } from '@taiga-ui/i18n';
 import { Gender, SocialData } from '@core/interfaces/social-data';
-import { MINIMUM_PASSWORD_LENGTH } from '@core/constants';
+import { MINIMUM_PASSWORD_LENGTH } from '@core/constants/signup.constants';
 
 @Component({
   selector: 'air-signup-form',
