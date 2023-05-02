@@ -1,7 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-import { TuiButtonModule, TuiErrorModule, TuiLinkModule, TuiSvgModule, TUI_SANITIZER } from '@taiga-ui/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import {
+  TuiButtonModule,
+  TuiDataListModule,
+  TuiErrorModule,
+  TuiLinkModule,
+  TuiSvgModule,
+  TuiTextfieldControllerModule,
+  TUI_SANITIZER,
+} from '@taiga-ui/core';
 import {
   TuiCheckboxLabeledModule,
   TuiDataListWrapperModule,
@@ -9,6 +18,7 @@ import {
   TuiInputDateModule,
   TuiInputPasswordModule,
   TuiInputPhoneInternationalModule,
+  TuiMarkerIconModule,
   TuiRadioBlockModule,
   TuiSelectModule,
   TuiSortCountriesPipeModule,
@@ -22,12 +32,14 @@ import { TabbedFormsComponent } from './components/tabbed-forms/tabbed-forms.com
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { SignupFormComponent } from './components/signup-form/signup-form.component';
 import { SocialButtonsComponent } from './components/social-buttons/social-buttons.component';
+import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 
 @NgModule({
   declarations: [
     NotFoundPageComponent,
     FooterComponent,
     HeaderComponent,
+    ProgressBarComponent,
     TabbedFormsComponent,
     LoginFormComponent,
     SignupFormComponent,
@@ -35,9 +47,12 @@ import { SocialButtonsComponent } from './components/social-buttons/social-butto
   ],
   imports: [
     CommonModule,
+    FormsModule,
     ReactiveFormsModule,
+    RouterModule,
     TuiButtonModule,
     TuiCheckboxLabeledModule,
+    TuiDataListModule,
     TuiDataListWrapperModule,
     TuiErrorModule,
     TuiInputModule,
@@ -45,11 +60,13 @@ import { SocialButtonsComponent } from './components/social-buttons/social-butto
     TuiInputPasswordModule,
     TuiInputPhoneInternationalModule,
     TuiLinkModule,
+    TuiMarkerIconModule,
     TuiRadioBlockModule,
     TuiSelectModule,
     TuiSortCountriesPipeModule,
     TuiSvgModule,
     TuiTabsModule,
+    TuiTextfieldControllerModule,
   ],
   exports: [HeaderComponent, FooterComponent],
   providers: [
