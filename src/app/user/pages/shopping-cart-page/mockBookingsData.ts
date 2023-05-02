@@ -1,11 +1,11 @@
-import { BookingModel } from '@shared/models/booking-data.model';
+import { Booking } from '@shared/models/booking.model';
 import { TuiDay, TuiTime } from '@taiga-ui/cdk';
 
-export const mockBookingsData: Array<BookingModel> = [
+export const mockBookingsData: Array<Booking> = [
   {
     flightNumber: 'FR 1925',
     flightType: 'roundtrip',
-    fligthsData: [
+    flightsData: [
       {
         departure: 'Dublin',
         arrival: 'Warsaw',
@@ -30,7 +30,7 @@ export const mockBookingsData: Array<BookingModel> = [
   {
     flightNumber: 'FR 1936',
     flightType: 'oneway',
-    fligthsData: [
+    flightsData: [
       {
         departure: 'Gdansk',
         arrival: 'Warsaw',
@@ -46,7 +46,7 @@ export const mockBookingsData: Array<BookingModel> = [
   {
     flightNumber: 'AR 1936',
     flightType: 'oneway',
-    fligthsData: [
+    flightsData: [
       {
         departure: 'Paris',
         arrival: 'Berlin',
@@ -63,7 +63,7 @@ export const mockBookingsData: Array<BookingModel> = [
   {
     flightNumber: 'LL 9012',
     flightType: 'oneway',
-    fligthsData: [
+    flightsData: [
       {
         departure: 'Warsaw',
         arrival: 'Oslo',

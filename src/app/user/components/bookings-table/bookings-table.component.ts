@@ -1,100 +1,69 @@
-import { Component, Input } from '@angular/core';
-// import { FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
-import { BookingModel } from '@shared/models/booking-data.model';
-import { mockBookingsData } from '@user/constants/shopping-cart.constant';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Booking } from '@shared/models/booking.model';
 
 @Component({
   selector: 'air-bookings-table',
   templateUrl: './bookings-table.component.html',
   styleUrls: ['./bookings-table.component.scss'],
 })
-export class BookingsTableComponent {
-  @Input() title = '';
-  allSelected = true;
-  bookings: Array<BookingModel & { state?: boolean }> = mockBookingsData.map((value) => {
-    const newValue = { ...value, state: true };
-    return newValue;
-  });
+export class BookingsTableComponent implements OnInit {
+  @Input() isEditable = false;
+  @Output() removeBooking = new EventEmitter<Booking>();
+  @Output() editBooking = new EventEmitter<Booking>();
+  @Output() bookingDetails = new EventEmitter<Booking>();
+
+  @Input() bookings: Array<Booking & { isSelected?: boolean }> = [];
+  areAllSelected = true;
   readonly columns = ['number', 'flight', 'triptype', 'dates', 'passengers', 'price', 'actions'];
 
-  constructor(private router: Router) {}
-
-  remove(item: BookingModel): void {
-    this.bookings = this.bookings.filter((booking) => booking !== item);
-    // TODO: remove the bokking via service
+  ngOnInit(): void {
+    this.bookings = this.bookings.map((value) => {
+      return { ...value, isSelected: true };
+    });
   }
 
-  edit(item: BookingModel): void {
-    console.log(`Edit button flight=${item.flightNumber}`);
-    this.router.navigateByUrl('/booking');
-    // TODO: pre-fill data on booking page via a service
+  remove(item: Booking): void {
+    this.removeBooking.emit(item);
   }
 
-  details(item: BookingModel): void {
-    console.log(`Details button flight=${item.flightNumber}`);
-    this.router.navigateByUrl('/booking/step-summary');
-    // TODO: pre-fill data on booking summary page via a service
+  edit(item: Booking): void {
+    this.editBooking.emit(item);
   }
 
-  isAllSelected() {
-    this.allSelected = this.bookings.every((value) => value.state);
-    return this.allSelected;
+  details(item: Booking): void {
+    this.bookingDetails.emit(item);
   }
 
-  selectAll(event: Event) {
-    if (!event || !event.target) return;
-    this.bookings.forEach((value) => (value.state = this.allSelected));
+  isAllSelected(): boolean {
+    this.areAllSelected = this.bookings.every((value) => value.isSelected);
+    return this.areAllSelected;
   }
 
-  priceOfSelectedBookings() {
-    return this.bookings.filter((value) => value.state).reduce((acc, cur) => acc + cur.price, 0);
+  selectAll(): void {
+    this.bookings.forEach((value) => (value.isSelected = this.areAllSelected));
   }
 
-  countOfSelectedBookings() {
-    return this.bookings.filter((value) => value.state).length;
+  priceOfSelectedBookings(): number {
+    return this.bookings.filter((value) => value.isSelected).reduce((acc, cur) => acc + cur.price, 0);
   }
 
-  flightNumberSorter(a: BookingModel, b: BookingModel): number {
-    if (a.flightNumber > b.flightNumber) {
-      return 1;
-    }
-    if (a.flightNumber < b.flightNumber) {
-      return -1;
-    }
-    return 0;
+  countOfSelectedBookings(): number {
+    return this.bookings.filter((value) => value.isSelected).length;
   }
 
-  endpointsSorter(a: BookingModel, b: BookingModel): number {
-    if (a.fligthsData[0].departure > b.fligthsData[0].departure) {
-      return 1;
-    }
-    if (b.fligthsData[0].departure > a.fligthsData[0].departure) {
-      return -1;
-    }
-    return 0;
+  endpointsSorter(a: Booking, b: Booking): number {
+    return a.flightsData[0].departure.localeCompare(b.flightsData[0].departure);
   }
 
-  tripTypeSorter(a: BookingModel, b: BookingModel): number {
-    if (a.flightType > b.flightType) {
-      return 1;
-    }
-    if (a.flightType < b.flightType) {
-      return -1;
-    }
-    return 0;
+  tripTypeSorter(a: Booking, b: Booking): number {
+    return a.flightType.localeCompare(b.flightType);
   }
 
-  dateSorter(a: BookingModel, b: BookingModel): number {
-    if (a.fligthsData[0].departureDate.date.toString('YMD') > b.fligthsData[0].departureDate.date.toString('YMD')) {
-      return 1;
-    }
-    if (a.fligthsData[0].departureDate.date.toString('YMD') < b.fligthsData[0].departureDate.date.toString('YMD')) {
-      return -1;
-    }
-    return (
-      a.fligthsData[0].departureDate.time.toAbsoluteMilliseconds() -
-      b.fligthsData[0].departureDate.time.toAbsoluteMilliseconds()
-    );
+  dateSorter(a: Booking, b: Booking): number {
+    const aDate = a.flightsData[0].departureDate.date.toUtcNativeDate().getTime();
+    const bDate = b.flightsData[0].departureDate.date.toUtcNativeDate().getTime();
+    const aTimeMs = a.flightsData[0].departureDate.time.toAbsoluteMilliseconds();
+    const bTimeMs = b.flightsData[0].departureDate.time.toAbsoluteMilliseconds();
+    return aDate === bDate ? aTimeMs - bTimeMs : aDate - bDate;
   }
 }

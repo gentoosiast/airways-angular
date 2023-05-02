@@ -1,1 +1,10 @@
-<air-bookings-table [title]="title"></air-bookings-table>
+<div class="wrapper">
+  <div class="title">Cart</div>
+  <air-bookings-table
+    [bookings]="bookings"
+    [isEditable]="true"
+    (removeBooking)="removeBooking($event)"
+    (editBooking)="editBooking($event)"
+    (bookingDetails)="bookingDetails($event)"
+  ></air-bookings-table>
+</div>

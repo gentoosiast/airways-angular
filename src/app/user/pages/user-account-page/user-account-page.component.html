@@ -1,1 +1,8 @@
-<air-bookings-table [title]="title"></air-bookings-table>
+<div class="wrapper">
+  <div class="title">Account</div>
+  <air-bookings-table
+    [bookings]="bookings"
+    [isEditable]="false"
+    (bookingDetails)="bookingDetails($event)"
+  ></air-bookings-table>
+</div>

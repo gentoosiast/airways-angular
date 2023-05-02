@@ -1,6 +1,6 @@
 import { TuiDay, TuiTime } from '@taiga-ui/cdk';
 
-export interface FligthsData {
+export interface FlightsData {
   departure: string;
   arrival: string;
   departureDate: { date: TuiDay; time: TuiTime };
@@ -13,10 +13,10 @@ export interface Passengers {
   infants?: number;
 }
 
-export interface BookingModel {
+export interface Booking {
   flightNumber: string;
   flightType: 'oneway' | 'roundtrip';
-  fligthsData: Array<FligthsData>;
+  flightsData: Array<FlightsData>;
   passengers: Passengers;
   price: number;
 }
