@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { TuiLetModule } from '@taiga-ui/cdk';
 import {
   TuiButtonModule,
   TuiDataListModule,
@@ -50,6 +51,7 @@ import { ProgressBarComponent } from './components/progress-bar/progress-bar.com
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
+    TuiLetModule,
     TuiButtonModule,
     TuiCheckboxLabeledModule,
     TuiDataListModule,

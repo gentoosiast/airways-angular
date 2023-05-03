@@ -1,12 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
-import { filter, startWith, Subscription, tap } from 'rxjs';
+import { filter, Observable, startWith, Subscription, tap } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { TuiDialogService, TuiAlertService } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 import { TabbedFormsComponent } from '../tabbed-forms/tabbed-forms.component';
 import { UserSettingsService } from '@core/services/user-settings.service';
 import { Currency, DateFormat } from '@core/constants/user-settings.constant';
+import { selectUser } from 'src/app/store/selectors/user.selectors';
+import { User } from '@core/models/user.model';
 
 @Component({
   selector: 'air-header',
@@ -14,9 +17,10 @@ import { Currency, DateFormat } from '@core/constants/user-settings.constant';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  showProgressBar = false;
-  dateFormats = Object.values(DateFormat);
   currencies = Object.values(Currency);
+  dateFormats = Object.values(DateFormat);
+  showProgressBar = false;
+  user$?: Observable<User | null>;
 
   userSettingsForm = new FormGroup({
     dateFormat: new FormControl(this.dateFormats[0]),
@@ -43,12 +47,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private dialogs: TuiDialogService,
     private alertService: TuiAlertService,
     private router: Router,
+    private store: Store,
     private userSettingsService: UserSettingsService,
   ) {}
 
   ngOnInit(): void {
     this.sub.add(this.showProgressBar$.subscribe());
     this.sub.add(this.userSettings$.subscribe());
+    this.user$ = this.store.select(selectUser);
   }
 
   ngOnDestroy(): void {
@@ -57,9 +63,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   openLoginModal() {
     this.sub.add(
-      this.dialogs.open<boolean>(new PolymorpheusComponent(TabbedFormsComponent)).subscribe({
-        next: () => {
-          this.sub.add(this.alertService.open('Form has been submitted').subscribe());
+      this.dialogs.open<string>(new PolymorpheusComponent(TabbedFormsComponent)).subscribe({
+        next: (message) => {
+          this.sub.add(this.alertService.open(message).subscribe());
         },
       }),
     );
