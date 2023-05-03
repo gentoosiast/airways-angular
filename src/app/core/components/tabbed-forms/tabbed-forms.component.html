@@ -5,7 +5,7 @@
   </tui-tabs>
 
   <ng-container *ngIf="activeTabIdx === 0; else signup">
-    <air-login-form (formSubmit)="onLoginFormSubmit()"></air-login-form>
+    <air-login-form (formSubmit)="onLoginFormSubmit($event)"></air-login-form>
   </ng-container>
 
   <ng-template #signup>

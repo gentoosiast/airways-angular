@@ -68,6 +68,8 @@ export class SignupFormComponent {
   }
 
   onSubmit() {
+    console.log(this.signupForm.value);
+    console.log(this.birthDate?.value?.toUtcNativeDate().toString());
     this.formSubmit.emit();
   }
 
