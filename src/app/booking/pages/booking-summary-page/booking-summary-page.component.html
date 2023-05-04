@@ -1,1 +1,29 @@
-<p>booking-summary-page works!</p>
+<div class="wrapper">
+  <h1 class="title"><tui-svg src="/assets/icons/preview.svg"></tui-svg> Summary</h1>
+  <div class="flights-wrapper">
+    <div class="card" *ngFor="let flight of booking.flightsData">
+      <div class="card-header">
+        <div class="flight">
+          <span class="flight-number">{{ booking.flightNumber }}</span>
+          <span>{{ flight.departure }} - {{ flight.arrival }}</span>
+        </div>
+        <div class="date">
+          {{ flight | flightsDates }}
+        </div>
+      </div>
+      <div class="card-content" *ngFor="let passenger of booking.passengerData">
+        <div class="passenger">{{ passenger.firstName.toUpperCase() }} {{ passenger.lastName.toUpperCase() }}</div>
+        <div class="baggage">
+          <div *ngIf="passenger.baggageCount">{{ passenger.baggageCount }} checked bag (total 23 kg) included</div>
+          <div *ngIf="passenger.tariff !== 'infants'">1 cabin bag + 1 personal item (max. 8 kg) included</div>
+          <div *ngIf="passenger.tariff !== 'infants'">Seat {{ passenger.seat }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="buttons-wrapper">
+    <button tuiButton appearance="flat" type="button">Back</button>
+    <button tuiButton type="button" appearance="outline">Add to order cart</button>
+    <button tuiButton type="button" appearance="primary">Buy now</button>
+  </div>
+</div>
