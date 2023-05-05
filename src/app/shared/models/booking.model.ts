@@ -1,5 +1,7 @@
 import { TuiDay, TuiTime } from '@taiga-ui/cdk';
 
+export type PassengerCategory = 'adults' | 'children' | 'infants';
+
 export interface Passenger {
   firstName: string;
   lastName: string;
@@ -8,7 +10,7 @@ export interface Passenger {
   baggageCount: number;
   isAssistanceNeeded: boolean;
   seat?: string;
-  tariff: 'adults' | 'children' | 'infants';
+  passengerCategory: PassengerCategory;
 }
 
 export interface Passengers {

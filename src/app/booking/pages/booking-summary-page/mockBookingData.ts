@@ -32,7 +32,7 @@ export const mockBookingData: Booking = {
       baggageCount: 1,
       isAssistanceNeeded: false,
       seat: '19E',
-      tariff: 'adults',
+      passengerCategory: 'adults',
     },
     {
       firstName: 'James',
@@ -42,7 +42,7 @@ export const mockBookingData: Booking = {
       baggageCount: 1,
       isAssistanceNeeded: false,
       seat: '20E',
-      tariff: 'adults',
+      passengerCategory: 'adults',
     },
     {
       firstName: 'Harry',
@@ -51,7 +51,7 @@ export const mockBookingData: Booking = {
       birthDate: new TuiDay(1980, 6, 31),
       baggageCount: 0,
       isAssistanceNeeded: false,
-      tariff: 'infants',
+      passengerCategory: 'infants',
     },
   ],
   price: 551.38,

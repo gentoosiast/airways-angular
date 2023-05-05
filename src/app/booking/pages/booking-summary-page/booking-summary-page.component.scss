@@ -56,3 +56,28 @@
   gap: 1rem;
   justify-content: end;
 }
+
+.category-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1rem 0;
+}
+
+.details {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2rem;
+  max-width: 320px;
+}
+
+.total {
+  display: flex;
+  padding: 1rem;
+  justify-content: space-between;
+  max-width: calc(320px + 2rem);
+}
+
+.category-title {
+  display: flex;
+  justify-content: space-between;
+}

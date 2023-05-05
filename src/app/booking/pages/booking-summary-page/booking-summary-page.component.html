@@ -15,9 +15,37 @@
         <div class="passenger">{{ passenger.firstName.toUpperCase() }} {{ passenger.lastName.toUpperCase() }}</div>
         <div class="baggage">
           <div *ngIf="passenger.baggageCount">{{ passenger.baggageCount }} checked bag (total 23 kg) included</div>
-          <div *ngIf="passenger.tariff !== 'infants'">1 cabin bag + 1 personal item (max. 8 kg) included</div>
-          <div *ngIf="passenger.tariff !== 'infants'">Seat {{ passenger.seat }}</div>
+          <div *ngIf="passenger.passengerCategory !== 'infants'">
+            1 cabin bag + 1 personal item (max. 8 kg) included
+          </div>
+          <div *ngIf="passenger.passengerCategory !== 'infants'">Seat {{ passenger.seat }}</div>
         </div>
+      </div>
+    </div>
+  </div>
+  <div class="payment-wrapper">
+    <div class="card">
+      <div class="category" *ngFor="let passenger of passengerCategories; index as i">
+        <div class="category-wrapper" *ngIf="passenger[1]">
+          <div class="category-title">
+            <span> {{ passenger[1] }} x {{ passenger[0] | titlecase }} Fare </span>
+            <span>
+              {{ getPriceForPassengerCategory(passenger[0]) | number | currency }}
+            </span>
+          </div>
+          <div class="details">
+            <span>Fare</span>
+            <span>{{ getFareForPassengerCategory(passenger[0]) | number | currency }}</span>
+          </div>
+          <div class="details">
+            <span>Tax & Service Charge</span>
+            <span>{{ getTaxForPassengerCategory(passenger[0]) | number | currency }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="total">
+        <span>TOTAL:</span>
+        <span>{{ getTotalPrice() | number | currency }}</span>
       </div>
     </div>
   </div>
