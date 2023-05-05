@@ -21,9 +21,19 @@
         <button *ngIf="!user" tuiButton size="s" type="button" icon="tuiIconUser" (click)="openLoginModal()">
           Sign in
         </button>
-        <button *ngIf="user" tuiButton size="s" type="button" icon="tuiIconUser" routerLink="/user/account">
-          {{ user.firstName }} {{ user.lastName }}
-        </button>
+        <div *ngIf="user" class="user-buttons">
+          <button tuiButton size="s" type="button" icon="tuiIconUser" routerLink="/user/account">
+            {{ user.firstName }} {{ user.lastName }}
+          </button>
+          <button
+            tuiIconButton
+            size="s"
+            type="button"
+            icon="tuiIconLogOut"
+            aria-label="Sign out"
+            (click)="logout()"
+          ></button>
+        </div>
       </ng-container>
       <button
         tuiIconButton

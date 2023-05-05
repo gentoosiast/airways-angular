@@ -17,4 +17,12 @@ export const appReducer = createReducer(
       user,
     }),
   ),
+
+  on(
+    UserActions.logoutUser,
+    (state): AppState => ({
+      ...state,
+      user: null,
+    }),
+  ),
 );

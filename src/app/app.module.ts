@@ -12,6 +12,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { CoreModule } from './core/core.module';
 import { AppComponent } from './app.component';
 import { appFeatureKey, appReducer } from './store/reducers/app.reducer';
+import * as userEffects from './store/effects/user.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,7 +26,7 @@ import { appFeatureKey, appReducer } from './store/reducers/app.reducer';
     TuiMobileCalendarDialogModule,
     AppRoutingModule,
     StoreModule.forRoot({ [appFeatureKey]: appReducer }, {}),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot(userEffects),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     CoreModule,
   ],

@@ -17,4 +17,8 @@ export class AuthService {
       .post<LoginResponse>(`${environment.apiBaseUrl}/login`, loginData)
       .pipe(tap((response) => this.storageService.set<string>('token', response.accessToken)));
   }
+
+  logout(): void {
+    this.storageService.delete('token');
+  }
 }

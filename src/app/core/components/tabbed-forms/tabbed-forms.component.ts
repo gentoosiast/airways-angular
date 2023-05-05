@@ -2,7 +2,7 @@ import { Component, Inject, OnDestroy } from '@angular/core';
 import { EMPTY, Subscription, catchError } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
-import { TuiAlertService, TuiDialogContext } from '@taiga-ui/core';
+import { TuiAlertService, TuiDialogContext, TuiNotification } from '@taiga-ui/core';
 import { LoginData } from '@core/interfaces/login-data';
 import { AuthService } from '@core/services/auth.service';
 import { loginUser } from 'src/app/store/actions/user.actions';
@@ -43,11 +43,18 @@ export class TabbedFormsComponent implements OnDestroy {
         catchError((err) => {
           if (err instanceof HttpErrorResponse) {
             this.sub.add(
-              this.alerts.open(`HTTP Error ${err.status}: ${err.error}`, { label: 'Login error' }).subscribe(),
+              this.alerts
+                .open(`HTTP Error ${err.status}: ${err.error}`, { label: 'Login error', status: TuiNotification.Error })
+                .subscribe(),
             );
           } else {
             this.sub.add(
-              this.alerts.open(`HTTP Error ${err.status}: ${err.message}`, { label: 'Login error' }).subscribe(),
+              this.alerts
+                .open(`HTTP Error ${err.status}: ${err.message}`, {
+                  label: 'Login error',
+                  status: TuiNotification.Error,
+                })
+                .subscribe(),
             );
           }
 

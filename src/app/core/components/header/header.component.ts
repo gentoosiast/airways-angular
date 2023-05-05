@@ -3,13 +3,14 @@ import { NavigationEnd, Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import { filter, Observable, startWith, Subscription, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { TuiDialogService, TuiAlertService } from '@taiga-ui/core';
+import { TuiDialogService, TuiAlertService, TuiNotification } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 import { TabbedFormsComponent } from '../tabbed-forms/tabbed-forms.component';
 import { UserSettingsService } from '@core/services/user-settings.service';
 import { Currency, DateFormat } from '@core/constants/user-settings.constant';
 import { selectUser } from 'src/app/store/selectors/user.selectors';
 import { User } from '@core/models/user.model';
+import { logoutUser } from 'src/app/store/actions/user.actions';
 
 @Component({
   selector: 'air-header',
@@ -61,11 +62,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
+  logout() {
+    this.store.dispatch(logoutUser());
+  }
+
   openLoginModal() {
     this.sub.add(
       this.dialogs.open<string>(new PolymorpheusComponent(TabbedFormsComponent)).subscribe({
         next: (message) => {
-          this.sub.add(this.alertService.open(message).subscribe());
+          this.sub.add(this.alertService.open(message, { status: TuiNotification.Success }).subscribe());
         },
       }),
     );
