@@ -7,6 +7,7 @@ import { AirportsService } from '@core/services/airports.service';
 import { Airport } from '@core/interfaces/airport';
 import { FlightType } from '@shared/interfaces/flight-type';
 import { Passengers } from '@shared/interfaces/passengers';
+import { adultValidator } from '@flight-search/validators/adultValidator';
 import { FLIGHT_SEARCH_MINIMUM_QUERY_LENGTH, FLIGHT_SEARCH_DEBOUNCE_TIME } from '@flight-search/constants';
 
 @Component({
@@ -20,7 +21,10 @@ export class FlightSearchPageComponent implements OnInit, OnDestroy {
     departure: this.fb.control<string | null>('', [Validators.required]),
     arrival: this.fb.control<string | null>('', [Validators.required]),
     date: this.fb.control<TuiDay | null>(null, [Validators.required]),
-    passengers: this.fb.control<Passengers | null>({ adults: 0, children: 0, infants: 0 }, Validators.required),
+    passengers: this.fb.control<Passengers | null>({ adults: 1, children: 0, infants: 0 }, [
+      Validators.required,
+      adultValidator,
+    ]),
   });
   passengerItems = [
     { category: 'adults', description: '14+ years' },
