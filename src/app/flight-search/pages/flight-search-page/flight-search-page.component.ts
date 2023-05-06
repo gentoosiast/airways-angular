@@ -5,8 +5,8 @@ import { TuiDay } from '@taiga-ui/cdk';
 import plur from 'plur';
 import { AirportsService } from '@core/services/airports.service';
 import { Airport } from '@core/interfaces/airport';
-import { FlightType } from '@shared/interfaces/flight-type';
 import { Passengers } from '@shared/interfaces/passengers';
+import { FlightType } from '@shared/types/flight-type';
 import { adultValidator } from '@flight-search/validators/adultValidator';
 import { FLIGHT_SEARCH_MINIMUM_QUERY_LENGTH, FLIGHT_SEARCH_DEBOUNCE_TIME } from '@flight-search/constants';
 
