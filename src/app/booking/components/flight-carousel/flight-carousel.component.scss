@@ -1,0 +1,35 @@
+@use 'src/app/shared/styles/colors';
+
+:host {
+  --tui-carousel-padding: 'null';
+
+  & ::ng-deep .t-items {
+    align-items: flex-end;
+  }
+}
+
+.selector {
+  height: 83px;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+
+  &.hidden {
+    display: none;
+  }
+}
+
+.step-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(calc(-50% + 6px));
+  z-index: 10;
+
+  &-prev {
+    left: 0%;
+  }
+
+  &-next {
+    right: 0%;
+  }
+}
