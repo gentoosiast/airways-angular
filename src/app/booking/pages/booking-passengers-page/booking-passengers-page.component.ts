@@ -53,8 +53,8 @@ export class BookingPassengersPageComponent implements OnInit {
     Object.entries(passengers).forEach(([category, qty]) => {
       for (let i = 0; i < qty; i++) {
         const fbGroup = this.fb.group<PassengerFormGroup>({
-          firstName: this.fb.control('', [Validators.required]),
-          lastName: this.fb.control('', [Validators.required]),
+          firstName: this.fb.control('', [Validators.required, Validators.pattern(/^\p{Letter}+$/u)]),
+          lastName: this.fb.control('', [Validators.required, Validators.pattern(/^\p{Letter}+$/u)]),
           gender: this.fb.control<Gender | null>('male'),
           birthDate: this.fb.control(null, [Validators.required]),
           baggage: this.fb.control(0),

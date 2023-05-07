@@ -24,6 +24,13 @@
               "
               error="First name is required"
             ></tui-error>
+            <tui-error
+              *ngIf="
+                passenger.formGroup.get('firstName')?.touched &&
+                passenger.formGroup.get('firstName')?.hasError('pattern')
+              "
+              error="First name should contain only letters"
+            ></tui-error>
           </div>
 
           <div class="form-field">
@@ -38,6 +45,12 @@
                 passenger.formGroup.get('lastName')?.hasError('required')
               "
               error="Last name is required"
+            ></tui-error>
+            <tui-error
+              *ngIf="
+                passenger.formGroup.get('lastName')?.touched && passenger.formGroup.get('lastName')?.hasError('pattern')
+              "
+              error="Last name should contain only letters"
             ></tui-error>
           </div>
 
