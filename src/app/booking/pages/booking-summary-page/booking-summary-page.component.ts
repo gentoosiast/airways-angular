@@ -11,39 +11,36 @@ import { PassengerCategory, Passengers } from '@shared/models/booking.model';
 export class BookingSummaryPageComponent {
   booking = mockBookingData;
   paymentDetails = mockPaymentData;
-  passengerCategories = Object.entries(this.booking.passengers) as [PassengerCategory, number][];
+  passengerCategories = Object.keys(this.booking.passengers) as Array<PassengerCategory>;
 
   getPriceForPassengerCategory(category: keyof Passengers): number {
-    const passengersCount = this.passengerCategories.find((element) => element[0] === category);
-    return passengersCount
-      ? passengersCount[1] *
-          (this.paymentDetails.price[category].fare +
-            this.paymentDetails.price[category].serviceCharge +
-            this.paymentDetails.price[category].tax)
-      : 0;
+    return (
+      this.booking.passengers[category] *
+      (this.paymentDetails.price[category].fare +
+        this.paymentDetails.price[category].serviceCharge +
+        this.paymentDetails.price[category].tax)
+    );
   }
 
   getFareForPassengerCategory(category: keyof Passengers): number {
-    const passengersCount = this.passengerCategories.find((element) => element[0] === category);
-    return passengersCount ? passengersCount[1] * this.paymentDetails.price[category].fare : 0;
+    return this.booking.passengers[category] * this.paymentDetails.price[category].fare;
   }
 
   getTaxForPassengerCategory(category: keyof Passengers): number {
-    const passengersCount = this.passengerCategories.find((element) => element[0] === category);
-    return passengersCount
-      ? passengersCount[1] *
-          (this.paymentDetails.price[category].serviceCharge + this.paymentDetails.price[category].tax)
-      : 0;
+    return (
+      this.booking.passengers[category] *
+      (this.paymentDetails.price[category].serviceCharge + this.paymentDetails.price[category].tax)
+    );
   }
 
   getTotalPrice(): number {
     return this.passengerCategories.reduce(
-      (sum, curCategory) =>
+      (sum, category) =>
         sum +
-        curCategory[1] *
-          (this.paymentDetails.price[curCategory[0]].fare +
-            this.paymentDetails.price[curCategory[0]].serviceCharge +
-            this.paymentDetails.price[curCategory[0]].tax),
+        this.booking.passengers[category] *
+          (this.paymentDetails.price[category].fare +
+            this.paymentDetails.price[category].serviceCharge +
+            this.paymentDetails.price[category].tax),
       0,
     );
   }

@@ -15,8 +15,8 @@ export interface Passenger {
 
 export interface Passengers {
   adults: number;
-  children?: number;
-  infants?: number;
+  children: number;
+  infants: number;
 }
 
 export interface FlightsData {

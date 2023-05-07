@@ -8,7 +8,6 @@ export interface Price {
   adults: PriceDetails;
   children: PriceDetails;
   infants: PriceDetails;
-  // [key:string]: PriceDetails;
 }
 
 export interface PaymentDetails {
