@@ -56,7 +56,7 @@ export class BookingPassengersPageComponent implements OnInit {
           firstName: this.fb.control('', [Validators.required, Validators.pattern(/^\p{Letter}+$/u)]),
           lastName: this.fb.control('', [Validators.required, Validators.pattern(/^\p{Letter}+$/u)]),
           gender: this.fb.control<Gender | null>('male'),
-          birthDate: this.fb.control(null, [Validators.required]),
+          birthDate: this.fb.control(null, [Validators.required]), // TODO: add validator to check if value matches age limit for its passenger category
           baggage: this.fb.control(0),
           isAssistanceNeeded: this.fb.control(false),
         });
