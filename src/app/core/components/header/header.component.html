@@ -1,1 +1,33 @@
-<p>header works!</p>
+<header class="header">
+  <div class="content-wrapper">
+    <a routerLink="/" class="logo-link">
+      <img src="assets/logo.svg" alt="Logo" class="logo" />
+    </a>
+    <air-progress-bar *ngIf="showProgressBar"></air-progress-bar>
+    <div class="buttons-wrapper">
+      <form class="form" [formGroup]="userSettingsForm">
+        <tui-select tuiTextfieldSize="s" formControlName="dateFormat" class="date-format">
+          Date format
+          <tui-data-list-wrapper *tuiDataList [items]="dateFormats"></tui-data-list-wrapper>
+        </tui-select>
+
+        <tui-select tuiTextfieldSize="s" formControlName="currency" class="currency">
+          Currency
+          <tui-data-list-wrapper *tuiDataList [items]="currencies"></tui-data-list-wrapper>
+        </tui-select>
+      </form>
+
+      <button tuiButton size="s" type="button" icon="tuiIconUser" (click)="openLoginModal()">Sign in</button>
+      <button
+        tuiIconButton
+        routerLink="/user/cart"
+        size="m"
+        shape="rounded"
+        type="button"
+        appearance="icon"
+        icon="tuiIconShoppingBag"
+        class="shopping-bag"
+      ></button>
+    </div>
+  </div>
+</header>

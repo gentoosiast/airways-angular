@@ -1,0 +1,62 @@
+<ng-container *ngIf="flight">
+  <div class="flight-details" [ngClass]="{ selected: isFlightSelected }">
+    <div class="flight-details-left">
+      <air-date-time-widget
+        [isDeparture]="true"
+        [date]="flight.departureDate"
+        [airportName]="flight.departureAirport.name"
+      ></air-date-time-widget>
+
+      <div class="flight-duration">
+        <span class="flight-time">{{ flight.flightDuration | humanReadableTime }}</span>
+        <div class="flight-icon">
+          <span class="flight-icon-line"></span>
+          <tui-svg [src]="getFlightIcon()"></tui-svg>
+          <span class="flight-icon-line"></span>
+        </div>
+        <span class="flight-connections">{{ flight.connections | flightConnections }}</span>
+      </div>
+
+      <air-date-time-widget
+        [isDeparture]="false"
+        [date]="flight.arrivalDate"
+        [airportName]="flight.arrivalAirport.name"
+      ></air-date-time-widget>
+
+      <div class="flight-number">
+        <span class="flight-number-label">Flight no.</span>
+        <span class="flight-number-value">{{ flight.flightNumber }}</span>
+      </div>
+    </div>
+
+    <div class="flight-details-right">
+      <div class="seats-price">
+        <div *ngIf="!isFlightSelected" class="seats" [airSeats]="[flight.seats, flight.availableSeats]">
+          <span class="seats-text">{{ flight.availableSeats }} seats available</span>
+        </div>
+
+        <div class="price">
+          <span *ngIf="!isFlightSelected" class="price-label">Price</span>
+          <span class="price-value">{{ flight.price | currency : 'EUR' }}</span>
+        </div>
+      </div>
+
+      <button
+        *ngIf="!isFlightSelected; else editButton"
+        class="select-button"
+        tuiButton
+        size="m"
+        type="button"
+        (click)="onConfirmFlight(true)"
+      >
+        Select
+      </button>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #editButton>
+  <button class="edit-button" tuiButton size="s" appearance="outline" type="button" (click)="onConfirmFlight(false)">
+    Edit
+  </button>
+</ng-template>

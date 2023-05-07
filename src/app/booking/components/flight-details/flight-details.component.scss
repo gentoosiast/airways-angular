@@ -1,0 +1,134 @@
+@use 'src/app/shared/styles/colors';
+@use 'src/app/shared/styles/typography';
+
+.flight-details {
+  display: flex;
+  border-radius: 5px;
+  background-color: colors.$color-neutral-100;
+  box-shadow: 0 1px 4px rgba(0 0 0 / 20%);
+}
+
+.flight-details-left {
+  padding: 27px 35px 27px 40px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.flight-details-right {
+  padding: 27px 40px 27px 28px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  border-left: 2px dashed colors.$color-secondary-40;
+}
+
+.selected > .flight-details-right {
+  border-left: 2px solid transparent;
+}
+
+.flight-duration {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.flight-time,
+.flight-connections {
+  @extend %typo-label-small;
+
+  flex-shrink: 0;
+  color: colors.$color-neutral-black;
+}
+
+.flight-icon {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.flight-icon-line {
+  width: 118px;
+  height: 2px;
+  background-color: colors.$color-secondary-40;
+}
+
+.flight-number {
+  @extend %typo-body-medium;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.flight-number-label {
+  color: colors.$color-neutral-30;
+}
+
+.flight-number-value {
+  color: colors.$color-neutral-black;
+}
+
+.seats-price {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.seats {
+  align-self: stretch;
+  padding: 4px 8px;
+  display: flex;
+  justify-content: flex-end;
+  background-color: transparent;
+
+  &.seats-almost-full {
+    background-color: colors.$color-highlight-red30;
+  }
+
+  &.seats-less-than-half {
+    background-color: colors.$color-highlight-yellow30;
+  }
+
+  &.seats-more-than-half {
+    background-color: colors.$color-highlight-green30;
+  }
+}
+
+.seats-text {
+  @extend %typo-subtitle-small;
+
+  max-width: 55px;
+  display: inline-block;
+  text-align: right;
+  color: colors.$color-neutral-20;
+}
+
+.price {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.price-label {
+  @extend %typo-subtitle-small;
+
+  color: colors.$color-neutral-30;
+}
+
+.price-value {
+  @extend %typo-subtitle-large;
+
+  color: colors.$color-primary;
+}
+
+.selected .price-value {
+  color: colors.$color-neutral-black;
+}
+
+.select-button,
+.edit-button {
+  @extend %typo-button;
+}
