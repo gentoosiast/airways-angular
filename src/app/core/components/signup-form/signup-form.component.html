@@ -1,0 +1,64 @@
+<form class="form" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+  <air-social-buttons
+    class="social-buttons"
+    (facebookButtonClick)="onFacebookButtonClick($event)"
+    (googleButtonClick)="onGoogleButtonClick($event)"
+  ></air-social-buttons>
+
+  <p class="divider">or sign up with your email</p>
+
+  <tui-input formControlName="email">Email&nbsp;<span class="tui-required"></span></tui-input>
+  <tui-error *ngIf="email?.touched && email?.hasError('required')" error="Email is required"></tui-error>
+  <tui-error *ngIf="email?.touched && email?.hasError('email')" error="Email should be valid"></tui-error>
+
+  <tui-input-password formControlName="password">Password&nbsp;<span class="tui-required"></span></tui-input-password>
+  <tui-error *ngIf="password?.touched && password?.hasError('required')" error="Password is required"></tui-error>
+  <tui-error
+    *ngIf="password?.touched && password?.hasError('minlength')"
+    error="Password should be at least {{ minPasswordLength }} characters long"
+  ></tui-error>
+
+  <tui-input formControlName="firstName">First name&nbsp;<span class="tui-required"></span></tui-input>
+  <tui-error *ngIf="firstName?.touched && firstName?.hasError('required')" error="First name is required"></tui-error>
+
+  <tui-input formControlName="lastName">Last name&nbsp;<span class="tui-required"></span></tui-input>
+  <tui-error *ngIf="lastName?.touched && lastName?.hasError('required')" error="Last name is required"></tui-error>
+
+  <tui-input-date formControlName="birthDate" [min]="minAllowedDate" [max]="maxAllowedDate"
+    >Date of birth&nbsp;<span class="tui-required"></span
+  ></tui-input-date>
+  <tui-error *ngIf="birthDate?.touched && birthDate?.hasError('required')" error="Birth date is required"></tui-error>
+
+  <div class="gender-group" tuiGroup>
+    <tui-radio-block class="gender-radio" formControlName="gender" [hideRadio]="true" item="male">
+      Male
+    </tui-radio-block>
+    <tui-radio-block class="gender-radio" formControlName="gender" [hideRadio]="true" item="female"
+      >Female
+    </tui-radio-block>
+  </div>
+
+  <tui-input-phone-international
+    formControlName="phone"
+    [countries]="(countries | tuiSortCountries | async) || []"
+    [countryIsoCode]="countryIsoCode"
+    >Mobile phone number&nbsp;<span class="tui-required"></span
+  ></tui-input-phone-international>
+  <tui-error *ngIf="phone?.touched && phone?.hasError('required')" error="Phone number is required"></tui-error>
+
+  <tui-select formControlName="citizenship">
+    Citizenship
+    <tui-data-list-wrapper *tuiDataList [items]="countryNames"></tui-data-list-wrapper>
+  </tui-select>
+  <tui-error
+    *ngIf="citizenship?.touched && citizenship?.hasError('required')"
+    error="Citizenship is required"
+  ></tui-error>
+
+  <tui-checkbox-labeled class="checkbox-tos" size="l" formControlName="hasAcceptedTOS">
+    I agree to <a tuiLink href="javascript:void">Airway's Privacy Policy</a> and
+    <a tuiLink href="javascript:void">Terms of Use</a>
+  </tui-checkbox-labeled>
+
+  <button tuiButton [disabled]="!signupForm.valid" type="submit">Sign up</button>
+</form>

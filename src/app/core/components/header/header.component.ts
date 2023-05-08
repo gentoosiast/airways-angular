@@ -2,6 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import { filter, startWith, Subscription, tap } from 'rxjs';
+import { TuiDialogService, TuiAlertService } from '@taiga-ui/core';
+import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
+import { TabbedFormsComponent } from '../tabbed-forms/tabbed-forms.component';
 import { UserSettingsService } from '@core/services/user-settings.service';
 import { Currency, DateFormat } from '@core/constants/user-settings.constant';
 
@@ -36,7 +39,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }),
   );
 
-  constructor(private router: Router, private userSettingsService: UserSettingsService) {}
+  constructor(
+    private dialogs: TuiDialogService,
+    private alertService: TuiAlertService,
+    private router: Router,
+    private userSettingsService: UserSettingsService,
+  ) {}
 
   ngOnInit(): void {
     this.sub.add(this.showProgressBar$.subscribe());
@@ -45,5 +53,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
+  }
+
+  openLoginModal() {
+    this.sub.add(
+      this.dialogs.open<boolean>(new PolymorpheusComponent(TabbedFormsComponent)).subscribe({
+        next: () => {
+          this.sub.add(this.alertService.open('Form has been submitted').subscribe());
+        },
+      }),
+    );
   }
 }

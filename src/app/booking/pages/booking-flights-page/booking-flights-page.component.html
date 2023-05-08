@@ -1,1 +1,55 @@
-<p>booking-flights-page works!</p>
+<div class="page">
+  <div class="flights">
+    <div class="flight">
+      <div class="heading">
+        <tui-svg src="/assets/icons/plane-right.svg"></tui-svg>
+        <span class="heading-text">{{ departureAirportName }} to {{ arrivalAirportName }}</span>
+      </div>
+
+      <div class="flight-select">
+        <air-flight-carousel
+          [flights]="departureFlights"
+          [isVisible]="!isDepartureConfirmed"
+          (selectFlight)="onSelectDepartureFlight($event)"
+        ></air-flight-carousel>
+
+        <air-flight-details
+          *ngIf="departureFlightIdx !== null"
+          [flight]="departureFlights[departureFlightIdx]"
+          [isFlightSelected]="isDepartureConfirmed"
+          (confirmFlight)="onConfirmDepartureFlight($event)"
+        ></air-flight-details>
+      </div>
+    </div>
+
+    <div *ngIf="arrivalFlights" class="flight">
+      <div class="heading">
+        <tui-svg src="/assets/icons/plane-left.svg"></tui-svg>
+        <span class="heading-text">{{ arrivalAirportName }} to {{ departureAirportName }}</span>
+      </div>
+
+      <div class="flight-select">
+        <air-flight-carousel
+          [flights]="arrivalFlights"
+          [isVisible]="!isArrivalConfirmed"
+          (selectFlight)="onSelectArrivalFlight($event)"
+        ></air-flight-carousel>
+
+        <air-flight-details
+          *ngIf="arrivalFlightIdx !== null"
+          [flight]="arrivalFlights[arrivalFlightIdx]"
+          [isFlightSelected]="isArrivalConfirmed"
+          [isDeparture]="false"
+          (confirmFlight)="onConfirmArrivalFlight($event)"
+        ></air-flight-details>
+      </div>
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button tuiButton appearance="flat" type="button" (click)="onBack()">Back</button>
+    <button tuiButton type="button" [disabled]="!isDepartureConfirmed || !isArrivalConfirmed" (click)="onContinue()">
+      Continue
+    </button>
+  </div>
+</div>
