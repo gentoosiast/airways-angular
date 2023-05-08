@@ -32,6 +32,7 @@ import { FlightConnectionsPipe } from './pipes/flight-connections.pipe';
 import { DateTimeWidgetComponent } from './components/date-time-widget/date-time-widget.component';
 import { BookingSummaryPageComponent } from './pages/booking-summary-page/booking-summary-page.component';
 import { SharedModule } from '../shared/shared.module';
+import { PluralizePipe } from './pipes/pluralize.pipe';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { SharedModule } from '../shared/shared.module';
     FlightConnectionsPipe,
     DateTimeWidgetComponent,
     BookingSummaryPageComponent,
+    PluralizePipe,
   ],
   imports: [
     CommonModule,

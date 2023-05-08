@@ -87,7 +87,13 @@
           </div>
 
           <div class="form-field">
-            <tui-input-count formControlName="baggage" tuiTextfieldPostfix="kg">Checked-in baggage</tui-input-count>
+            <tui-input-count
+              #baggage
+              formControlName="baggage"
+              [tuiTextfieldPostfix]="'item' | pluralize : baggage.value ?? 0"
+              tuiHintContent="Each item up to 23kg"
+              >Checked-in baggage</tui-input-count
+            >
           </div>
         </div>
       </div>
