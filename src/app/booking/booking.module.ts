@@ -11,6 +11,8 @@ import { SeatsDirective } from './directives/seats.directive';
 import { HumanReadableTimePipe } from './pipes/human-readable-time.pipe';
 import { FlightConnectionsPipe } from './pipes/flight-connections.pipe';
 import { DateTimeWidgetComponent } from './components/date-time-widget/date-time-widget.component';
+import { BookingSummaryPageComponent } from './pages/booking-summary-page/booking-summary-page.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { DateTimeWidgetComponent } from './components/date-time-widget/date-time
     HumanReadableTimePipe,
     FlightConnectionsPipe,
     DateTimeWidgetComponent,
+    BookingSummaryPageComponent,
   ],
-  imports: [CommonModule, BookingRoutingModule, TuiSvgModule, TuiButtonModule, TuiCarouselModule],
+  imports: [CommonModule, BookingRoutingModule, TuiSvgModule, SharedModule, TuiButtonModule, TuiCarouselModule],
 })
 export class BookingModule {}
