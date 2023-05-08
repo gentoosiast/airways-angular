@@ -1,11 +1,7 @@
-interface BasePassengers {
+export interface Passengers {
   adults: number;
   children: number;
   infants: number;
 }
 
-export type PassengerCategory = keyof BasePassengers;
-
-export interface Passengers extends BasePassengers {
-  [key: string]: number;
-}
+export type PassengerCategory = keyof Passengers;
