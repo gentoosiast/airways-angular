@@ -15,6 +15,7 @@
         "prettier"
       ],
       "rules": {
+        "curly": ["error", "all"],
         "@angular-eslint/directive-selector": [
           "error",
           {
