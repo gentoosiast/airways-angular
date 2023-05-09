@@ -1,1 +1,10 @@
-<p>shopping-cart-page works!</p>
+<div class="wrapper">
+  <div class="title">Cart</div>
+  <air-bookings-table
+    [bookings]="bookings"
+    [isEditable]="true"
+    (removeBooking)="removeBooking($event)"
+    (editBooking)="editBooking($event)"
+    (bookingDetails)="bookingDetails($event)"
+  ></air-bookings-table>
+</div>

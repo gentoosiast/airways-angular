@@ -1,0 +1,62 @@
+@use 'src/app/shared/styles/colors' as *;
+
+.title {
+  color: var(--tui-primary-active);
+}
+
+.table {
+  margin: 20px auto;
+}
+
+th {
+  white-space: nowrap;
+  background: var(--tui-base-03);
+  border: none;
+}
+
+td {
+  white-space: nowrap;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  border-bottom: 1px solid var(--tui-base-03);
+  font-weight: 600;
+
+  &.td {
+    padding: 0.5rem 0.75rem;
+    vertical-align: middle;
+  }
+}
+
+.flight-number {
+  color: var(--tui-primary);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.passenger {
+  vertical-align: middle;
+}
+
+.price {
+  color: $color-highlight-green0;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.total-price {
+  background: linear-gradient(90deg, #11397e 0%, #005abc 100%);
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.flexbox {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
