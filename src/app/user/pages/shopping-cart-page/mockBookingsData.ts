@@ -24,6 +24,7 @@ export const mockBookingsData: Array<Booking> = [
       children: 1,
       infants: 1,
     },
+    passengerData: [],
     price: 551.38,
   },
 
@@ -40,7 +41,10 @@ export const mockBookingsData: Array<Booking> = [
     ],
     passengers: {
       adults: 1,
+      children: 0,
+      infants: 0,
     },
+    passengerData: [],
     price: 20.96,
   },
   {
@@ -57,7 +61,9 @@ export const mockBookingsData: Array<Booking> = [
     passengers: {
       adults: 1,
       children: 2,
+      infants: 0,
     },
+    passengerData: [],
     price: 30.96,
   },
   {
@@ -76,6 +82,7 @@ export const mockBookingsData: Array<Booking> = [
       children: 1,
       infants: 2,
     },
+    passengerData: [],
     price: 273.92,
   },
 ];

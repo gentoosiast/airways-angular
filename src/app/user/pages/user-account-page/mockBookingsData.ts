@@ -24,6 +24,7 @@ export const mockBookingsData: Array<Booking> = [
       children: 1,
       infants: 1,
     },
+    passengerData: [],
     price: 551.38,
   },
 
@@ -40,7 +41,10 @@ export const mockBookingsData: Array<Booking> = [
     ],
     passengers: {
       adults: 1,
+      children: 0,
+      infants: 0,
     },
+    passengerData: [],
     price: 20.96,
   },
   {
@@ -57,7 +61,39 @@ export const mockBookingsData: Array<Booking> = [
     passengers: {
       adults: 1,
       children: 2,
+      infants: 0,
     },
+    passengerData: [
+      {
+        firstName: 'Lili',
+        lastName: 'Potter',
+        gender: 'female',
+        birthDate: new TuiDay(1960, 7, 31),
+        baggageCount: 1,
+        isAssistanceNeeded: false,
+        seat: '19E',
+        passengerCategory: 'adults',
+      },
+      {
+        firstName: 'James',
+        lastName: 'Potter',
+        gender: 'male',
+        birthDate: new TuiDay(1960, 10, 1),
+        baggageCount: 1,
+        isAssistanceNeeded: false,
+        seat: '20E',
+        passengerCategory: 'adults',
+      },
+      {
+        firstName: 'Harry',
+        lastName: 'Potter',
+        gender: 'male',
+        birthDate: new TuiDay(1980, 6, 31),
+        baggageCount: 0,
+        isAssistanceNeeded: false,
+        passengerCategory: 'infants',
+      },
+    ],
     price: 30.96,
   },
   {
@@ -76,6 +112,7 @@ export const mockBookingsData: Array<Booking> = [
       children: 1,
       infants: 2,
     },
+    passengerData: [],
     price: 273.92,
   },
 ];
