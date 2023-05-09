@@ -1,1 +1,124 @@
-<p>booking-passengers-page works!</p>
+<form class="form" [formGroup]="passengersForm" (ngSubmit)="onSubmit()">
+  <div class="passengers-block">
+    <div class="heading">
+      <tui-svg src="/assets/icons/person.svg"></tui-svg>
+      <h2>Passengers</h2>
+    </div>
+    <p class="subheading">Enter the passenger's names as they appear on document (passport or ID).</p>
+
+    <div class="passengers-form" *ngFor="let passenger of passengerData; index as i">
+      <h2 class="passenger-heading">{{ i + 1 }}. {{ passenger.category | titlecase }}</h2>
+
+      <div class="passenger-form" [formGroup]="passenger.formGroup">
+        <div class="form-row">
+          <div class="form-field">
+            <tui-input
+              formControlName="firstName"
+              tuiHintContent="Add the passenger's name as it is written on their documents (passport or ID). Do not use any accents or special characters. Do not use a nickname."
+              >First name&nbsp;<span class="tui-required"></span
+            ></tui-input>
+            <tui-error
+              *ngIf="
+                passenger.formGroup.get('firstName')?.touched &&
+                passenger.formGroup.get('firstName')?.hasError('required')
+              "
+              error="First name is required"
+            ></tui-error>
+            <tui-error
+              *ngIf="
+                passenger.formGroup.get('firstName')?.touched &&
+                passenger.formGroup.get('firstName')?.hasError('pattern')
+              "
+              error="First name should contain only letters"
+            ></tui-error>
+          </div>
+
+          <div class="form-field">
+            <tui-input
+              formControlName="lastName"
+              tuiHintContent="Add the passenger's name as it is written on their documents (passport or ID). Do not use any accents or special characters. Do not use a nickname."
+              >Last name&nbsp;<span class="tui-required"></span
+            ></tui-input>
+            <tui-error
+              *ngIf="
+                passenger.formGroup.get('lastName')?.touched &&
+                passenger.formGroup.get('lastName')?.hasError('required')
+              "
+              error="Last name is required"
+            ></tui-error>
+            <tui-error
+              *ngIf="
+                passenger.formGroup.get('lastName')?.touched && passenger.formGroup.get('lastName')?.hasError('pattern')
+              "
+              error="Last name should contain only letters"
+            ></tui-error>
+          </div>
+
+          <div class="form-field">
+            <div class="radio-group" tuiGroup [collapsed]="true">
+              <tui-radio-block formControlName="gender" item="male" [hideRadio]="true">Male</tui-radio-block>
+              <tui-radio-block formControlName="gender" item="female" [hideRadio]="true">Female</tui-radio-block>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <tui-input-date formControlName="birthDate" [max]="maxAllowedDate"
+              >Date of birth&nbsp;<span class="tui-required"></span
+            ></tui-input-date>
+            <tui-error
+              *ngIf="
+                passenger.formGroup.get('birthDate')?.touched &&
+                passenger.formGroup.get('birthDate')?.hasError('required')
+              "
+              error="Birth date is required"
+            ></tui-error>
+          </div>
+        </div>
+
+        <div class="form-row form-row-align-center" *ngIf="passenger.category !== 'infants'">
+          <div class="form-field">
+            <div class="toggle-with-label">
+              <tui-toggle formControlName="isAssistanceNeeded" size="l"></tui-toggle>
+              <div class="label-with-icon">
+                <tui-svg src="/assets/icons/disability.svg"></tui-svg>
+                <p class="assistance-label">Need special assistance?</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <tui-input-count
+              #baggage
+              formControlName="baggage"
+              [tuiTextfieldPostfix]="'item' | pluralize : baggage.value ?? 0"
+              tuiHintContent="Each item up to 23kg"
+              >Checked-in baggage</tui-input-count
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contacts-block">
+    <div class="heading">
+      <tui-svg src="/assets/icons/contacts.svg"></tui-svg>
+      <h2>Contact details</h2>
+    </div>
+    <p class="subheading">
+      We need contact details to be able to deliver the latest information regarding your flight.
+    </p>
+
+    <div class="contacts-form">
+      <air-passenger-contacts formGroupName="contacts"></air-passenger-contacts>
+    </div>
+  </div>
+
+  <div class="buttons-block">
+    <button tuiButton type="button" appearance="outline">Back</button>
+    <button tuiButton type="submit" [disabled]="!passengersForm.valid">Continue</button>
+  </div>
+</form>
+
+<pre>{{ passengersForm.value | json }}</pre>
+<p>Form is valid: {{ passengersForm.valid }}</p>

@@ -1,0 +1,23 @@
+<form class="form" [formGroup]="contactForm">
+  <div class="form-row">
+    <div class="form-field">
+      <tui-input-phone-international
+        formControlName="phone"
+        [countries]="(countries | tuiSortCountries | async) || []"
+        [(countryIsoCode)]="countryIsoCode"
+        >Mobile phone number&nbsp;<span class="tui-required"></span
+      ></tui-input-phone-international>
+      <tui-error *ngIf="phone?.touched && phone?.hasError('required')" error="Mobile phone is required"></tui-error>
+    </div>
+
+    <div class="form-field">
+      <tui-input formControlName="email">
+        Email&nbsp;
+        <span class="tui-required"></span>
+        <input tuiTextfield placeholder="e.g. example@email.com" type="email" />
+      </tui-input>
+      <tui-error *ngIf="email?.touched && email?.hasError('required')" error="Email is required"></tui-error>
+      <tui-error *ngIf="email?.touched && email?.hasError('email')" error="Email should be valid"></tui-error>
+    </div>
+  </div>
+</form>

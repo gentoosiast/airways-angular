@@ -5,7 +5,7 @@ import { TuiDay } from '@taiga-ui/cdk';
 import plur from 'plur';
 import { AirportsService } from '@core/services/airports.service';
 import { Airport } from '@core/interfaces/airport';
-import { Passengers } from '@shared/interfaces/passengers';
+import { PassengerCategory, Passengers } from '@shared/interfaces/passengers';
 import { FlightType } from '@shared/types/flight-type';
 import { adultValidator } from '@flight-search/validators/adultValidator';
 import { FLIGHT_SEARCH_MINIMUM_QUERY_LENGTH, FLIGHT_SEARCH_DEBOUNCE_TIME } from '@flight-search/constants';
@@ -26,7 +26,7 @@ export class FlightSearchPageComponent implements OnInit, OnDestroy {
       adultValidator,
     ]),
   });
-  passengerItems = [
+  passengerItems: { category: PassengerCategory; description: string }[] = [
     { category: 'adults', description: '14+ years' },
     { category: 'children', description: '2-14 years' },
     { category: 'infants', description: '0-2 years' },
@@ -68,10 +68,10 @@ export class FlightSearchPageComponent implements OnInit, OnDestroy {
     return this.airportForm.get('passengers');
   }
 
-  modifyPassengers(type: string, delta: number) {
+  modifyPassengers(type: PassengerCategory, delta: number) {
     const passengers = this.airportForm.get('passengers')?.value;
 
-    if (passengers && type in passengers) {
+    if (passengers) {
       passengers[type] += delta;
       if (passengers[type] < 0) {
         passengers[type] = 0;
