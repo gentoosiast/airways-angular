@@ -1,0 +1,25 @@
+@use '/src/app/shared/styles/colors';
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.divider {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 12px;
+  color: colors.$color-neutral-black;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  align-self: center;
+  border-bottom: 1px solid colors.$color-secondary-50;
+}
+
+.link-reminder {
+  align-self: end;
+}

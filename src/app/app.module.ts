@@ -1,8 +1,9 @@
 import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TuiRootModule, TuiDialogModule, TUI_SANITIZER } from '@taiga-ui/core';
-import { TuiMobileCalendarModule } from '@taiga-ui/addon-mobile';
+import { HttpClientModule } from '@angular/common/http';
+import { TuiRootModule, TuiDialogModule, TuiAlertModule, TUI_SANITIZER } from '@taiga-ui/core';
+import { TuiMobileCalendarDialogModule } from '@taiga-ui/addon-mobile';
 import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
 import { AppRoutingModule } from './app-routing.module';
 import { StoreModule } from '@ngrx/store';
@@ -16,9 +17,11 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     TuiRootModule,
     TuiDialogModule,
-    TuiMobileCalendarModule,
+    TuiAlertModule,
+    TuiMobileCalendarDialogModule,
     AppRoutingModule,
     StoreModule.forRoot({}, {}),
     EffectsModule.forRoot([]),
