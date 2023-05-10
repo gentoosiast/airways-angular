@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { FlightsData } from '@shared/models/booking.model';
+import { FlightsData } from '@shared/types/booking';
 
 @Pipe({
   name: 'flightsDates',

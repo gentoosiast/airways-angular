@@ -1,4 +1,4 @@
-import { Passengers } from '@shared/interfaces/passengers';
+import { Passengers } from '@shared/types/passengers';
 
 export const passengersMockData: Passengers = {
   adults: 2,

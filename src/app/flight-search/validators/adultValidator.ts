@@ -1,5 +1,5 @@
 import { AbstractControl, ValidationErrors } from '@angular/forms';
-import { Passengers } from '@shared/interfaces/passengers';
+import { Passengers } from '@shared/types/passengers';
 
 export const adultValidator = (ac: AbstractControl): ValidationErrors | null => {
   const passengers: Passengers = ac.value;

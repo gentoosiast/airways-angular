@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { User } from '@core/models/user.model';
+import { User } from '@core/types/user';
 import { mockSocialData } from './mockSocialData';
 
 @Component({

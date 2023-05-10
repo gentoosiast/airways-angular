@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { mockedFlightsData } from './mockData';
-import { Flight } from '@booking/interfaces/flight';
+import { Flight } from '@booking/types/flight';
 
 @Component({
   selector: 'air-booking-flights-page',

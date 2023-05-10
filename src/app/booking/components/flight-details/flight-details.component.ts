@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Flight } from '@booking/interfaces/flight';
+import { Flight } from '@booking/types/flight';
 
 @Component({
   selector: 'air-flight-details',

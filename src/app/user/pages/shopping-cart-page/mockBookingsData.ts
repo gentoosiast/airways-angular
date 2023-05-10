@@ -1,4 +1,4 @@
-import { Booking } from '@shared/models/booking.model';
+import { Booking } from '@shared/types/booking';
 import { TuiDay, TuiTime } from '@taiga-ui/cdk';
 
 export const mockBookingsData: Array<Booking> = [

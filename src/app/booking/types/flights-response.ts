@@ -1,4 +1,4 @@
-import { Flight } from '@booking/interfaces/flight';
+import { Flight } from '@booking/types/flight';
 
 export interface FlightsResponse {
   departure: Flight[];

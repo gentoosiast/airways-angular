@@ -1,4 +1,4 @@
-import { FlightsResponse } from '@booking/models/flights-response.model';
+import { FlightsResponse } from '@booking/types/flights-response';
 
 const warsawAirport = {
   name: 'Warsaw Modlin',

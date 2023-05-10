@@ -2,7 +2,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { TuiDay } from '@taiga-ui/cdk';
 import { TuiCountryIsoCode, TUI_ENGLISH_LANGUAGE_COUNTRIES } from '@taiga-ui/i18n';
-import { Gender, User } from '@core/models/user.model';
+import { User } from '@core/types/user';
+import { Gender } from '@core/types/social-data';
 import { MINIMUM_PASSWORD_LENGTH } from '@core/constants/signup.constants';
 
 @Component({

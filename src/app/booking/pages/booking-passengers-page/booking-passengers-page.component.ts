@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { TuiDay } from '@taiga-ui/cdk';
-import { Gender } from '@core/interfaces/social-data';
+import { Gender } from '@core/types/social-data';
 import { passengersMockData } from './mockData';
-import { PassengerCategory, Passengers } from '@shared/interfaces/passengers';
+import { PassengerCategory, Passengers } from '@shared/types/passengers';
 
 interface Passenger {
   category: PassengerCategory;

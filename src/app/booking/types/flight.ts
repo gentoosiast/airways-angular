@@ -1,4 +1,4 @@
-import { Airport } from '@core/interfaces/airport';
+import { Airport } from '@booking/types/airport';
 
 export interface Flight {
   flightNumber: string; // i.e. 'FR 1925'
