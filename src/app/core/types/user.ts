@@ -1,4 +1,4 @@
-export type Gender = 'male' | 'female';
+import { Gender } from './social-data';
 
 export interface User {
   id: number;

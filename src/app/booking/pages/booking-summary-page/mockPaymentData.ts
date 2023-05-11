@@ -1,4 +1,4 @@
-import { PaymentDetails } from '@shared/models/payment.model';
+import { PaymentDetails } from '@shared/types/payment';
 
 export const mockPaymentData: PaymentDetails = {
   flightNumber: 'FR 1925',

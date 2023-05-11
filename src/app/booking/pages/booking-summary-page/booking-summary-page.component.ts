@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { mockBookingData } from './mockBookingData';
 import { mockPaymentData } from './mockPaymentData';
-import { PassengerCategory, Passengers } from '@shared/models/booking.model';
+import { PassengerCategory, Passengers } from '@shared/types/passengers';
 
 @Component({
   selector: 'air-booking-summary-page',

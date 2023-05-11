@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { User } from '@core/models/user.model';
+import { User } from '@core/types/user';
 
 @Component({
   selector: 'air-login-form',

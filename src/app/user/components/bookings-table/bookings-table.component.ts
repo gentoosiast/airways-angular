@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Booking } from '@shared/models/booking.model';
+import { Booking } from '@shared/types/booking';
 
 @Component({
   selector: 'air-bookings-table',
