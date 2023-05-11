@@ -6,7 +6,7 @@ import { TuiDialogService, TuiAlertService } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 import { TabbedFormsComponent } from '../tabbed-forms/tabbed-forms.component';
 import { UserSettingsService } from '@core/services/user-settings.service';
-import { Currency, DateFormat } from '@core/constants/user-settings.constant';
+import { Currency, DateFormat } from '@core/types/user-settings';
 
 @Component({
   selector: 'air-header',
