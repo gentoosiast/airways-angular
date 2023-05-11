@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
-import { LoginData } from '@core/interfaces/login-data';
-import { LoginResponse } from '@core/interfaces/login-response';
+import { LoginData, LoginResponse } from '@core/types/login';
 import { LocalStorageService } from './local-storage.service';
 
 @Injectable({

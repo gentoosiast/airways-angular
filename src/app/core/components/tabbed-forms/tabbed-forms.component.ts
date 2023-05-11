@@ -3,7 +3,7 @@ import { EMPTY, Subscription, catchError } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
 import { TuiAlertService, TuiDialogContext, TuiNotification } from '@taiga-ui/core';
-import { LoginData } from '@core/interfaces/login-data';
+import { LoginData } from '@core/types/login';
 import { AuthService } from '@core/services/auth.service';
 import { loginUser } from 'src/app/store/actions/user.actions';
 import { HttpErrorResponse } from '@angular/common/http';

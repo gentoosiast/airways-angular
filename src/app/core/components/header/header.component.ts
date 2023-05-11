@@ -9,7 +9,7 @@ import { TabbedFormsComponent } from '../tabbed-forms/tabbed-forms.component';
 import { UserSettingsService } from '@core/services/user-settings.service';
 import { Currency, DateFormat } from '@core/constants/user-settings.constant';
 import { selectUser } from 'src/app/store/selectors/user.selectors';
-import { User } from '@core/models/user.model';
+import { User } from '@core/types/user';
 import { logoutUser } from 'src/app/store/actions/user.actions';
 
 @Component({
