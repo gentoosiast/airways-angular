@@ -5,7 +5,9 @@ export interface LoginData {
   password: string;
 }
 
-export interface LoginResponse {
-  accessToken: string;
+export type SignupData = Required<Omit<User, 'id'>>;
+
+export interface LoginSignupResponse {
+  access_token: string;
   user: User;
 }

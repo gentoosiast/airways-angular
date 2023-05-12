@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { LoginData } from '@core/types/login';
+import { LoginData } from '@core/types/login-signup';
 import { User } from '@core/types/user';
 
 @Component({

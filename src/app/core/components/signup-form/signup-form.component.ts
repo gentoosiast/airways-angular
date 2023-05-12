@@ -4,6 +4,7 @@ import { TuiDay } from '@taiga-ui/cdk';
 import { TuiCountryIsoCode, TUI_ENGLISH_LANGUAGE_COUNTRIES } from '@taiga-ui/i18n';
 import { User } from '@core/types/user';
 import { Gender } from '@core/types/social-data';
+import { SignupData } from '@core/types/login-signup';
 import { MINIMUM_PASSWORD_LENGTH } from '@core/constants/signup.constants';
 
 @Component({
@@ -12,7 +13,7 @@ import { MINIMUM_PASSWORD_LENGTH } from '@core/constants/signup.constants';
   styleUrls: ['./signup-form.component.scss'],
 })
 export class SignupFormComponent {
-  @Output() private formSubmit = new EventEmitter();
+  @Output() private formSubmit = new EventEmitter<SignupData>();
   countries = Object.values(TuiCountryIsoCode);
   countryIsoCode = TuiCountryIsoCode.US;
   countryNames = this.countries.map((country) => TUI_ENGLISH_LANGUAGE_COUNTRIES[country]);
@@ -51,6 +52,10 @@ export class SignupFormComponent {
     return this.signupForm.get('birthDate');
   }
 
+  get gender() {
+    return this.signupForm.get('gender');
+  }
+
   get phone() {
     return this.signupForm.get('phone');
   }
@@ -68,9 +73,32 @@ export class SignupFormComponent {
   }
 
   onSubmit() {
-    console.log(this.signupForm.value);
-    console.log(this.birthDate?.value?.toUtcNativeDate().toString());
-    this.formSubmit.emit();
+    if (
+      this.signupForm.invalid ||
+      !this.email?.value ||
+      !this.password?.value ||
+      !this.firstName?.value ||
+      !this.lastName?.value ||
+      !this.birthDate?.value ||
+      !this.gender?.value ||
+      !this.phone?.value ||
+      !this.citizenship?.value
+    ) {
+      return;
+    }
+
+    const signupData: SignupData = {
+      email: this.email.value,
+      password: this.password.value,
+      firstName: this.firstName.value,
+      lastName: this.lastName.value,
+      birthDate: `${this.birthDate.value.toUtcNativeDate().toISOString()}`,
+      gender: this.gender.value,
+      phone: this.phone.value,
+      citizenship: this.citizenship.value,
+    };
+
+    this.formSubmit.emit(signupData);
   }
 
   private setFormData(data: User) {
