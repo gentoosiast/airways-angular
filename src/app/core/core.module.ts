@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TuiLetModule } from '@taiga-ui/cdk';
@@ -34,6 +35,7 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 import { SignupFormComponent } from './components/signup-form/signup-form.component';
 import { SocialButtonsComponent } from './components/social-buttons/social-buttons.component';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
+import { TokenInterceptor } from './interceptors/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -75,6 +77,11 @@ import { ProgressBarComponent } from './components/progress-bar/progress-bar.com
     {
       provide: TUI_SANITIZER,
       useClass: NgDompurifySanitizer,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
     },
   ],
 })
