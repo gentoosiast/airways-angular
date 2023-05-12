@@ -65,9 +65,9 @@ export class TabbedFormsComponent implements OnDestroy {
 
   private handleError(err: HttpErrorResponse, label: string) {
     if (err.status === 0) {
-      this.showAlertError('Network error', err.message);
+      this.showErrorAlert('Network error', err.message);
     } else {
-      this.showAlertError(label, `HTTP Error ${err.status}: ${err.error.message}`);
+      this.showErrorAlert(label, `HTTP Error ${err.status}: ${err.error.message}`);
     }
   }
 
@@ -79,7 +79,7 @@ export class TabbedFormsComponent implements OnDestroy {
     this.context.completeWith('');
   }
 
-  private showAlertError(label: string, message: string) {
+  private showErrorAlert(label: string, message: string) {
     this.sub.add(
       this.alerts
         .open(message, {
