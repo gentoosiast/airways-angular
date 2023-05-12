@@ -6,7 +6,7 @@ import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
 import { TuiAlertService, TuiDialogContext, TuiNotification } from '@taiga-ui/core';
 import { LoginData, SignupData } from '@core/types/login-signup';
 import { AuthService } from '@core/services/auth.service';
-import { loginUser } from '@store/actions/user.actions';
+import { saveUser } from '@store/actions/user.actions';
 import { ALERT_DISPLAY_DURATION } from '@core/constants/alerts.constants';
 
 @Component({
@@ -40,7 +40,7 @@ export class TabbedFormsComponent implements OnDestroy {
         }),
       )
       .subscribe((user) => {
-        this.store.dispatch(loginUser(user));
+        this.store.dispatch(saveUser(user));
 
         this.ok('User logged in successfully...');
       });
@@ -57,7 +57,7 @@ export class TabbedFormsComponent implements OnDestroy {
         }),
       )
       .subscribe((user) => {
-        this.store.dispatch(loginUser(user));
+        this.store.dispatch(saveUser(user));
 
         this.ok('User was successfully registered...');
       });

@@ -11,7 +11,8 @@ const initalState: AppState = {
 export const appReducer = createReducer(
   initalState,
   on(
-    UserActions.loginUser,
+    UserActions.saveUser,
+    UserActions.loadUserSuccess,
     (state, { user }): AppState => ({
       ...state,
       user,
@@ -20,6 +21,7 @@ export const appReducer = createReducer(
 
   on(
     UserActions.logoutUser,
+    UserActions.loadUserFail,
     (state): AppState => ({
       ...state,
       user: null,

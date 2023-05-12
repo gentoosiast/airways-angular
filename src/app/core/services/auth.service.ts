@@ -4,6 +4,7 @@ import { Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { LoginData, SignupData, LoginSignupResponse } from '@core/types/login-signup';
 import { LocalStorageService } from './local-storage.service';
+import { STORAGE_ACCESS_TOKEN_KEY, STORAGE_USER_KEY } from '@shared/constants/storage.constants';
 
 @Injectable({
   providedIn: 'root',
@@ -18,12 +19,13 @@ export class AuthService {
   }
 
   logout(): void {
-    this.storageService.delete('token');
+    this.storageService.delete(STORAGE_ACCESS_TOKEN_KEY);
+    this.storageService.delete(STORAGE_USER_KEY);
   }
 
   signup(signupData: SignupData): Observable<LoginSignupResponse> {
     return this.http
       .post<LoginSignupResponse>(`${environment.apiBaseUrl}/auth/signup`, signupData)
-      .pipe(tap((response) => this.storageService.set<string>('token', response.access_token)));
+      .pipe(tap((response) => this.storageService.set<string>(STORAGE_ACCESS_TOKEN_KEY, response.access_token)));
   }
 }
