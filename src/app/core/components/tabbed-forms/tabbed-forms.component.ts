@@ -65,7 +65,7 @@ export class TabbedFormsComponent implements OnDestroy {
 
   private handleError(err: HttpErrorResponse, label: string) {
     if (err.status === 0) {
-      this.showAlertError('Network error', `${err.error.message}`);
+      this.showAlertError('Network error', err.message);
     } else {
       this.showAlertError(label, `HTTP Error ${err.status}: ${err.error.message}`);
     }
