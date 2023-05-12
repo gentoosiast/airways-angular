@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Currency, DateFormat } from '@core/constants/user-settings.constant';
+import { Currency, DateFormat } from '@core/types/user-settings';
 
 @Injectable({
   providedIn: 'root',

@@ -7,7 +7,7 @@ import { TuiDialogService, TuiAlertService, TuiNotification } from '@taiga-ui/co
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 import { TabbedFormsComponent } from '../tabbed-forms/tabbed-forms.component';
 import { UserSettingsService } from '@core/services/user-settings.service';
-import { Currency, DateFormat } from '@core/constants/user-settings.constant';
+import { Currency, DateFormat } from '@core/types/user-settings';
 import { selectUser } from 'src/app/store/selectors/user.selectors';
 import { User } from '@core/types/user';
 import { logoutUser } from 'src/app/store/actions/user.actions';
