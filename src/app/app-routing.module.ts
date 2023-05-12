@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NotFoundPageComponent } from '@core/pages/not-found-page/not-found-page.component';
+import { authGuardFn } from '@user/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
   {
     path: 'user',
     loadChildren: () => import('@user/user.module').then((m) => m.UserModule),
+    canMatch: [authGuardFn],
   },
   {
     path: '**',
