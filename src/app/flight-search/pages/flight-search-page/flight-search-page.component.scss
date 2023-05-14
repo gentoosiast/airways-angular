@@ -61,35 +61,3 @@
 .passengers-block {
   flex: 1;
 }
-
-.passengers-item {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.passengers-label {
-  display: flex;
-  flex-direction: column;
-}
-
-.passengers-label-category {
-  color: colors.$color-primary;
-}
-
-.passengers-label-description {
-  font-size: 14px;
-  color: colors.$color-neutral-30;
-}
-
-.passengers-quantity {
-  font-family: Consolas, Courier, monospace;
-  color: colors.$color-primary;
-}
-
-.passengers-select-controls {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}

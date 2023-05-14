@@ -77,40 +77,10 @@
     </div>
 
     <div class="passengers-block">
-      <tui-select formControlName="passengers" [stringify]="stringifyPassengers">
-        <tui-data-list *tuiDataList>
-          <button tuiOption *ngFor="let item of passengerItems">
-            <div class="passengers-item">
-              <div class="passengers-label">
-                <span class="passengers-label-category">{{ item.category | titlecase }}</span>
-                <span class="passengers-label-description">{{ item.description }}</span>
-              </div>
-              <div class="passengers-select-controls">
-                <button
-                  tuiIconButton
-                  type="button"
-                  appearance="icon"
-                  icon="tuiIconMinusCircleLarge"
-                  (click)="modifyPassengers(item.category, -1)"
-                ></button>
-                <span class="passengers-quantity">
-                  {{ passengers?.value?.[item.category] }}
-                </span>
-                <button
-                  tuiIconButton
-                  type="button"
-                  appearance="icon"
-                  icon="tuiIconPlusCircleLarge"
-                  (click)="modifyPassengers(item.category, 1)"
-                ></button>
-              </div>
-            </div>
-          </button>
-        </tui-data-list>
-      </tui-select>
+      <air-passenger-select *ngIf="passengers" formControlName="passengers"></air-passenger-select>
       <tui-error
-        *ngIf="passengers?.touched && passengers?.hasError('adultValidator')"
-        [error]="passengers?.getError('adultValidator')"
+        *ngIf="passengers.touched && passengers.hasError('adultValidator')"
+        [error]="passengers.getError('adultValidator')"
       ></tui-error>
     </div>
   </div>
