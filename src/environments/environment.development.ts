@@ -1,3 +1,3 @@
 export const environment = {
-  apiBaseUrl: 'https://95.216.89.186:36663',
+  apiBaseUrl: 'https://blackphillip.space:36663',
 };
