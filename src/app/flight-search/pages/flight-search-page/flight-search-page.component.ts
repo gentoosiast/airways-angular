@@ -1,13 +1,18 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable, Subject, Subscription, debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs';
-import { TuiDay } from '@taiga-ui/cdk';
+import { TuiDay, TuiDayRange } from '@taiga-ui/cdk';
+import { Store } from '@ngrx/store';
 import { AirportsService } from '@core/services/airports.service';
 import { Airport } from '@booking/types/airport';
 import { Passengers } from '@shared/types/passengers';
 import { FlightType } from '@shared/types/flight-type';
 import { adultValidator } from '@shared/validators/adultValidator';
 import { FLIGHT_SEARCH_MINIMUM_QUERY_LENGTH, FLIGHT_SEARCH_DEBOUNCE_TIME } from '@flight-search/constants';
+import { FlightSearchData } from '@shared/types/flight-data';
+import { saveFlightSearch } from '@store/actions/flight-data.actions';
+import { selectFlightSearchData } from '@store/selectors/flight-data.selectors';
 
 @Component({
   selector: 'air-flight-search-page',
@@ -17,14 +22,15 @@ import { FLIGHT_SEARCH_MINIMUM_QUERY_LENGTH, FLIGHT_SEARCH_DEBOUNCE_TIME } from 
 export class FlightSearchPageComponent implements OnInit, OnDestroy {
   airportForm = this.fb.group({
     flightType: this.fb.control<FlightType | null>('roundtrip', [Validators.required]),
-    departure: this.fb.control<string | null>('', [Validators.required]),
-    arrival: this.fb.control<string | null>('', [Validators.required]),
-    date: this.fb.control<TuiDay | null>(null, [Validators.required]),
+    departure: this.fb.control<Airport | null>(null, [Validators.required]),
+    arrival: this.fb.control<Airport | null>(null, [Validators.required]),
+    date: this.fb.control<TuiDay | TuiDayRange | null>(null, [Validators.required]),
     passengers: this.fb.control<Passengers | null>({ adults: 1, children: 0, infants: 0 }, [
       Validators.required,
       adultValidator,
     ]),
   });
+  flightData$ = this.store.select(selectFlightSearchData);
   todayDate = TuiDay.currentLocal();
   private searchDeparture$$ = new Subject<string | null>();
   private searchArrival$$ = new Subject<string | null>();
@@ -32,12 +38,17 @@ export class FlightSearchPageComponent implements OnInit, OnDestroy {
   airportsArrival$ = this.getAirports(this.searchArrival$$);
   private sub = new Subscription();
 
-  constructor(private fb: FormBuilder, private airportsService: AirportsService) {}
+  constructor(
+    private fb: FormBuilder,
+    private airportsService: AirportsService,
+    private router: Router,
+    private store: Store,
+  ) {}
 
   ngOnInit(): void {
+    this.seedFormFromStore();
     this.monitorFlightTypeChanges();
   }
-
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
@@ -75,7 +86,32 @@ export class FlightSearchPageComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    // TODO
+    const { flightType, departure, arrival, date, passengers } = this.airportForm.value;
+
+    if (!this.airportForm.valid || !flightType || !departure || !arrival || !date || !passengers) {
+      return;
+    }
+
+    let flightDate = '';
+    let returnDate;
+    if (date instanceof TuiDayRange) {
+      flightDate = date.from.toUtcNativeDate().toISOString();
+      returnDate = date.to.toUtcNativeDate().toISOString();
+    } else {
+      flightDate = date.toUtcNativeDate().toISOString();
+    }
+
+    const flightSearchData: FlightSearchData = {
+      flightType,
+      departure,
+      arrival,
+      flightDate,
+      returnDate,
+      passengers,
+    };
+
+    this.store.dispatch(saveFlightSearch({ flightSearchData }));
+    this.router.navigateByUrl('/booking/step-flights');
   }
 
   stringifyAirport(item: Airport | null): string {
@@ -109,6 +145,34 @@ export class FlightSearchPageComponent implements OnInit, OnDestroy {
           date: null,
         });
         this.date?.markAsUntouched();
+      }),
+    );
+  }
+
+  private seedFormFromStore() {
+    this.sub.add(
+      this.flightData$.subscribe((flightData) => {
+        if (!flightData) {
+          return;
+        }
+
+        let date = null;
+        if (!flightData.returnDate) {
+          date = TuiDay.fromUtcNativeDate(new Date(flightData.flightDate));
+        } else {
+          date = new TuiDayRange(
+            TuiDay.fromUtcNativeDate(new Date(flightData.flightDate)),
+            TuiDay.fromUtcNativeDate(new Date(flightData.returnDate)),
+          );
+        }
+
+        this.airportForm.setValue({
+          flightType: flightData.flightType,
+          departure: flightData.departure,
+          arrival: flightData.arrival,
+          date,
+          passengers: flightData.passengers,
+        });
       }),
     );
   }

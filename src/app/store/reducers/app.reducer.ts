@@ -1,10 +1,12 @@
 import { createReducer, on } from '@ngrx/store';
 import { AppState } from '../state.model';
 import * as UserActions from '../actions/user.actions';
+import * as FlightDataActions from '../actions/flight-data.actions';
 
 export const appFeatureKey = 'app';
 
 const initalState: AppState = {
+  flightSearchData: null,
   user: null,
 };
 
@@ -25,6 +27,14 @@ export const appReducer = createReducer(
     (state): AppState => ({
       ...state,
       user: null,
+    }),
+  ),
+
+  on(
+    FlightDataActions.saveFlightSearch,
+    (state, { flightSearchData }): AppState => ({
+      ...state,
+      flightSearchData,
     }),
   ),
 );
