@@ -12,6 +12,7 @@
     <div class="cities-combo-boxes">
       <tui-combo-box
         *tuiLet="airportsDeparture$ | async as airportsDeparture"
+        spellcheck="false"
         [tuiTextfieldCleaner]="true"
         [valueContent]="labelContent"
         [stringify]="stringifyAirport"
@@ -32,6 +33,7 @@
 
       <tui-combo-box
         *tuiLet="airportsArrival$ | async as airportsArrival"
+        spellcheck="false"
         [tuiTextfieldCleaner]="true"
         [valueContent]="labelContent"
         [stringify]="stringifyAirport"
