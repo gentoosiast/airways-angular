@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, catchError, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { LoginData, SignupData, LoginSignupResponse } from '@core/types/login-signup';
 import { LocalStorageService } from './local-storage.service';
@@ -13,9 +13,10 @@ export class AuthService {
   constructor(private http: HttpClient, private storageService: LocalStorageService) {}
 
   login(loginData: LoginData): Observable<LoginSignupResponse> {
-    return this.http
-      .post<LoginSignupResponse>(`${environment.apiBaseUrl}/auth/login`, loginData)
-      .pipe(tap((response) => this.storageService.set<string>('token', response.access_token)));
+    return this.http.post<LoginSignupResponse>(`${environment.apiBaseUrl}/auth/login`, loginData).pipe(
+      tap((response) => this.storageService.set<string>('token', response.access_token)),
+      catchError(this.handleError),
+    );
   }
 
   logout(): void {
@@ -24,8 +25,17 @@ export class AuthService {
   }
 
   signup(signupData: SignupData): Observable<LoginSignupResponse> {
-    return this.http
-      .post<LoginSignupResponse>(`${environment.apiBaseUrl}/auth/signup`, signupData)
-      .pipe(tap((response) => this.storageService.set<string>(STORAGE_ACCESS_TOKEN_KEY, response.access_token)));
+    return this.http.post<LoginSignupResponse>(`${environment.apiBaseUrl}/auth/signup`, signupData).pipe(
+      tap((response) => this.storageService.set<string>(STORAGE_ACCESS_TOKEN_KEY, response.access_token)),
+      catchError(this.handleError),
+    );
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      return throwError(() => new Error(`Network error: ${error.message}`));
+    } else {
+      return throwError(() => new Error(`HTTP Error ${error.status}: ${error.error.message}`));
+    }
   }
 }
