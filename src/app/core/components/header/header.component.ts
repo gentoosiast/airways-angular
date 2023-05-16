@@ -8,9 +8,11 @@ import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 import { TabbedFormsComponent } from '../tabbed-forms/tabbed-forms.component';
 import { UserSettingsService } from '@core/services/user-settings.service';
 import { Currency, DateFormat } from '@core/types/user-settings';
-import { selectUser } from 'src/app/store/selectors/user.selectors';
+import { selectUser } from '@store/selectors/user.selectors';
 import { User } from '@core/types/user';
-import { logoutUser } from 'src/app/store/actions/user.actions';
+import { logoutUser } from '@store/actions/user.actions';
+import { FlightSearchData } from '@shared/types/flight-data';
+import { selectFlightSearchData } from '@store/selectors/flight-data.selectors';
 
 @Component({
   selector: 'air-header',
@@ -20,6 +22,7 @@ import { logoutUser } from 'src/app/store/actions/user.actions';
 export class HeaderComponent implements OnInit, OnDestroy {
   currencies = Object.values(Currency);
   dateFormats = Object.values(DateFormat);
+  flightSearchData$?: Observable<FlightSearchData | null>;
   showProgressBar = false;
   user$?: Observable<User | null>;
 
@@ -55,6 +58,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.sub.add(this.showProgressBar$.subscribe());
     this.sub.add(this.userSettings$.subscribe());
+    this.flightSearchData$ = this.store.select(selectFlightSearchData);
     this.user$ = this.store.select(selectUser);
   }
 
@@ -64,6 +68,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   logout() {
     this.store.dispatch(logoutUser());
+  }
+
+  onFlightSearchEdit() {
+    // TODO
   }
 
   openLoginModal() {

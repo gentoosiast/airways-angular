@@ -1,4 +1,5 @@
 @use 'src/app/shared/styles/colors' as *;
+@use 'src/app/shared/styles/typography';
 
 :host {
   position: sticky;
@@ -10,12 +11,27 @@
   background: $color-neutral-100;
 }
 
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
 .content-wrapper {
   display: flex;
   max-width: 1130px;
   align-items: center;
   justify-content: space-between;
   margin: 0 auto;
+  column-gap: 1.5rem;
+}
+
+.flight-content-wrapper {
+  margin: 0 auto;
+  padding: 22px 0;
+  display: flex;
+  max-width: 1130px;
+  justify-content: flex-start;
+  align-items: center;
   column-gap: 1.5rem;
 }
 
@@ -48,4 +64,35 @@
   justify-content: center;
   align-items: center;
   gap: 5px;
+}
+
+.airports {
+  @extend %typo-title-xsmall;
+
+  display: flex;
+  gap: 16px;
+  color: $color-neutral-black;
+}
+
+.flight-info {
+  @extend %typo-label-medium;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: $color-neutral-30;
+}
+
+.passengers {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.bullet {
+  display: block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: $color-secondary-0;
 }
