@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { FlightsRequest } from '@booking/types/flights-request';
+import { FlightsRequest } from '@shared/types/flights-request';
 import { Flights } from '@shared/types/flights';
 
 @Injectable({

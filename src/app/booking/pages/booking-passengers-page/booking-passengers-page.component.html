@@ -115,7 +115,7 @@
   </div>
 
   <div class="buttons-block">
-    <button tuiButton type="button" appearance="outline">Back</button>
+    <button tuiButton type="button" appearance="outline" (click)="onBackButton()">Back</button>
     <button tuiButton type="submit" [disabled]="!passengersForm.valid">Continue</button>
   </div>
 </form>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { TuiDay } from '@taiga-ui/cdk';
 import { Gender } from '@core/types/social-data';
 import { passengersMockData } from './mockData';
@@ -35,7 +36,7 @@ export class BookingPassengersPageComponent implements OnInit {
     }),
   });
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private router: Router) {}
 
   get passengers() {
     return this.passengersForm.controls['passengers'] as FormArray<FormGroup<PassengerFormGroup>>;
@@ -43,6 +44,10 @@ export class BookingPassengersPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.processPassengers(passengersMockData);
+  }
+
+  onBackButton() {
+    this.router.navigateByUrl('/booking/step-flights');
   }
 
   onSubmit() {

@@ -1,42 +1,26 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { EMPTY, Observable, Subscription, catchError, merge, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { TuiAlertService, TuiNotification } from '@taiga-ui/core';
-import { selectFlightSearchData } from '@store/selectors/flight-data.selectors';
+import { selectFlights } from '@store/selectors/flight-data.selectors';
 import { Flights } from '@shared/types/flights';
-import { FlightsRequest } from '@booking/types/flights-request';
-import { FlightsService } from '@core/services/flights.service';
-import { ALERT_DISPLAY_DURATION } from '@core/constants/alerts.constants';
-import { saveFlights } from '@store/actions/flight-data.actions';
 
 @Component({
   selector: 'air-booking-flights-page',
   templateUrl: './booking-flights-page.component.html',
   styleUrls: ['./booking-flights-page.component.scss'],
 })
-export class BookingFlightsPageComponent implements OnInit, OnDestroy {
-  flightSearchData$ = this.store.select(selectFlightSearchData);
-  flightsData$?: Observable<Flights>;
+export class BookingFlightsPageComponent implements OnInit {
+  flightsData$?: Observable<Flights | null>;
   departureFlightIdx: number | null = null;
   arrivalFlightIdx: number | null = null;
   isDepartureConfirmed = false;
   isArrivalConfirmed = false;
-  private sub = new Subscription();
 
-  constructor(
-    @Inject(TuiAlertService) private readonly alerts: TuiAlertService,
-    private router: Router,
-    private store: Store,
-    private flightsService: FlightsService,
-  ) {}
+  constructor(private router: Router, private store: Store) {}
 
   ngOnInit(): void {
-    this.findFlights();
-  }
-
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
+    this.flightsData$ = this.store.select(selectFlights);
   }
 
   onBackButton(): void {
@@ -44,7 +28,6 @@ export class BookingFlightsPageComponent implements OnInit, OnDestroy {
   }
 
   onContinueButton(): void {
-    // TODO: add data to the store
     this.router.navigateByUrl('/booking/step-passengers');
   }
 
@@ -62,48 +45,5 @@ export class BookingFlightsPageComponent implements OnInit, OnDestroy {
 
   onSelectArrivalFlight(flightIdx: number): void {
     this.arrivalFlightIdx = flightIdx;
-  }
-
-  private findFlights(): void {
-    this.sub.add(
-      this.flightSearchData$.subscribe((flightSearchData) => {
-        if (!flightSearchData) {
-          return;
-        }
-
-        const request: FlightsRequest = {
-          departureIATA: flightSearchData.departure.iata_code,
-          arrivalIATA: flightSearchData.arrival.iata_code,
-          flightDate: flightSearchData.flightDate,
-          returnDate: flightSearchData.returnDate,
-          adults: flightSearchData.passengers.adults,
-          children: flightSearchData.passengers.children,
-          infants: flightSearchData.passengers.infants,
-        };
-
-        this.flightsData$ = this.flightsService.search(request).pipe(
-          tap((flights) => {
-            this.store.dispatch(saveFlights({ flights }));
-          }),
-          catchError((err) => {
-            this.showErrorAlert(err.message);
-
-            return EMPTY;
-          }),
-        );
-      }),
-    );
-  }
-
-  private showErrorAlert(message: string): void {
-    this.sub.add(
-      this.alerts
-        .open(message, {
-          label: 'Request error',
-          status: TuiNotification.Error,
-          autoClose: ALERT_DISPLAY_DURATION,
-        })
-        .subscribe(),
-    );
   }
 }
