@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Flight } from '@booking/types/flight';
+import { Flight } from '@shared/types/flight';
 
 @Component({
   selector: 'air-flight-carousel',
