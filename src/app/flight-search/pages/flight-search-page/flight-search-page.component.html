@@ -1,4 +1,4 @@
-<form class="form" [formGroup]="airportForm">
+<form class="form" [formGroup]="airportForm" (ngSubmit)="onSubmit()">
   <div class="flight-radios">
     <tui-radio-labeled class="flight-radio" formControlName="flightType" item="roundtrip" size="l"
       >Round Trip</tui-radio-labeled
@@ -86,7 +86,7 @@
   </div>
 
   <div class="tui-form__buttons tui-form__buttons_align_end">
-    <button tuiButton type="submit" [disabled]="!airportForm.valid" (click)="onSubmit()">Search</button>
+    <button tuiButton type="submit" [disabled]="!airportForm.valid">Search</button>
   </div>
 </form>
 
