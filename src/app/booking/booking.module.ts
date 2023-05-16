@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BookingRoutingModule } from './booking-routing.module';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TuiLetModule } from '@taiga-ui/cdk';
 import {
   TuiButtonModule,
   TuiErrorModule,
@@ -53,6 +54,7 @@ import { PluralizePipe } from './pipes/pluralize.pipe';
     CommonModule,
     ReactiveFormsModule,
     BookingRoutingModule,
+    TuiLetModule,
     TuiButtonModule,
     TuiErrorModule,
     TuiGroupModule,
