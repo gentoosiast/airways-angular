@@ -5,3 +5,4 @@ import { appFeatureKey } from '../reducers/app.reducer';
 export const selectFeature = createFeatureSelector<AppState>(appFeatureKey);
 
 export const selectFlightSearchData = createSelector(selectFeature, (state) => state.flightSearchData);
+export const selectFlights = createSelector(selectFeature, (state) => state.flights);

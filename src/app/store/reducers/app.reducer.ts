@@ -7,6 +7,7 @@ export const appFeatureKey = 'app';
 
 const initalState: AppState = {
   flightSearchData: null,
+  flights: null,
   user: null,
 };
 
@@ -35,6 +36,14 @@ export const appReducer = createReducer(
     (state, { flightSearchData }): AppState => ({
       ...state,
       flightSearchData,
+    }),
+  ),
+
+  on(
+    FlightDataActions.saveFlights,
+    (state, { flights }): AppState => ({
+      ...state,
+      flights,
     }),
   ),
 );

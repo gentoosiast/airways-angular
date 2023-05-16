@@ -1,13 +1,14 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { EMPTY, Observable, Subscription, catchError } from 'rxjs';
+import { EMPTY, Observable, Subscription, catchError, merge, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { TuiAlertService, TuiNotification } from '@taiga-ui/core';
 import { selectFlightSearchData } from '@store/selectors/flight-data.selectors';
-import { FlightsResponse } from '@booking/types/flights-response';
+import { Flights } from '@shared/types/flights';
 import { FlightsRequest } from '@booking/types/flights-request';
 import { FlightsService } from '@core/services/flights.service';
 import { ALERT_DISPLAY_DURATION } from '@core/constants/alerts.constants';
+import { saveFlights } from '@store/actions/flight-data.actions';
 
 @Component({
   selector: 'air-booking-flights-page',
@@ -16,7 +17,7 @@ import { ALERT_DISPLAY_DURATION } from '@core/constants/alerts.constants';
 })
 export class BookingFlightsPageComponent implements OnInit, OnDestroy {
   flightSearchData$ = this.store.select(selectFlightSearchData);
-  flightsData$?: Observable<FlightsResponse>;
+  flightsData$?: Observable<Flights>;
   departureFlightIdx: number | null = null;
   arrivalFlightIdx: number | null = null;
   isDepartureConfirmed = false;
@@ -81,6 +82,9 @@ export class BookingFlightsPageComponent implements OnInit, OnDestroy {
         };
 
         this.flightsData$ = this.flightsService.search(request).pipe(
+          tap((flights) => {
+            this.store.dispatch(saveFlights({ flights }));
+          }),
           catchError((err) => {
             this.showErrorAlert(err.message);
 

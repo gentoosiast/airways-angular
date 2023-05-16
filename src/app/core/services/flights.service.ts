@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { FlightsRequest } from '@booking/types/flights-request';
-import { FlightsResponse } from '@booking/types/flights-response';
+import { Flights } from '@shared/types/flights';
 
 @Injectable({
   providedIn: 'root',
@@ -11,9 +11,9 @@ import { FlightsResponse } from '@booking/types/flights-response';
 export class FlightsService {
   constructor(private http: HttpClient) {}
 
-  search(searchRequest: FlightsRequest): Observable<FlightsResponse> {
+  search(searchRequest: FlightsRequest): Observable<Flights> {
     return this.http
-      .post<FlightsResponse>(`${environment.apiBaseUrl}/flights`, searchRequest)
+      .post<Flights>(`${environment.apiBaseUrl}/flights`, searchRequest)
       .pipe(catchError(this.handleError));
   }
 
