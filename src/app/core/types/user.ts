@@ -1,7 +1,8 @@
 import { Gender } from './social-data';
 
 export interface User {
-  id: number;
+  id?: number;
+  password?: string;
   email: string;
   firstName: string;
   lastName: string;

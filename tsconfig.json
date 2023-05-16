@@ -25,6 +25,7 @@
       "@flight-search/*": ["./src/app/flight-search/*"],
       "@booking/*": ["./src/app/booking/*"],
       "@shared/*": ["./src/app/shared/*"],
+      "@store/*": ["./src/app/store/*"],
       "@user/*": ["./src/app/user/*"]
     }
   },

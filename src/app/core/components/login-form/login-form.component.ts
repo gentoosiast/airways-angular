@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { LoginData } from '@core/types/login-signup';
 import { User } from '@core/types/user';
 
 @Component({
@@ -8,7 +9,7 @@ import { User } from '@core/types/user';
   styleUrls: ['./login-form.component.scss'],
 })
 export class LoginFormComponent {
-  @Output() private formSubmit = new EventEmitter();
+  @Output() private formSubmit = new EventEmitter<LoginData>();
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]],
@@ -33,7 +34,11 @@ export class LoginFormComponent {
   }
 
   onSubmit() {
-    this.formSubmit.emit();
+    if (!this.email?.value || !this.password?.value) {
+      return;
+    }
+
+    this.formSubmit.emit({ email: this.email.value, password: this.password.value });
   }
 
   private setFormData(data: User) {
