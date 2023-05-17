@@ -5,7 +5,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class PassengersDataPipe implements PipeTransform {
   transform(passenger: 'adults' | 'children' | 'infants', count: number): string {
-    if (!count) return '';
+    if (!count) {
+      return '';
+    }
     if (passenger === 'adults') {
       return `${count} x Adult${count > 1 ? 's' : ''}`;
     }

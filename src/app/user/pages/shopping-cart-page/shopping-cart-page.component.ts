@@ -1,21 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { Booking } from '@shared/types/booking';
-import { mockBookingsData } from './mockBookingsData';
+import * as bookingsActions from '../../../store/actions/current-order.actions';
+import { selectCurrentOrder } from 'src/app/store/selectors/bookings.selector';
 
 @Component({
   selector: 'air-shopping-cart-page',
   templateUrl: './shopping-cart-page.component.html',
   styleUrls: ['./shopping-cart-page.component.scss'],
 })
-export class ShoppingCartPageComponent {
-  bookings = mockBookingsData;
+export class ShoppingCartPageComponent implements OnInit {
+  bookings$!: Observable<Array<Booking & { isSelected?: boolean }>>;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private readonly store: Store) {}
+
+  ngOnInit(): void {
+    this.bookings$ = this.store.select(selectCurrentOrder).pipe();
+  }
 
   removeBooking(booking: Booking) {
-    this.bookings = this.bookings.filter((item) => item !== booking);
-    // TODO: remove the booking via service
+    if (booking.id) {
+      this.store.dispatch(bookingsActions.removeBooking({ bookingId: booking.id }));
+    }
   }
 
   editBooking(booking: Booking) {
