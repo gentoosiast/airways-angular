@@ -1,6 +1,5 @@
-import { Component, OnDestroy, forwardRef } from '@angular/core';
+import { Component, forwardRef } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Subject } from 'rxjs';
 import plur from 'plur';
 import { PassengerCategory, Passengers } from '@shared/types/passengers';
 
@@ -16,14 +15,13 @@ import { PassengerCategory, Passengers } from '@shared/types/passengers';
     },
   ],
 })
-export class PassengerSelectComponent implements ControlValueAccessor, OnDestroy {
+export class PassengerSelectComponent implements ControlValueAccessor {
   formControl: FormControl<Passengers | null> = new FormControl({ adults: 1, children: 0, infants: 0 });
   passengerItems: { category: PassengerCategory; description: string }[] = [
     { category: 'adults', description: '14+ years' },
     { category: 'children', description: '2-14 years' },
     { category: 'infants', description: '0-2 years' },
   ];
-  private destroy$$: Subject<boolean> = new Subject<boolean>();
   private isDisabled = false;
   private isTouched = false;
   private onChange: null | ((value: Passengers) => void) = null;
@@ -35,11 +33,6 @@ export class PassengerSelectComponent implements ControlValueAccessor, OnDestroy
 
   get invalid(): boolean {
     return this.formControl.invalid && this.formControl.touched;
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$$.next(true);
-    this.destroy$$.unsubscribe();
   }
 
   registerOnChange(fn: (value: Passengers) => void): void {
