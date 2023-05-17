@@ -74,7 +74,16 @@
           </div>
         </div>
 
-        <button tuiButton type="button" size="s" appearance="secondary" (click)="onFlightSearchEdit()">Edit</button>
+        <button
+          *ngIf="showEditButton"
+          tuiButton
+          type="button"
+          size="s"
+          appearance="secondary"
+          (click)="openFlightSearchModal()"
+        >
+          Edit
+        </button>
       </div>
     </ng-container>
   </div>

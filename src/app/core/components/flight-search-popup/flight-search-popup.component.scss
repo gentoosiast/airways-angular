@@ -1,0 +1,55 @@
+@use '/src/app/shared/styles/colors';
+
+.popup {
+  // padding: 20px;
+  min-width: fit-content;
+  max-width: 1128px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.departure-combo-box,
+.arrival-combo-box {
+  min-width: 200px;
+}
+
+.input-date-range {
+  min-width: 240px;
+}
+
+.input-date {
+  min-width: 140px;
+}
+
+.passengers-select {
+  min-width: 260px;
+}
+
+.departure-block,
+.arrival-block,
+.date-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.airport-label {
+  display: flex;
+  gap: 1ch;
+}
+
+.airport-code {
+  color: colors.$color-neutral-30;
+}
+
+.airport-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.airport-item-subheading {
+  font-size: 14px;
+  color: colors.$color-neutral-30;
+}
