@@ -1,4 +1,9 @@
-<tui-select [formControl]="formControl" [stringify]="stringifyPassengers" (focusedChange)="onFocusChange()">
+<tui-select
+  *ngIf="formControl"
+  [formControl]="formControl"
+  [stringify]="stringifyPassengers"
+  (focusedChange)="onFocusChange()"
+>
   <tui-data-list *tuiDataList>
     <button tuiOption *ngFor="let item of passengerItems">
       <div class="passengers-item">
@@ -15,7 +20,7 @@
             (click)="modifyPassengers(item.category, -1)"
           ></button>
           <span class="passengers-quantity">
-            {{ passengers[item.category] }}
+            {{ passengers?.[item.category] }}
           </span>
           <button
             tuiIconButton

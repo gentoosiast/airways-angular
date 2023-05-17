@@ -1,15 +1,6 @@
-import { Component, Injector, OnDestroy, OnInit, forwardRef } from '@angular/core';
-import {
-  ControlValueAccessor,
-  FormControl,
-  FormControlDirective,
-  FormControlName,
-  FormGroupDirective,
-  NG_VALUE_ACCESSOR,
-  NgControl,
-  NgModel,
-} from '@angular/forms';
-import { Subject, takeUntil, tap } from 'rxjs';
+import { Component, OnDestroy, forwardRef } from '@angular/core';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Subject } from 'rxjs';
 import plur from 'plur';
 import { PassengerCategory, Passengers } from '@shared/types/passengers';
 
@@ -25,9 +16,8 @@ import { PassengerCategory, Passengers } from '@shared/types/passengers';
     },
   ],
 })
-export class PassengerSelectComponent implements ControlValueAccessor, OnInit, OnDestroy {
-  formControl!: FormControl<Passengers>;
-  passengers: Passengers = { adults: 1, children: 0, infants: 0 };
+export class PassengerSelectComponent implements ControlValueAccessor, OnDestroy {
+  formControl: FormControl<Passengers | null> = new FormControl({ adults: 1, children: 0, infants: 0 });
   passengerItems: { category: PassengerCategory; description: string }[] = [
     { category: 'adults', description: '14+ years' },
     { category: 'children', description: '2-14 years' },
@@ -39,10 +29,12 @@ export class PassengerSelectComponent implements ControlValueAccessor, OnInit, O
   private onChange: null | ((value: Passengers) => void) = null;
   private onTouched: null | (() => void) = null;
 
-  constructor(private injector: Injector) {}
+  get passengers(): Passengers | null {
+    return this.formControl.value;
+  }
 
-  ngOnInit(): void {
-    this.setComponentControl();
+  get invalid(): boolean {
+    return this.formControl.invalid && this.formControl.touched;
   }
 
   ngOnDestroy(): void {
@@ -68,20 +60,30 @@ export class PassengerSelectComponent implements ControlValueAccessor, OnInit, O
   }
 
   writeValue(value: Passengers): void {
-    this.passengers = value;
+    this.formControl.setValue(value);
   }
 
   modifyPassengers(type: PassengerCategory, delta: number) {
     this.markAsTouched();
 
-    if (!this.isDisabled && this.passengers) {
-      this.passengers[type] += delta;
-      if (this.passengers[type] < 0) {
-        this.passengers[type] = 0;
+    if (!this.isDisabled) {
+      const value = this.formControl.value;
+
+      if (!value) {
+        return;
       }
 
+      const passengers = { ...value };
+
+      passengers[type] += delta;
+      if (passengers[type] < 0) {
+        passengers[type] = 0;
+      }
+
+      this.formControl.setValue(passengers);
+
       if (this.onChange) {
-        this.onChange(this.passengers);
+        this.onChange(passengers);
       }
     }
   }
@@ -101,33 +103,6 @@ export class PassengerSelectComponent implements ControlValueAccessor, OnInit, O
     if (!this.isDisabled && !this.isTouched && this.onTouched) {
       this.isTouched = true;
       this.onTouched();
-    }
-  }
-
-  private setComponentControl(): void {
-    const injectedControl = this.injector.get(NgControl);
-
-    switch (injectedControl.constructor) {
-      case NgModel: {
-        const { control, update } = injectedControl as NgModel;
-
-        this.formControl = control;
-
-        this.formControl.valueChanges
-          .pipe(
-            tap((value) => update.emit(value)),
-            takeUntil(this.destroy$$),
-          )
-          .subscribe();
-        break;
-      }
-      case FormControlName: {
-        this.formControl = this.injector.get(FormGroupDirective).getControl(injectedControl as FormControlName);
-        break;
-      }
-      default: {
-        this.formControl = (injectedControl as FormControlDirective).form as FormControl;
-      }
     }
   }
 }
