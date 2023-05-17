@@ -56,7 +56,7 @@ export class PassengerSelectComponent implements ControlValueAccessor {
     this.formControl.setValue(value);
   }
 
-  modifyPassengers(type: PassengerCategory, delta: number) {
+  modifyPassengers(type: PassengerCategory, delta: number): void {
     this.markAsTouched();
 
     if (!this.isDisabled) {
@@ -81,7 +81,7 @@ export class PassengerSelectComponent implements ControlValueAccessor {
     }
   }
 
-  onFocusChange() {
+  onFocusChange(): void {
     this.markAsTouched();
   }
 
@@ -92,7 +92,7 @@ export class PassengerSelectComponent implements ControlValueAccessor {
     )}, ${passengers.infants} ${plur('Infant', passengers.infants)}`;
   }
 
-  private markAsTouched() {
+  private markAsTouched(): void {
     if (!this.isDisabled && !this.isTouched && this.onTouched) {
       this.isTouched = true;
       this.onTouched();
