@@ -39,9 +39,9 @@ export const appReducer = createReducer(
 
   on(
     BookingsActions.removeBooking,
-    (state, { bookingId }): AppState => ({
+    (state, { id }): AppState => ({
       ...state,
-      currentOrder: state.currentOrder.filter((item) => item.id !== bookingId),
+      currentOrder: state.currentOrder.filter((item) => item.id !== id),
     }),
   ),
 );

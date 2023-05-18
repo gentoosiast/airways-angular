@@ -6,7 +6,8 @@ import { Subscription } from 'rxjs';
 import { mockBookingData } from './mockBookingData';
 import { mockPaymentData } from './mockPaymentData';
 import { PassengerCategory, Passengers } from '@shared/types/passengers';
-import * as bookingsActions from '../../../store/actions/current-order.actions';
+import { addBooking } from '@store/actions/current-order.actions';
+import { nanoid } from 'nanoid';
 
 @Component({
   selector: 'air-booking-summary-page',
@@ -74,9 +75,9 @@ export class BookingSummaryPageComponent implements OnDestroy {
 
   private addBookingToCart() {
     if (!this.booking.id) {
-      this.booking.id = Date.now();
+      this.booking.id = nanoid();
     }
-    this.store.dispatch(bookingsActions.addBooking({ booking: this.booking }));
+    this.store.dispatch(addBooking({ booking: this.booking }));
   }
 
   private showAddToCartAlert(): void {

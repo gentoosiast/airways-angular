@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Booking } from '@shared/types/booking';
-import * as bookingsActions from '../../../store/actions/current-order.actions';
+import { removeBooking } from '@store/actions/current-order.actions';
 import { selectCurrentOrder } from 'src/app/store/selectors/bookings.selector';
 
 @Component({
@@ -17,12 +17,12 @@ export class ShoppingCartPageComponent implements OnInit {
   constructor(private router: Router, private readonly store: Store) {}
 
   ngOnInit(): void {
-    this.bookings$ = this.store.select(selectCurrentOrder).pipe();
+    this.bookings$ = this.store.select(selectCurrentOrder);
   }
 
   removeBooking(booking: Booking) {
     if (booking.id) {
-      this.store.dispatch(bookingsActions.removeBooking({ bookingId: booking.id }));
+      this.store.dispatch(removeBooking({ id: booking.id }));
     }
   }
 
