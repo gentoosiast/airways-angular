@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { mockBookingData } from './mockBookingData';
 import { mockPaymentData } from './mockPaymentData';
 import { PassengerCategory, Passengers } from '@shared/types/passengers';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'air-booking-summary-page',
@@ -12,6 +13,8 @@ export class BookingSummaryPageComponent {
   booking = mockBookingData;
   paymentDetails = mockPaymentData;
   passengerCategories = Object.keys(this.booking.passengers) as Array<PassengerCategory>;
+
+  constructor(private router: Router) {}
 
   getPriceForPassengerCategory(category: keyof Passengers): number {
     return (
@@ -43,5 +46,9 @@ export class BookingSummaryPageComponent {
             this.paymentDetails.price[category].tax),
       0,
     );
+  }
+
+  onBackButton() {
+    this.router.navigateByUrl('/booking/step-passengers');
   }
 }

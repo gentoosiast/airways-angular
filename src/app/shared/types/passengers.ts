@@ -1,5 +1,4 @@
 import { Gender } from '@core/types/social-data';
-import { TuiDay } from '@taiga-ui/cdk';
 
 export interface Passengers {
   adults: number;
@@ -13,9 +12,19 @@ export interface Passenger {
   firstName: string;
   lastName: string;
   gender: Gender;
-  birthDate: TuiDay;
+  birthDate: string;
   baggageCount: number;
   isAssistanceNeeded: boolean;
   seat?: string;
-  passengerCategory: PassengerCategory;
+  category: PassengerCategory;
+}
+
+export interface PassengerContacts {
+  phone: string;
+  email: string;
+}
+
+export interface PassengersInfo {
+  passengers: Passenger[];
+  contacts: PassengerContacts;
 }

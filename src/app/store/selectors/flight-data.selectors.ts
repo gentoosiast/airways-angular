@@ -6,3 +6,4 @@ export const selectFeature = createFeatureSelector<AppState>(appFeatureKey);
 
 export const selectFlightSearchData = createSelector(selectFeature, (state) => state.flightSearchData);
 export const selectFlights = createSelector(selectFeature, (state) => state.flights);
+export const selectPassengersInfo = createSelector(selectFeature, (state) => state.passengersInfo);
