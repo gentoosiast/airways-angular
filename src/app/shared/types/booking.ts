@@ -10,6 +10,7 @@ export interface FlightsData {
 }
 
 export interface Booking {
+  id?: string;
   flightNumber: string;
   flightType: FlightType;
   flightsData: Array<FlightsData>;

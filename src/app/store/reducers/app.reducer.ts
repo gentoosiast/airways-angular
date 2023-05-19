@@ -1,11 +1,13 @@
 import { createReducer, on } from '@ngrx/store';
 import { AppState } from '../state.model';
 import * as UserActions from '../actions/user.actions';
+import * as BookingsActions from '../actions/current-order.actions';
 
 export const appFeatureKey = 'app';
 
 const initalState: AppState = {
   user: null,
+  currentOrder: [],
 };
 
 export const appReducer = createReducer(
@@ -25,6 +27,21 @@ export const appReducer = createReducer(
     (state): AppState => ({
       ...state,
       user: null,
+    }),
+  ),
+
+  on(BookingsActions.addBooking, (state, { booking }): AppState => {
+    return {
+      ...state,
+      currentOrder: [...state.currentOrder.filter((item) => item.id !== booking.id), { ...booking, isSelected: true }],
+    };
+  }),
+
+  on(
+    BookingsActions.removeBooking,
+    (state, { id }): AppState => ({
+      ...state,
+      currentOrder: state.currentOrder.filter((item) => item.id !== id),
     }),
   ),
 );
