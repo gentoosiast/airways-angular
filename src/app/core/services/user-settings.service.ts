@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Currency, DateFormat } from '@core/types/user-settings';
+import { UserSettings } from '@shared/types/user-settings';
+import { LocalStorageService } from './local-storage.service';
+import { STORAGE_USER_SETTINGS_KEY } from '@shared/constants/storage.constants';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserSettingsService {
-  dateFormat: DateFormat = DateFormat.MM_DD_YYYY;
-  currency: Currency = Currency.Ruble;
+  constructor(private localStorageService: LocalStorageService) {}
 
-  setUserSettings(value: { dateFormat?: DateFormat | null; currency?: Currency | null }) {
-    this.dateFormat = value.dateFormat || this.dateFormat;
-    this.currency = value.currency || this.currency;
-    // TODO: maybe save to local storage
+  load(): UserSettings | null {
+    return this.localStorageService.get<UserSettings>(STORAGE_USER_SETTINGS_KEY);
+  }
+
+  save(settings: UserSettings): void {
+    this.localStorageService.set<UserSettings>(STORAGE_USER_SETTINGS_KEY, settings);
   }
 }
