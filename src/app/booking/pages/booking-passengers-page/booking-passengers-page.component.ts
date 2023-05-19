@@ -8,6 +8,7 @@ import { Gender } from '@core/types/social-data';
 import { Passenger, PassengerCategory, PassengerContacts, Passengers, PassengersInfo } from '@shared/types/passengers';
 import { savePassengersInfo } from '@store/actions/flight-data.actions';
 import { selectFlightSearchData, selectPassengersInfo } from '@store/selectors/flight-data.selectors';
+import { generateRandomSeatLetter, generateRandomSeatNumber } from './random-generator';
 
 interface PassengerFormGroup {
   firstName: FormControl<string | null>;
@@ -66,8 +67,12 @@ export class BookingPassengersPageComponent implements OnInit, OnDestroy {
 
     const passengers: Passenger[] = [];
 
+    let startingSeatNumber = generateRandomSeatNumber();
+    const seatLetter = generateRandomSeatLetter();
+
     for (let i = 0; i < this.passengers.value.length; i++) {
       const passenger = this.passengers.value[i];
+      let seat: string | undefined;
 
       if (
         !passenger ||
@@ -82,6 +87,11 @@ export class BookingPassengersPageComponent implements OnInit, OnDestroy {
         return;
       }
 
+      if (passenger.category !== 'infants') {
+        seat = `${startingSeatNumber}${seatLetter}`;
+        startingSeatNumber++;
+      }
+
       passengers.push({
         firstName: passenger.firstName,
         lastName: passenger.lastName,
@@ -89,6 +99,7 @@ export class BookingPassengersPageComponent implements OnInit, OnDestroy {
         birthDate: passenger.birthDate.toUtcNativeDate().toISOString(),
         baggageCount: passenger.baggageCount,
         isAssistanceNeeded: passenger.isAssistanceNeeded,
+        seat,
         category: passenger.category,
       });
     }
