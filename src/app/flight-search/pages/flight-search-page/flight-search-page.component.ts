@@ -4,7 +4,7 @@ import { Observable, Subject, Subscription, debounceTime, distinctUntilChanged, 
 import { TuiDay } from '@taiga-ui/cdk';
 import { AirportsService } from '@core/services/airports.service';
 import { Airport } from '@booking/types/airport';
-import { PassengerCategory, Passengers } from '@shared/types/passengers';
+import { Passengers } from '@shared/types/passengers';
 import { FlightType } from '@shared/types/flight-type';
 import { adultValidator } from '@shared/validators/adultValidator';
 import { FLIGHT_SEARCH_MINIMUM_QUERY_LENGTH, FLIGHT_SEARCH_DEBOUNCE_TIME } from '@flight-search/constants';
