@@ -1,5 +1,4 @@
 import { Component, Inject, OnDestroy } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
 import { EMPTY, Subscription, catchError } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
@@ -34,7 +33,7 @@ export class TabbedFormsComponent implements OnDestroy {
       .login(loginData)
       .pipe(
         catchError((err) => {
-          this.handleError(err, 'Login error');
+          this.showErrorAlert(err.message);
 
           return EMPTY;
         }),
@@ -51,7 +50,7 @@ export class TabbedFormsComponent implements OnDestroy {
       .signup(signupData)
       .pipe(
         catchError((err) => {
-          this.handleError(err, 'Signup error');
+          this.showErrorAlert(err.message);
 
           return EMPTY;
         }),
@@ -63,14 +62,6 @@ export class TabbedFormsComponent implements OnDestroy {
       });
   }
 
-  private handleError(err: HttpErrorResponse, label: string) {
-    if (err.status === 0) {
-      this.showErrorAlert('Network error', err.message);
-    } else {
-      this.showErrorAlert(label, `HTTP Error ${err.status}: ${err.error.message}`);
-    }
-  }
-
   private ok(message: string) {
     this.context.completeWith(message);
   }
@@ -79,11 +70,11 @@ export class TabbedFormsComponent implements OnDestroy {
     this.context.completeWith('');
   }
 
-  private showErrorAlert(label: string, message: string) {
+  private showErrorAlert(message: string) {
     this.sub.add(
       this.alerts
         .open(message, {
-          label,
+          label: 'Request error',
           status: TuiNotification.Error,
           autoClose: ALERT_DISPLAY_DURATION,
         })

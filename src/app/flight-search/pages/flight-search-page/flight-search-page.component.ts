@@ -1,13 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Observable, Subject, Subscription, debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs';
 import { TuiDay } from '@taiga-ui/cdk';
-import plur from 'plur';
 import { AirportsService } from '@core/services/airports.service';
 import { Airport } from '@booking/types/airport';
-import { PassengerCategory, Passengers } from '@shared/types/passengers';
+import { Passengers } from '@shared/types/passengers';
 import { FlightType } from '@shared/types/flight-type';
-import { adultValidator } from '@flight-search/validators/adultValidator';
+import { adultValidator } from '@shared/validators/adultValidator';
 import { FLIGHT_SEARCH_MINIMUM_QUERY_LENGTH, FLIGHT_SEARCH_DEBOUNCE_TIME } from '@flight-search/constants';
 
 @Component({
@@ -26,11 +25,6 @@ export class FlightSearchPageComponent implements OnInit, OnDestroy {
       adultValidator,
     ]),
   });
-  passengerItems: { category: PassengerCategory; description: string }[] = [
-    { category: 'adults', description: '14+ years' },
-    { category: 'children', description: '2-14 years' },
-    { category: 'infants', description: '0-2 years' },
-  ];
   todayDate = TuiDay.currentLocal();
   private searchDeparture$$ = new Subject<string | null>();
   private searchArrival$$ = new Subject<string | null>();
@@ -65,22 +59,7 @@ export class FlightSearchPageComponent implements OnInit, OnDestroy {
   }
 
   get passengers() {
-    return this.airportForm.get('passengers');
-  }
-
-  modifyPassengers(type: PassengerCategory, delta: number) {
-    const passengers = this.airportForm.get('passengers')?.value;
-
-    if (passengers) {
-      passengers[type] += delta;
-      if (passengers[type] < 0) {
-        passengers[type] = 0;
-      }
-
-      this.airportForm.patchValue({
-        passengers,
-      });
-    }
+    return this.airportForm.get('passengers') as FormControl;
   }
 
   extractValueFromEvent(event: Event): string | null {
@@ -101,13 +80,6 @@ export class FlightSearchPageComponent implements OnInit, OnDestroy {
 
   stringifyAirport(item: Airport | null): string {
     return item ? `${item.city} ${item.iata_code}` : '';
-  }
-
-  stringifyPassengers(passengers: Passengers): string {
-    return `${passengers.adults} ${plur('Adult', passengers.adults)}, ${passengers.children} ${plur(
-      'Child',
-      passengers.children,
-    )}, ${passengers.infants} ${plur('Infant', passengers.infants)}`;
   }
 
   swapDepartureArrival(): void {
