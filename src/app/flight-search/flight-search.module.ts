@@ -14,6 +14,7 @@ import {
 } from '@taiga-ui/kit';
 import { FlightSearchRoutingModule } from './flight-search-routing.module';
 import { FlightSearchPageComponent } from './pages/flight-search-page/flight-search-page.component';
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
   declarations: [FlightSearchPageComponent],
@@ -33,6 +34,7 @@ import { FlightSearchPageComponent } from './pages/flight-search-page/flight-sea
     TuiRadioLabeledModule,
     TuiSelectModule,
     FlightSearchRoutingModule,
+    SharedModule,
   ],
 })
 export class FlightSearchModule {}

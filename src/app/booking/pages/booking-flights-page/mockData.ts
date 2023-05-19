@@ -1,29 +1,19 @@
 import { FlightsResponse } from '@booking/types/flights-response';
 
 const warsawAirport = {
+  id: 1,
   name: 'Warsaw Modlin',
   city: 'Warsaw',
   country: 'Poland',
   iata_code: 'WMI',
-  _geoloc: {
-    lat: 52.451111,
-    lng: 20.651667,
-  },
-  links_count: 52,
-  objectID: '8414',
 };
 
 const dublinAirport = {
+  id: 2,
   name: 'Dublin',
   city: 'Dublin',
   country: 'Ireland',
   iata_code: 'DUB',
-  _geoloc: {
-    lat: 53.421333,
-    lng: -6.270075,
-  },
-  links_count: 414,
-  objectID: '599',
 };
 
 export const mockedFlightsData: FlightsResponse = {
