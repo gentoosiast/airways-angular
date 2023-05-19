@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Booking } from '@shared/types/booking';
 
 @Component({
@@ -6,21 +6,15 @@ import { Booking } from '@shared/types/booking';
   templateUrl: './bookings-table.component.html',
   styleUrls: ['./bookings-table.component.scss'],
 })
-export class BookingsTableComponent implements OnInit {
+export class BookingsTableComponent {
   @Input() isEditable = false;
   @Output() removeBooking = new EventEmitter<Booking>();
   @Output() editBooking = new EventEmitter<Booking>();
   @Output() bookingDetails = new EventEmitter<Booking>();
 
-  @Input() bookings: Array<Booking & { isSelected?: boolean }> = [];
+  @Input() bookings: Array<Booking & { isSelected?: boolean }> | null = [];
   areAllSelected = true;
   readonly columns = ['number', 'flight', 'triptype', 'dates', 'passengers', 'price', 'actions'];
-
-  ngOnInit(): void {
-    this.bookings = this.bookings.map((value) => {
-      return { ...value, isSelected: true };
-    });
-  }
 
   remove(item: Booking): void {
     this.removeBooking.emit(item);
@@ -35,20 +29,20 @@ export class BookingsTableComponent implements OnInit {
   }
 
   isAllSelected(): boolean {
-    this.areAllSelected = this.bookings.every((value) => value.isSelected);
+    this.areAllSelected = !!this.bookings?.every((value) => value.isSelected);
     return this.areAllSelected;
   }
 
   selectAll(): void {
-    this.bookings.forEach((value) => (value.isSelected = this.areAllSelected));
+    this.bookings?.forEach((value) => (value.isSelected = this.areAllSelected));
   }
 
   priceOfSelectedBookings(): number {
-    return this.bookings.filter((value) => value.isSelected).reduce((acc, cur) => acc + cur.price, 0);
+    return this.bookings?.filter((value) => value.isSelected).reduce((acc, cur) => acc + cur.price, 0) || 0;
   }
 
   countOfSelectedBookings(): number {
-    return this.bookings.filter((value) => value.isSelected).length;
+    return this.bookings?.filter((value) => value.isSelected).length || 0;
   }
 
   endpointsSorter(a: Booking, b: Booking): number {

@@ -1,7 +1,7 @@
 <div class="wrapper">
   <div class="title">Cart</div>
   <air-bookings-table
-    [bookings]="bookings"
+    [bookings]="bookings$ | async"
     [isEditable]="true"
     (removeBooking)="removeBooking($event)"
     (editBooking)="editBooking($event)"
