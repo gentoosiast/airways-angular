@@ -126,9 +126,7 @@ export class FlightSearchPopupComponent implements OnInit, OnDestroy {
 
   private monitorFormChanges(): void {
     this.sub.add(
-      this.airportForm.valueChanges.subscribe((value) => {
-        console.log(`form value changed: ${JSON.stringify(value)}`);
-
+      this.airportForm.valueChanges.subscribe(() => {
         const { flightType, departure, arrival, date, passengers } = this.airportForm.value;
 
         if (!this.airportForm.valid || !flightType || !departure || !arrival || !date || !passengers) {
