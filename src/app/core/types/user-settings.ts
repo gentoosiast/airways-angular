@@ -2,12 +2,12 @@ export enum Currency {
   Ruble = 'RUB',
   Euro = 'EUR',
   Dollar = 'USD',
-  Pound = 'GBP',
+  Pound = 'PLN',
 }
 
 export enum DateFormat {
-  MM_DD_YYYY = 'MM/DD/YYYY',
-  DD_MM_YYYY = 'DD/MM/YYYY',
-  YYYY_DD_MM = 'YYYY/DD/MM',
-  YYYY_MM_DD = 'YYYY/MM/DD',
+  MM_DD_YYYY = 'MM/dd/YYYY',
+  DD_MM_YYYY = 'dd/MM/YYYY',
+  YYYY_DD_MM = 'YYYY/dd/MM',
+  YYYY_MM_DD = 'YYYY/MM/dd',
 }

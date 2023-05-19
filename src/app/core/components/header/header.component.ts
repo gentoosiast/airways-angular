@@ -87,4 +87,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }),
     );
   }
+
+  stringify(item: DateFormat): string {
+    return item.toUpperCase();
+  }
 }

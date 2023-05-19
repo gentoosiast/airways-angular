@@ -7,9 +7,18 @@
       <air-progress-bar *ngIf="showProgressBar"></air-progress-bar>
       <div class="buttons-wrapper">
         <form class="form" [formGroup]="userSettingsForm">
-          <tui-select tuiTextfieldSize="s" formControlName="dateFormat" class="date-format">
+          <tui-select
+            tuiTextfieldSize="s"
+            [valueContent]="stringify | tuiStringifyContent"
+            formControlName="dateFormat"
+            class="date-format"
+          >
             Date format
-            <tui-data-list-wrapper *tuiDataList [items]="dateFormats"></tui-data-list-wrapper>
+            <tui-data-list-wrapper
+              *tuiDataList
+              [items]="dateFormats"
+              [itemContent]="stringify | tuiStringifyContent"
+            ></tui-data-list-wrapper>
           </tui-select>
 
           <tui-select tuiTextfieldSize="s" formControlName="currency" class="currency">

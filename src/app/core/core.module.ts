@@ -26,6 +26,7 @@ import {
   TuiRadioBlockModule,
   TuiSelectModule,
   TuiSortCountriesPipeModule,
+  TuiStringifyContentPipeModule,
   TuiTabsModule,
 } from '@taiga-ui/kit';
 import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
@@ -78,6 +79,7 @@ import { SharedModule } from '@shared/shared.module';
     TuiRadioBlockModule,
     TuiSelectModule,
     TuiSortCountriesPipeModule,
+    TuiStringifyContentPipeModule,
     TuiSvgModule,
     TuiTabsModule,
     TuiTextfieldControllerModule,
