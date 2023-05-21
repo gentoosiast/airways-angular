@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Booking } from '@shared/types/booking';
 import { mockBookingsData } from './mockBookingsData';
+import { selectUserSettings } from '@store/selectors/user-settings.selectors';
 
 @Component({
   selector: 'air-user-account-page',
@@ -10,8 +12,9 @@ import { mockBookingsData } from './mockBookingsData';
 })
 export class UserAccountPageComponent {
   bookings = mockBookingsData;
+  userSettings$ = this.store.select(selectUserSettings);
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private store: Store) {}
 
   bookingDetails(booking: Booking) {
     console.log(`Details button flight=${booking.flightNumber}`);

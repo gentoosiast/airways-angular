@@ -1,8 +1,10 @@
 <div class="wrapper">
   <div class="title">Account</div>
   <air-bookings-table
+    *ngIf="userSettings$ | async as userSettings"
     [bookings]="bookings"
     [isEditable]="false"
+    [preferredCurrency]="userSettings.currency"
     (bookingDetails)="bookingDetails($event)"
   ></air-bookings-table>
 </div>

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Currency } from '@core/types/user-settings';
 import { Booking } from '@shared/types/booking';
 
 @Component({
@@ -8,6 +9,7 @@ import { Booking } from '@shared/types/booking';
 })
 export class BookingsTableComponent {
   @Input() isEditable = false;
+  @Input() preferredCurrency: Currency = Currency.Euro;
   @Output() removeBooking = new EventEmitter<Booking>();
   @Output() editBooking = new EventEmitter<Booking>();
   @Output() bookingDetails = new EventEmitter<Booking>();
@@ -38,7 +40,11 @@ export class BookingsTableComponent {
   }
 
   priceOfSelectedBookings(): number {
-    return this.bookings?.filter((value) => value.isSelected).reduce((acc, cur) => acc + cur.price, 0) || 0;
+    return (
+      this.bookings
+        ?.filter((value) => value.isSelected)
+        .reduce((acc, cur) => acc + cur.price.total[this.preferredCurrency], 0) || 0
+    );
   }
 
   countOfSelectedBookings(): number {

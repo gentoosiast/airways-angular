@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Booking } from '@shared/types/booking';
 import { removeBooking } from '@store/actions/current-order.actions';
 import { selectCurrentOrder } from 'src/app/store/selectors/bookings.selector';
+import { selectUserSettings } from '@store/selectors/user-settings.selectors';
 
 @Component({
   selector: 'air-shopping-cart-page',
@@ -13,6 +14,7 @@ import { selectCurrentOrder } from 'src/app/store/selectors/bookings.selector';
 })
 export class ShoppingCartPageComponent implements OnInit {
   bookings$!: Observable<Array<Booking & { isSelected?: boolean }>>;
+  userSettings$ = this.store.select(selectUserSettings);
 
   constructor(private router: Router, private readonly store: Store) {}
 

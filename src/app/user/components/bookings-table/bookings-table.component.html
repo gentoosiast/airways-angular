@@ -46,7 +46,7 @@
         </div>
       </td>
       <td *tuiCell="'price'" tuiTd class="price td">
-        {{ item.price | currency }}
+        {{ item.price.total[preferredCurrency] | currency : preferredCurrency }}
       </td>
       <td *tuiCell="'actions'" tuiTd>
         <tui-hosted-dropdown tuiDropdownAlign="right" [sided]="true" [content]="dropdown">
@@ -74,7 +74,7 @@
           <button tuiButton appearance="secondary" size="s" routerLink="/">+ Add new trip</button>
           <div class="total">
             <div class="tui-text_h6">Total</div>
-            <div class="tui-text_h5 total-price">{{ priceOfSelectedBookings() | currency }}</div>
+            <div class="tui-text_h5 total-price">{{ priceOfSelectedBookings() | currency : preferredCurrency }}</div>
           </div>
         </div>
       </td>
