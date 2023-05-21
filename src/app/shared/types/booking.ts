@@ -1,6 +1,7 @@
 import { TuiDay, TuiTime } from '@taiga-ui/cdk';
 import { FlightType } from './flight-type';
 import { Passengers, Passenger } from './passengers';
+import { FlightPrice } from './flight-price';
 
 export interface FlightsData {
   departure: string;
@@ -16,5 +17,5 @@ export interface Booking {
   flightsData: Array<FlightsData>;
   passengers: Passengers;
   passengerData: Array<Passenger>;
-  price: number;
+  price: FlightPrice;
 }

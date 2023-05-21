@@ -54,5 +54,54 @@ export const mockBookingData: Booking = {
       category: 'infants',
     },
   ],
-  price: 551.38,
+  price: {
+    total: {
+      EUR: 686.6,
+      USD: 755.26,
+      RUB: 58896.35,
+      PLN: 3137.75,
+    },
+    adults: {
+      fare: {
+        EUR: 142.14,
+        USD: 156.36,
+        RUB: 12192.96,
+        PLN: 649.59,
+      },
+      tax: {
+        EUR: 38.54,
+        USD: 42.4,
+        RUB: 3306.08,
+        PLN: 176.13,
+      },
+    },
+    children: {
+      fare: {
+        EUR: 92.39,
+        USD: 101.63,
+        RUB: 7925.42,
+        PLN: 422.23,
+      },
+      tax: {
+        EUR: 25.05,
+        USD: 27.56,
+        RUB: 2148.95,
+        PLN: 114.49,
+      },
+    },
+    infants: {
+      fare: {
+        EUR: 71.07,
+        USD: 78.18,
+        RUB: 6096.48,
+        PLN: 324.79,
+      },
+      tax: {
+        EUR: 19.27,
+        USD: 21.2,
+        RUB: 1653.04,
+        PLN: 88.07,
+      },
+    },
+  },
 };
