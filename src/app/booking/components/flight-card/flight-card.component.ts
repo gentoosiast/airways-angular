@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { Currency } from '@core/types/user-settings';
 import { Flight } from '@shared/types/flight';
 
 @Component({
@@ -10,6 +11,7 @@ export class FlightCardComponent implements OnInit {
   @Input() flight?: Flight;
   @Input() index = 0;
   @Input() isSelected = false;
+  @Input() preferredCurrency: Currency = Currency.Euro;
   @Output() flightSelect = new EventEmitter<number>();
   isDisabled = false;
   private todayDate = new Date();

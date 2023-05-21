@@ -7,7 +7,9 @@
   >
     <span class="date">{{ flight.departureDate | date : 'dd MMM' : 'Z' }}</span>
     <span class="weekday">{{ flight.departureDate | date : 'EEEE' : 'Z' }}</span>
-    <span *ngIf="!isDisabled; else noflight" class="price">{{ flight.price.total.EUR | currency : 'EUR' }}</span>
+    <span *ngIf="!isDisabled; else noflight" class="price">{{
+      flight.price.total[preferredCurrency] | currency : preferredCurrency
+    }}</span>
   </div>
 
   <ng-template #noflight>

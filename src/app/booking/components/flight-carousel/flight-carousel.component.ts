@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { EMPTY, Observable } from 'rxjs';
 import { Flight } from '@shared/types/flight';
+import { UserSettings } from '@shared/types/user-settings';
 
 @Component({
   selector: 'air-flight-carousel',
@@ -9,6 +11,7 @@ import { Flight } from '@shared/types/flight';
 export class FlightCarouselComponent implements OnInit {
   @Input() flights: Flight[] = [];
   @Input() isVisible = true;
+  @Input() userSettings$: Observable<UserSettings> = EMPTY;
   @Output() selectFlight = new EventEmitter<number>();
   displayItemsCount = 5; // TODO: value will depend on available screen space
   index = 0;
