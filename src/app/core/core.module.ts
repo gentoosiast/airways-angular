@@ -15,9 +15,11 @@ import {
 } from '@taiga-ui/core';
 import {
   TuiCheckboxLabeledModule,
+  TuiComboBoxModule,
   TuiDataListWrapperModule,
   TuiInputModule,
   TuiInputDateModule,
+  TuiInputDateRangeModule,
   TuiInputPasswordModule,
   TuiInputPhoneInternationalModule,
   TuiMarkerIconModule,
@@ -36,6 +38,9 @@ import { SignupFormComponent } from './components/signup-form/signup-form.compon
 import { SocialButtonsComponent } from './components/social-buttons/social-buttons.component';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 import { TokenInterceptor } from './interceptors/token.interceptor';
+import { CountPassengersPipe } from './pipes/count-passengers.pipe';
+import { FlightSearchPopupComponent } from './components/flight-search-popup/flight-search-popup.component';
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -47,20 +52,25 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
     LoginFormComponent,
     SignupFormComponent,
     SocialButtonsComponent,
+    CountPassengersPipe,
+    FlightSearchPopupComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
+    SharedModule,
     TuiLetModule,
     TuiButtonModule,
     TuiCheckboxLabeledModule,
+    TuiComboBoxModule,
     TuiDataListModule,
     TuiDataListWrapperModule,
     TuiErrorModule,
     TuiInputModule,
     TuiInputDateModule,
+    TuiInputDateRangeModule,
     TuiInputPasswordModule,
     TuiInputPhoneInternationalModule,
     TuiLinkModule,

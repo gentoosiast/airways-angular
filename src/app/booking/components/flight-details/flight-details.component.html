@@ -37,7 +37,7 @@
 
         <div class="price">
           <span *ngIf="!isFlightSelected" class="price-label">Price</span>
-          <span class="price-value">{{ flight.price | currency : 'EUR' }}</span>
+          <span class="price-value">{{ flight.price.total.EUR | currency : 'EUR' }}</span>
         </div>
       </div>
 

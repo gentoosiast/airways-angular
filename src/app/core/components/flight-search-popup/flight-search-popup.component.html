@@ -1,0 +1,81 @@
+<div class="popup" [formGroup]="airportForm">
+  <div class="departure-block">
+    <tui-combo-box
+      *tuiLet="airportsDeparture$ | async as airportsDeparture"
+      class="departure-combo-box"
+      spellcheck="false"
+      [tuiTextfieldCleaner]="true"
+      [valueContent]="labelContent"
+      [stringify]="stringifyAirport"
+      (searchChange)="onDepartureSearchChange($event)"
+      formControlName="departure"
+      >From
+      <input
+        tuiTextfield
+        placeholder="Type a city name"
+        (input)="onDepartureSearchChange(extractValueFromEvent($event))"
+      />
+      <tui-data-list-wrapper
+        *tuiDataList
+        [items]="airportsDeparture"
+        [itemContent]="itemContent"
+      ></tui-data-list-wrapper>
+    </tui-combo-box>
+    <tui-error *ngIf="departure?.touched && departure?.invalid" error="Departure airport is required"></tui-error>
+  </div>
+
+  <div class="arrival-block">
+    <tui-combo-box
+      *tuiLet="airportsArrival$ | async as airportsArrival"
+      class="arrival-combo-box"
+      spellcheck="false"
+      [tuiTextfieldCleaner]="true"
+      [valueContent]="labelContent"
+      [stringify]="stringifyAirport"
+      (searchChange)="onArrivalSearchChange($event)"
+      formControlName="arrival"
+      >Destination
+      <input
+        tuiTextfield
+        placeholder="Type a city name"
+        (input)="onArrivalSearchChange(extractValueFromEvent($event))"
+      />
+      <tui-data-list-wrapper *tuiDataList [items]="airportsArrival" [itemContent]="itemContent"></tui-data-list-wrapper>
+    </tui-combo-box>
+    <tui-error *ngIf="arrival?.touched && arrival?.invalid" error="Arrival airport is required"></tui-error>
+  </div>
+
+  <div class="date-block">
+    <tui-input-date-range
+      *ngIf="flightType?.value === 'roundtrip'"
+      class="input-date-range"
+      formControlName="date"
+      [min]="todayDate"
+      >Dates</tui-input-date-range
+    >
+    <tui-input-date *ngIf="flightType?.value === 'oneway'" class="input-date" formControlName="date" [min]="todayDate"
+      >Date</tui-input-date
+    >
+    <tui-error *ngIf="date?.touched && date?.invalid" error="Date is required"></tui-error>
+  </div>
+
+  <air-passenger-select
+    *ngIf="passengers"
+    class="passengers-select"
+    formControlName="passengers"
+  ></air-passenger-select>
+</div>
+
+<ng-template #labelContent let-data>
+  <div class="airport-label">
+    <span class="airport-city">{{ data.city }}</span>
+    <span class="airport-code">{{ data.iata_code }}</span>
+  </div>
+</ng-template>
+
+<ng-template #itemContent let-data>
+  <div class="airport-item">
+    <span class="airport-item-heading">{{ data.city }} ({{ data.iata_code }})</span>
+    <span class="airport-item-subheading">{{ data.name }}, {{ data.country }} </span>
+  </div>
+</ng-template>

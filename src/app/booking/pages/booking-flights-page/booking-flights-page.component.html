@@ -1,55 +1,68 @@
-<div class="page">
-  <div class="flights">
-    <div class="flight">
-      <div class="heading">
-        <tui-svg src="/assets/icons/plane-right.svg"></tui-svg>
-        <span class="heading-text">{{ departureAirportName }} to {{ arrivalAirportName }}</span>
+<ng-container *tuiLet="flightsData$ | async as flightsData">
+  <div *ngIf="flightsData" class="page">
+    <div class="flights">
+      <div class="flight">
+        <div class="heading">
+          <tui-svg src="/assets/icons/plane-right.svg"></tui-svg>
+          <span class="heading-text"
+            >{{ flightsData.flights[0].departureAirport.name }} to
+            {{ flightsData.flights[0].arrivalAirport.name }}</span
+          >
+        </div>
+
+        <div class="flight-select">
+          <air-flight-carousel
+            [flights]="flightsData.flights"
+            [isVisible]="!isDepartureConfirmed"
+            (selectFlight)="onSelectDepartureFlight($event)"
+          ></air-flight-carousel>
+
+          <air-flight-details
+            *ngIf="departureFlightIdx !== null"
+            [flight]="flightsData.flights[departureFlightIdx]"
+            [isFlightSelected]="isDepartureConfirmed"
+            (confirmFlight)="onConfirmDepartureFlight($event)"
+          ></air-flight-details>
+        </div>
       </div>
 
-      <div class="flight-select">
-        <air-flight-carousel
-          [flights]="departureFlights"
-          [isVisible]="!isDepartureConfirmed"
-          (selectFlight)="onSelectDepartureFlight($event)"
-        ></air-flight-carousel>
+      <div *ngIf="flightsData.returnFlights" class="flight">
+        <div class="heading">
+          <tui-svg src="/assets/icons/plane-left.svg"></tui-svg>
+          <span class="heading-text"
+            >{{ flightsData.flights[0].arrivalAirport.name }} to
+            {{ flightsData.flights[0].departureAirport.name }}</span
+          >
+        </div>
 
-        <air-flight-details
-          *ngIf="departureFlightIdx !== null"
-          [flight]="departureFlights[departureFlightIdx]"
-          [isFlightSelected]="isDepartureConfirmed"
-          (confirmFlight)="onConfirmDepartureFlight($event)"
-        ></air-flight-details>
+        <div class="flight-select">
+          <air-flight-carousel
+            [flights]="flightsData.returnFlights"
+            [isVisible]="!isArrivalConfirmed"
+            (selectFlight)="onSelectArrivalFlight($event)"
+          ></air-flight-carousel>
+
+          <air-flight-details
+            *ngIf="arrivalFlightIdx !== null"
+            [flight]="flightsData.returnFlights[arrivalFlightIdx]"
+            [isFlightSelected]="isArrivalConfirmed"
+            [isDeparture]="false"
+            (confirmFlight)="onConfirmArrivalFlight($event)"
+          ></air-flight-details>
+        </div>
       </div>
     </div>
 
-    <div *ngIf="arrivalFlights" class="flight">
-      <div class="heading">
-        <tui-svg src="/assets/icons/plane-left.svg"></tui-svg>
-        <span class="heading-text">{{ arrivalAirportName }} to {{ departureAirportName }}</span>
-      </div>
-
-      <div class="flight-select">
-        <air-flight-carousel
-          [flights]="arrivalFlights"
-          [isVisible]="!isArrivalConfirmed"
-          (selectFlight)="onSelectArrivalFlight($event)"
-        ></air-flight-carousel>
-
-        <air-flight-details
-          *ngIf="arrivalFlightIdx !== null"
-          [flight]="arrivalFlights[arrivalFlightIdx]"
-          [isFlightSelected]="isArrivalConfirmed"
-          [isDeparture]="false"
-          (confirmFlight)="onConfirmArrivalFlight($event)"
-        ></air-flight-details>
-      </div>
+    <div class="buttons">
+      <button tuiButton appearance="flat" type="button" (click)="onBackButton()">Back</button>
+      <button
+        tuiButton
+        type="button"
+        [disabled]="!isDepartureConfirmed || (!!flightsData.returnFlights && !isArrivalConfirmed)"
+        (click)="onContinueButton()"
+      >
+        Continue
+      </button>
     </div>
   </div>
-
-  <div class="buttons">
-    <button tuiButton appearance="flat" type="button" (click)="onBack()">Back</button>
-    <button tuiButton type="button" [disabled]="!isDepartureConfirmed || !isArrivalConfirmed" (click)="onContinue()">
-      Continue
-    </button>
-  </div>
-</div>
+</ng-container>

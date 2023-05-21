@@ -5,12 +5,15 @@ import { filter, Observable, startWith, Subscription, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { TuiDialogService, TuiAlertService, TuiNotification } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
+import { FlightSearchPopupComponent } from '../flight-search-popup/flight-search-popup.component';
 import { TabbedFormsComponent } from '../tabbed-forms/tabbed-forms.component';
 import { UserSettingsService } from '@core/services/user-settings.service';
 import { Currency, DateFormat } from '@core/types/user-settings';
-import { selectUser } from 'src/app/store/selectors/user.selectors';
+import { selectUser } from '@store/selectors/user.selectors';
 import { User } from '@core/types/user';
-import { logoutUser } from 'src/app/store/actions/user.actions';
+import { logoutUser } from '@store/actions/user.actions';
+import { FlightSearchData } from '@shared/types/flight-data';
+import { selectFlightSearchData } from '@store/selectors/flight-data.selectors';
 
 @Component({
   selector: 'air-header',
@@ -20,6 +23,8 @@ import { logoutUser } from 'src/app/store/actions/user.actions';
 export class HeaderComponent implements OnInit, OnDestroy {
   currencies = Object.values(Currency);
   dateFormats = Object.values(DateFormat);
+  flightSearchData$?: Observable<FlightSearchData | null>;
+  showEditButton = false;
   showProgressBar = false;
   user$?: Observable<User | null>;
 
@@ -36,6 +41,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private showProgressBar$ = this.router.events.pipe(
     filter((event) => event instanceof NavigationEnd),
     tap(() => {
+      this.showEditButton = '/booking/step-flights' === this.router.url;
+
       if (['/booking/step-flights', '/booking/step-passengers', '/booking/step-summary'].includes(this.router.url)) {
         this.showProgressBar = true;
       } else {
@@ -55,6 +62,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.sub.add(this.showProgressBar$.subscribe());
     this.sub.add(this.userSettings$.subscribe());
+    this.flightSearchData$ = this.store.select(selectFlightSearchData);
     this.user$ = this.store.select(selectUser);
   }
 
@@ -62,11 +70,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  logout() {
+  logout(): void {
     this.store.dispatch(logoutUser());
   }
 
-  openLoginModal() {
+  openFlightSearchModal(): void {
+    this.sub.add(this.dialogs.open<boolean>(new PolymorpheusComponent(FlightSearchPopupComponent)).subscribe());
+  }
+
+  openLoginModal(): void {
     this.sub.add(
       this.dialogs.open<string>(new PolymorpheusComponent(TabbedFormsComponent)).subscribe({
         next: (message) => {

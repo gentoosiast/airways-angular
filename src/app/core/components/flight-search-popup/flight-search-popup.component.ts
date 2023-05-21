@@ -1,6 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import {
   EMPTY,
   Observable,
@@ -11,29 +10,31 @@ import {
   distinctUntilChanged,
   filter,
   switchMap,
+  take,
 } from 'rxjs';
-import { TuiDay, TuiDayRange } from '@taiga-ui/cdk';
-import { TuiAlertService, TuiNotification } from '@taiga-ui/core';
 import { Store } from '@ngrx/store';
+import { TuiDay, TuiDayRange } from '@taiga-ui/cdk';
+import { TuiAlertService, TuiDialogContext, TuiNotification } from '@taiga-ui/core';
+import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
 import { AirportsService } from '@core/services/airports.service';
-import { Airport } from '@booking/types/airport';
-import { Passengers } from '@shared/types/passengers';
-import { FlightType } from '@shared/types/flight-type';
-import { adultValidator } from '@shared/validators/adultValidator';
-import { FLIGHT_SEARCH_MINIMUM_QUERY_LENGTH, FLIGHT_SEARCH_DEBOUNCE_TIME } from '@flight-search/constants';
-import { FlightSearchData } from '@shared/types/flight-data';
-import { saveFlightSearch, saveFlights } from '@store/actions/flight-data.actions';
-import { selectFlightSearchData } from '@store/selectors/flight-data.selectors';
-import { FlightsRequest } from '@shared/types/flights-request';
 import { FlightsService } from '@core/services/flights.service';
+import { Airport } from '@booking/types/airport';
+import { FlightType } from '@shared/types/flight-type';
+import { Passengers } from '@shared/types/passengers';
+import { adultValidator } from '@shared/validators/adultValidator';
+import { selectFlightSearchData } from '@store/selectors/flight-data.selectors';
+import { saveFlightSearch, saveFlights } from '@store/actions/flight-data.actions';
+import { FlightSearchData } from '@shared/types/flight-data';
+import { FlightsRequest } from '@shared/types/flights-request';
+import { FLIGHT_SEARCH_DEBOUNCE_TIME, FLIGHT_SEARCH_MINIMUM_QUERY_LENGTH } from '@flight-search/constants';
 import { ALERT_DISPLAY_DURATION } from '@core/constants/alerts.constants';
 
 @Component({
-  selector: 'air-flight-search-page',
-  templateUrl: './flight-search-page.component.html',
-  styleUrls: ['./flight-search-page.component.scss'],
+  selector: 'air-flight-search-popup',
+  templateUrl: './flight-search-popup.component.html',
+  styleUrls: ['./flight-search-popup.component.scss'],
 })
-export class FlightSearchPageComponent implements OnInit, OnDestroy {
+export class FlightSearchPopupComponent implements OnInit, OnDestroy {
   airportForm = this.fb.group({
     flightType: this.fb.control<FlightType | null>('roundtrip', [Validators.required]),
     departure: this.fb.control<Airport | null>(null, [Validators.required]),
@@ -44,27 +45,28 @@ export class FlightSearchPageComponent implements OnInit, OnDestroy {
       adultValidator,
     ]),
   });
-  flightData$ = this.store.select(selectFlightSearchData);
-  todayDate = TuiDay.currentLocal();
   private searchDeparture$$ = new Subject<string | null>();
   private searchArrival$$ = new Subject<string | null>();
   airportsDeparture$ = this.getAirports(this.searchDeparture$$);
   airportsArrival$ = this.getAirports(this.searchArrival$$);
+  flightData$ = this.store.select(selectFlightSearchData);
+  todayDate = TuiDay.currentLocal();
   private sub = new Subscription();
 
   constructor(
+    @Inject(POLYMORPHEUS_CONTEXT) private context: TuiDialogContext<boolean>,
     @Inject(TuiAlertService) private readonly alerts: TuiAlertService,
-    private fb: FormBuilder,
     private airportsService: AirportsService,
     private flightsService: FlightsService,
-    private router: Router,
+    private fb: FormBuilder,
     private store: Store,
   ) {}
 
   ngOnInit(): void {
     this.seedFormFromStore();
-    this.monitorFlightTypeChanges();
+    this.monitorFormChanges();
   }
+
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
@@ -101,72 +103,16 @@ export class FlightSearchPageComponent implements OnInit, OnDestroy {
     this.searchArrival$$.next(searchQuery);
   }
 
-  onSubmit() {
-    const { flightType, departure, arrival, date, passengers } = this.airportForm.value;
-
-    if (!this.airportForm.valid || !flightType || !departure || !arrival || !date || !passengers) {
-      return;
-    }
-
-    let flightDate = '';
-    let returnDate;
-    if (date instanceof TuiDayRange) {
-      flightDate = date.from.toUtcNativeDate().toISOString();
-      returnDate = date.to.toUtcNativeDate().toISOString();
-    } else {
-      flightDate = date.toUtcNativeDate().toISOString();
-    }
-
-    const flightSearchData: FlightSearchData = {
-      flightType,
-      departure,
-      arrival,
-      flightDate,
-      returnDate,
-      passengers,
-    };
-
-    this.store.dispatch(saveFlightSearch({ flightSearchData }));
-
-    const request: FlightsRequest = {
-      departureIATA: flightSearchData.departure.iata_code,
-      arrivalIATA: flightSearchData.arrival.iata_code,
-      flightDate: flightSearchData.flightDate,
-      returnDate: flightSearchData.returnDate,
-      adults: flightSearchData.passengers.adults,
-      children: flightSearchData.passengers.children,
-      infants: flightSearchData.passengers.infants,
-    };
-
-    this.sub.add(
-      this.flightsService
-        .search(request)
-        .pipe(
-          catchError((err) => {
-            this.showErrorAlert(err.message);
-
-            return EMPTY;
-          }),
-        )
-        .subscribe((flights) => {
-          this.store.dispatch(saveFlights({ flights }));
-          this.router.navigateByUrl('/booking/step-flights');
-        }),
-    );
-  }
-
   stringifyAirport(item: Airport | null): string {
     return item ? `${item.city} ${item.iata_code}` : '';
   }
 
-  swapDepartureArrival(): void {
-    const departure = this.airportForm.get('departure')?.value;
-    const arrival = this.airportForm.get('arrival')?.value;
+  private ok() {
+    this.context.completeWith(true);
+  }
 
-    this.airportForm.patchValue({
-      departure: arrival,
-      arrival: departure,
-    });
+  private cancel() {
+    this.context.completeWith(false);
   }
 
   private getAirports(search$$: Subject<string | null>): Observable<Airport[]> {
@@ -178,21 +124,66 @@ export class FlightSearchPageComponent implements OnInit, OnDestroy {
     );
   }
 
-  private monitorFlightTypeChanges(): void {
-    // we need to reset 'date' value if `flightType` was switched
+  private monitorFormChanges(): void {
     this.sub.add(
-      this.flightType?.valueChanges.subscribe(() => {
-        this.airportForm.patchValue({
-          date: null,
-        });
-        this.date?.markAsUntouched();
+      this.airportForm.valueChanges.subscribe(() => {
+        const { flightType, departure, arrival, date, passengers } = this.airportForm.value;
+
+        if (!this.airportForm.valid || !flightType || !departure || !arrival || !date || !passengers) {
+          return;
+        }
+
+        let flightDate = '';
+        let returnDate;
+        if (date instanceof TuiDayRange) {
+          flightDate = date.from.toUtcNativeDate().toISOString();
+          returnDate = date.to.toUtcNativeDate().toISOString();
+        } else {
+          flightDate = date.toUtcNativeDate().toISOString();
+        }
+
+        const flightSearchData: FlightSearchData = {
+          flightType,
+          departure,
+          arrival,
+          flightDate,
+          returnDate,
+          passengers,
+        };
+
+        this.store.dispatch(saveFlightSearch({ flightSearchData }));
+
+        const request: FlightsRequest = {
+          departureIATA: flightSearchData.departure.iata_code,
+          arrivalIATA: flightSearchData.arrival.iata_code,
+          flightDate: flightSearchData.flightDate,
+          returnDate: flightSearchData.returnDate,
+          adults: flightSearchData.passengers.adults,
+          children: flightSearchData.passengers.children,
+          infants: flightSearchData.passengers.infants,
+        };
+
+        this.sub.add(
+          this.flightsService
+            .search(request)
+            .pipe(
+              catchError((err) => {
+                this.showErrorAlert(err.message);
+
+                return EMPTY;
+              }),
+            )
+            .subscribe((flights) => {
+              this.store.dispatch(saveFlights({ flights }));
+            }),
+        );
       }),
     );
   }
 
-  private seedFormFromStore() {
+  private seedFormFromStore(): void {
     this.sub.add(
-      this.flightData$.subscribe((flightData) => {
+      this.flightData$.pipe(take(1)).subscribe((flightData) => {
         if (!flightData) {
           return;
         }

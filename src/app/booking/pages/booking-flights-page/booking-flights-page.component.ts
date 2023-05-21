@@ -1,32 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { mockedFlightsData } from './mockData';
-import { Flight } from '@booking/types/flight';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { selectFlights } from '@store/selectors/flight-data.selectors';
+import { Flights } from '@shared/types/flights';
 
 @Component({
   selector: 'air-booking-flights-page',
   templateUrl: './booking-flights-page.component.html',
   styleUrls: ['./booking-flights-page.component.scss'],
 })
-export class BookingFlightsPageComponent {
-  departureAirportName: string = mockedFlightsData.departure[0].departureAirport.name;
-  arrivalAirportName: string = mockedFlightsData.departure[0].arrivalAirport.name;
-  departureFlights: Flight[] = mockedFlightsData.departure;
-  arrivalFlights?: Flight[] = mockedFlightsData.arrival;
+export class BookingFlightsPageComponent implements OnInit {
+  flightsData$?: Observable<Flights | null>;
   departureFlightIdx: number | null = null;
   arrivalFlightIdx: number | null = null;
   isDepartureConfirmed = false;
-  isArrivalConfirmed = !this.arrivalFlights;
+  isArrivalConfirmed = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private store: Store) {}
 
-  onBack(): void {
-    // TODO: return to the Flight Search form with previously pre-filled data
+  ngOnInit(): void {
+    this.flightsData$ = this.store.select(selectFlights);
+  }
+
+  onBackButton(): void {
     this.router.navigateByUrl('/');
   }
 
-  onContinue(): void {
-    // TODO
+  onContinueButton(): void {
+    this.router.navigateByUrl('/booking/step-passengers');
   }
 
   onConfirmDepartureFlight(isConfirmed: boolean): void {

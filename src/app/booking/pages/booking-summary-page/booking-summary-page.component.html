@@ -15,10 +15,8 @@
         <div class="passenger">{{ passenger.firstName | uppercase }} {{ passenger.lastName | uppercase }}</div>
         <div class="baggage">
           <div *ngIf="passenger.baggageCount">{{ passenger.baggageCount }} checked bag (total 23 kg) included</div>
-          <div *ngIf="passenger.passengerCategory !== 'infants'">
-            1 cabin bag + 1 personal item (max. 8 kg) included
-          </div>
-          <div *ngIf="passenger.passengerCategory !== 'infants'">Seat {{ passenger.seat }}</div>
+          <div *ngIf="passenger.category !== 'infants'">1 cabin bag + 1 personal item (max. 8 kg) included</div>
+          <div *ngIf="passenger.category !== 'infants'">Seat {{ passenger.seat }}</div>
         </div>
       </div>
     </div>
@@ -51,7 +49,7 @@
   </div>
 
   <div class="buttons-wrapper">
-    <button tuiButton appearance="flat" type="button">Back</button>
+    <button tuiButton appearance="flat" type="button" (click)="onBackButton()">Back</button>
     <button tuiButton type="button" appearance="outline" (click)="onAddToCart()">Add to order cart</button>
     <button tuiButton type="button" appearance="primary" (click)="onBuyNow()">Buy now</button>
   </div>

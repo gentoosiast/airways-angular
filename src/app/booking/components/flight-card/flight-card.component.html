@@ -6,8 +6,8 @@
     (click)="onSelectFlight()"
   >
     <span class="date">{{ flight.departureDate | date : 'dd MMM' : 'Z' }}</span>
-    <span class="weekday">Monday</span>
-    <span *ngIf="!isDisabled; else noflight" class="price">{{ flight.price | currency : 'EUR' }}</span>
+    <span class="weekday">{{ flight.departureDate | date : 'EEEE' : 'Z' }}</span>
+    <span *ngIf="!isDisabled; else noflight" class="price">{{ flight.price.total.EUR | currency : 'EUR' }}</span>
   </div>
 
   <ng-template #noflight>

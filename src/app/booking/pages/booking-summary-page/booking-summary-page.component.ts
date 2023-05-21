@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { TuiAlertService, TuiNotification } from '@taiga-ui/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { nanoid } from 'nanoid';
 import { mockBookingData } from './mockBookingData';
 import { mockPaymentData } from './mockPaymentData';
 import { PassengerCategory, Passengers } from '@shared/types/passengers';
 import { addBooking } from '@store/actions/current-order.actions';
-import { nanoid } from 'nanoid';
 
 @Component({
   selector: 'air-booking-summary-page',
@@ -61,6 +61,10 @@ export class BookingSummaryPageComponent implements OnDestroy {
             this.paymentDetails.price[category].tax),
       0,
     );
+  }
+
+  onBackButton() {
+    this.router.navigateByUrl('/booking/step-passengers');
   }
 
   onAddToCart() {
