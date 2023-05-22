@@ -18,6 +18,7 @@
           [flight]="flight"
           [index]="i"
           [isSelected]="i === selectedIndex"
+          [dateFormat]="userSettings.dateFormat"
           [preferredCurrency]="userSettings.currency"
           (flightSelect)="onSelectFlight($event)"
         ></air-flight-card>
