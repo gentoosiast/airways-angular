@@ -4,6 +4,7 @@
       <air-date-time-widget
         [isDeparture]="true"
         [date]="flight.departureDate"
+        [dateFormat]="dateFormat"
         [airportName]="flight.departureAirport.name"
       ></air-date-time-widget>
 
@@ -20,6 +21,7 @@
       <air-date-time-widget
         [isDeparture]="false"
         [date]="flight.arrivalDate"
+        [dateFormat]="dateFormat"
         [airportName]="flight.arrivalAirport.name"
       ></air-date-time-widget>
 

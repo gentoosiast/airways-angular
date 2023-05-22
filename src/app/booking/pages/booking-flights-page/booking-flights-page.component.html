@@ -23,6 +23,7 @@
               *ngIf="departureFlightIdx !== null"
               [flight]="flightsData.flights[departureFlightIdx]"
               [isFlightSelected]="isDepartureConfirmed"
+              [dateFormat]="userSettings.dateFormat"
               [preferredCurrency]="userSettings.currency"
               (confirmFlight)="onConfirmDepartureFlight($event)"
             ></air-flight-details>
@@ -53,6 +54,7 @@
               [flight]="flightsData.returnFlights[arrivalFlightIdx]"
               [isFlightSelected]="isArrivalConfirmed"
               [isDeparture]="false"
+              [dateFormat]="userSettings.dateFormat"
               [preferredCurrency]="userSettings.currency"
               (confirmFlight)="onConfirmArrivalFlight($event)"
             ></air-flight-details>
