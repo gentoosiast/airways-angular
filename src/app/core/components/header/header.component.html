@@ -66,15 +66,17 @@
           <span>{{ flightSearchData.arrival.name }}</span>
         </div>
 
-        <div class="flight-info">
+        <div *ngIf="userSettings$ | async as userSettings" class="flight-info">
           <span>{{ flightSearchData.flightType | titlecase }}</span>
           <span class="bullet"></span>
           <span *ngIf="flightSearchData.returnDate; else oneway"
-            >{{ flightSearchData.flightDate | date : 'd LLL' }} -
-            {{ flightSearchData.returnDate | date : 'd LLL' }}</span
+            >{{ flightSearchData.flightDate | date : getDateFormatForPipe(userSettings.dateFormat) }} -
+            {{ flightSearchData.returnDate | date : getDateFormatForPipe(userSettings.dateFormat) }}</span
           >
           <ng-template #oneway
-            ><span>{{ flightSearchData.flightDate | date : 'd LLL' }}</span></ng-template
+            ><span>{{
+              flightSearchData.flightDate | date : getDateFormatForPipe(userSettings.dateFormat)
+            }}</span></ng-template
           >
           <span class="bullet"></span>
           <div class="passengers">

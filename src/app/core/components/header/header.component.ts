@@ -75,6 +75,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.user$ = this.store.select(selectUser);
   }
 
+  getDateFormatForPipe(dateFormat: DateFormat): string {
+    switch (dateFormat) {
+      case DateFormat.MM_DD_YYYY:
+        return 'LLL d';
+      case DateFormat.DD_MM_YYYY:
+        return 'd LLL';
+      case DateFormat.YYYY_MM_DD:
+        return 'LLL d';
+      default:
+        return 'd LLL';
+    }
+  }
+
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
