@@ -3,6 +3,7 @@
     *ngIf="userSettings$ | async as userSettings"
     [bookings]="bookings"
     caption="Completed orders"
+    [dateFormat]="userSettings.dateFormat"
     [isEditable]="false"
     [preferredCurrency]="userSettings.currency"
     (bookingDetails)="bookingDetails($event)"

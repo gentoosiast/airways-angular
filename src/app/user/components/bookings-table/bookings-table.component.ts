@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Currency } from '@core/types/user-settings';
+import { Currency, DateFormat } from '@core/types/user-settings';
 import { Booking } from '@shared/types/booking';
 
 @Component({
@@ -10,6 +10,7 @@ import { Booking } from '@shared/types/booking';
 export class BookingsTableComponent {
   @Input() bookings: Array<Booking & { isSelected?: boolean }> | null = [];
   @Input() caption = '';
+  @Input() dateFormat: DateFormat = DateFormat.DD_MM_YYYY;
   @Input() isEditable = false;
   @Input() preferredCurrency: Currency = Currency.Euro;
   @Output() bookingDetails = new EventEmitter<Booking>();
@@ -18,6 +19,19 @@ export class BookingsTableComponent {
 
   areAllSelected = true;
   readonly columns = ['number', 'flight', 'triptype', 'dates', 'passengers', 'price', 'actions'];
+
+  getFormatForDatePipe(dateFormat: DateFormat): string {
+    switch (dateFormat) {
+      case DateFormat.MM_DD_YYYY:
+        return 'LLL d, yyyy, H:mm';
+      case DateFormat.DD_MM_YYYY:
+        return 'd LLL, yyyy, H:mm';
+      case DateFormat.YYYY_MM_DD:
+        return 'yyyy, LLL d, H:mm';
+      default:
+        return 'd LLL, yyyy, H:mm';
+    }
+  }
 
   edit(item: Booking): void {
     this.editBooking.emit(item);

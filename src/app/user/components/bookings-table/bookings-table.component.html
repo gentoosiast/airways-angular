@@ -48,11 +48,11 @@
       <td *tuiCell="'dates'" tuiTd class="td">
         <div class="dates">
           <span
-            >{{ booking.flight.departureDate | date : 'd LLL, yyyy, H:mm' : 'Z' }} —
+            >{{ booking.flight.departureDate | date : getFormatForDatePipe(dateFormat) : 'Z' }} —
             {{ booking.flight.arrivalDate | date : 'H:mm' : 'Z' }}</span
           >
           <span *ngIf="booking.returnFlight"
-            >{{ booking.returnFlight.departureDate | date : 'd LLL, yyyy, H:mm' : 'Z' }} —
+            >{{ booking.returnFlight.departureDate | date : getFormatForDatePipe(dateFormat) : 'Z' }} —
             {{ booking.returnFlight.arrivalDate | date : 'H:mm' : 'Z' }}</span
           >
         </div>
