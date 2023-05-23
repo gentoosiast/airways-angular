@@ -8,7 +8,7 @@ import { mockBookingData } from './mockBookingData';
 import { PassengerCategory, Passengers } from '@shared/types/passengers';
 import { addBooking } from '@store/actions/current-order.actions';
 import { selectUserSettings } from '@store/selectors/user-settings.selectors';
-import { Currency } from '@core/types/user-settings';
+import { Currency, DateFormat } from '@core/types/user-settings';
 
 @Component({
   selector: 'air-booking-summary-page',
@@ -17,6 +17,7 @@ import { Currency } from '@core/types/user-settings';
 })
 export class BookingSummaryPageComponent implements OnInit, OnDestroy {
   booking = mockBookingData;
+  dateFormat: DateFormat = DateFormat.DD_MM_YYYY;
   passengerCategories = Object.keys(this.booking.passengers) as Array<PassengerCategory>;
   preferredCurrency: Currency = Currency.Euro;
   userSettings$ = this.store.select(selectUserSettings);
@@ -81,6 +82,7 @@ export class BookingSummaryPageComponent implements OnInit, OnDestroy {
   private monitorCurrencySettings(): void {
     this.sub.add(
       this.userSettings$.subscribe((settings) => {
+        this.dateFormat = settings.dateFormat;
         this.preferredCurrency = settings.currency;
       }),
     );

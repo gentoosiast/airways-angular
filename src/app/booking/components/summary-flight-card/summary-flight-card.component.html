@@ -6,7 +6,7 @@
     </div>
     <div class="date">
       <span class="date-date">
-        {{ flight.departureDate | date : 'EEEE, MMMM d, y' : 'Z' }}
+        {{ flight.departureDate | date : getFormatForDatePipe(dateFormat) : 'Z' }}
       </span>
       <span class="date-time">
         {{ flight.departureDate | date : 'H:mm' : 'Z' }}

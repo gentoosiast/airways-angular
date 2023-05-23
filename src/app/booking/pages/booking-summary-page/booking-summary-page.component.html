@@ -2,11 +2,13 @@
   <h1 class="title"><tui-svg src="/assets/icons/preview.svg"></tui-svg> Summary</h1>
   <div class="grid">
     <air-summary-flight-card
+      [dateFormat]="dateFormat"
       [flight]="booking.flight"
       [passengerData]="booking.passengerData"
     ></air-summary-flight-card>
     <air-summary-flight-card
       *ngIf="booking.returnFlight"
+      [dateFormat]="dateFormat"
       [flight]="booking.returnFlight"
       [passengerData]="booking.passengerData"
     ></air-summary-flight-card>
