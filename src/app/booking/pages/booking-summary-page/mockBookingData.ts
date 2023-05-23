@@ -159,7 +159,7 @@ export const mockBookingData: Booking = {
       lastName: 'Potter',
       gender: 'female',
       birthDate: '1960-07-31',
-      baggageCount: 1,
+      baggageCount: 2,
       isAssistanceNeeded: false,
       seat: '19E',
       category: 'adults',

@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { DateFormat } from '@core/types/user-settings';
 import { Flight } from '@shared/types/flight';
 import { Passenger } from '@shared/types/passengers';
+import { BAGGAGE_ITEM_WEIGHT } from '@booking/constants/baggage.constants';
 
 @Component({
   selector: 'air-summary-flight-card',
@@ -12,6 +13,7 @@ export class SummaryFlightCardComponent {
   @Input() dateFormat: DateFormat = DateFormat.DD_MM_YYYY;
   @Input() flight?: Flight;
   @Input() passengerData: Passenger[] = [];
+  baggageItemWeight = BAGGAGE_ITEM_WEIGHT;
 
   getFormatForDatePipe(dateFormat: DateFormat): string {
     switch (dateFormat) {
