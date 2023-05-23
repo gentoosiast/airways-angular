@@ -18,6 +18,7 @@ import * as userSettingsEffects from './store/effects/user-settings.effects';
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    CoreModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -29,7 +30,6 @@ import * as userSettingsEffects from './store/effects/user-settings.effects';
     StoreModule.forRoot({ [appFeatureKey]: appReducer }, {}),
     EffectsModule.forRoot(userEffects, userSettingsEffects),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    CoreModule,
   ],
   providers: [
     {

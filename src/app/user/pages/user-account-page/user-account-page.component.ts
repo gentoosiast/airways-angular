@@ -17,7 +17,7 @@ export class UserAccountPageComponent {
   constructor(private router: Router, private store: Store) {}
 
   bookingDetails(booking: Booking) {
-    console.log(`Details button flight=${booking.flightNumber}`);
+    console.log(`Details button flight=${booking.flight.flightNumber}`);
     this.router.navigateByUrl('/booking/step-summary');
     // TODO: pre-fill data on booking summary page via a service
   }

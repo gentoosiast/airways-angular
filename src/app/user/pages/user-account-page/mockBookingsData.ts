@@ -1,24 +1,154 @@
 import { Booking } from '@shared/types/booking';
-import { TuiDay, TuiTime } from '@taiga-ui/cdk';
 
 export const mockBookingsData: Array<Booking> = [
   {
-    flightNumber: 'FR 1925',
     flightType: 'roundtrip',
-    flightsData: [
-      {
-        departure: 'Dublin',
-        arrival: 'Warsaw',
-        departureDate: { date: new TuiDay(2023, 2, 1), time: new TuiTime(8, 40) },
-        arrivalDate: { date: new TuiDay(2023, 2, 1), time: new TuiTime(12, 0) },
+    flight: {
+      flightNumber: 'IQ 9463',
+      departureAirport: {
+        id: 83,
+        iata_code: 'LED',
+        name: 'Pulkovo',
+        city: 'St. Petersburg',
+        country: 'Russia',
       },
-      {
-        departure: 'Modlin',
-        arrival: 'Dublin',
-        departureDate: { date: new TuiDay(2023, 2, 18), time: new TuiTime(7, 40) },
-        arrivalDate: { date: new TuiDay(2023, 2, 18), time: new TuiTime(11, 0) },
+      arrivalAirport: {
+        id: 6,
+        iata_code: 'LAX',
+        name: 'Los Angeles Intl',
+        city: 'Los Angeles',
+        country: 'United States',
       },
-    ],
+      departureDate: '2023-06-11T03:20:00.000Z',
+      arrivalDate: '2023-06-11T07:18:00.000Z',
+      flightDuration: 209,
+      price: {
+        total: {
+          EUR: 737.23,
+          USD: 810.95,
+          RUB: 63239.43,
+          PLN: 3369.13,
+        },
+        adults: {
+          fare: {
+            EUR: 150.24,
+            USD: 165.27,
+            RUB: 12887.71,
+            PLN: 686.6,
+          },
+          tax: {
+            EUR: 43.77,
+            USD: 48.14,
+            RUB: 3754.25,
+            PLN: 200.01,
+          },
+        },
+        children: {
+          fare: {
+            EUR: 97.66,
+            USD: 107.42,
+            RUB: 8377.01,
+            PLN: 446.29,
+          },
+          tax: {
+            EUR: 28.45,
+            USD: 31.29,
+            RUB: 2440.26,
+            PLN: 130.01,
+          },
+        },
+        infants: {
+          fare: {
+            EUR: 75.12,
+            USD: 82.63,
+            RUB: 6443.85,
+            PLN: 343.3,
+          },
+          tax: {
+            EUR: 21.88,
+            USD: 24.07,
+            RUB: 1877.12,
+            PLN: 100.01,
+          },
+        },
+      },
+      seats: 157,
+      availableSeats: 17,
+      connections: [],
+    },
+    returnFlight: {
+      flightNumber: 'AF 3192',
+      departureAirport: {
+        id: 6,
+        iata_code: 'LAX',
+        name: 'Los Angeles Intl',
+        city: 'Los Angeles',
+        country: 'United States',
+      },
+      arrivalAirport: {
+        id: 83,
+        iata_code: 'LED',
+        name: 'Pulkovo',
+        city: 'St. Petersburg',
+        country: 'Russia',
+      },
+      departureDate: '2023-06-28T21:45:00.000Z',
+      arrivalDate: '2023-06-29T01:45:00.000Z',
+      flightDuration: 219,
+      price: {
+        total: {
+          EUR: 945.18,
+          USD: 1039.69,
+          RUB: 81077.16,
+          PLN: 4319.45,
+        },
+        adults: {
+          fare: {
+            EUR: 193.33,
+            USD: 212.66,
+            RUB: 16583.93,
+            PLN: 883.52,
+          },
+          tax: {
+            EUR: 55.4,
+            USD: 60.94,
+            RUB: 4752.16,
+            PLN: 253.18,
+          },
+        },
+        children: {
+          fare: {
+            EUR: 125.67,
+            USD: 138.23,
+            RUB: 10779.56,
+            PLN: 574.29,
+          },
+          tax: {
+            EUR: 36.01,
+            USD: 39.61,
+            RUB: 3088.9,
+            PLN: 164.56,
+          },
+        },
+        infants: {
+          fare: {
+            EUR: 96.67,
+            USD: 106.33,
+            RUB: 8291.97,
+            PLN: 441.76,
+          },
+          tax: {
+            EUR: 27.7,
+            USD: 30.47,
+            RUB: 2376.08,
+            PLN: 126.59,
+          },
+        },
+      },
+      seats: 344,
+      availableSeats: 30,
+      connections: [],
+    },
     passengers: {
       adults: 1,
       children: 1,
@@ -78,16 +208,80 @@ export const mockBookingsData: Array<Booking> = [
   },
 
   {
-    flightNumber: 'FR 1936',
     flightType: 'oneway',
-    flightsData: [
-      {
-        departure: 'Gdansk',
-        arrival: 'Warsaw',
-        departureDate: { date: new TuiDay(2023, 4, 28), time: new TuiTime(15, 40) },
-        arrivalDate: { date: new TuiDay(2023, 4, 28), time: new TuiTime(16, 40) },
+    flight: {
+      flightNumber: 'LI 5121',
+      departureAirport: {
+        id: 58,
+        iata_code: 'LIS',
+        name: 'Lisboa',
+        city: 'Lisbon',
+        country: 'Portugal',
       },
-    ],
+      arrivalAirport: {
+        id: 73,
+        iata_code: 'IAD',
+        name: 'Washington Dulles Intl',
+        city: 'Washington',
+        country: 'United States',
+      },
+      departureDate: '2023-06-08T13:45:00.000Z',
+      arrivalDate: '2023-06-08T18:35:00.000Z',
+      flightDuration: 263,
+      price: {
+        total: {
+          EUR: 685.06,
+          USD: 753.57,
+          RUB: 58764.53,
+          PLN: 3130.73,
+        },
+        adults: {
+          fare: {
+            EUR: 131.71,
+            USD: 144.88,
+            RUB: 11298,
+            PLN: 601.91,
+          },
+          tax: {
+            EUR: 48.57,
+            USD: 53.43,
+            RUB: 4166.35,
+            PLN: 221.97,
+          },
+        },
+        children: {
+          fare: {
+            EUR: 85.61,
+            USD: 94.17,
+            RUB: 7343.7,
+            PLN: 391.24,
+          },
+          tax: {
+            EUR: 31.57,
+            USD: 34.73,
+            RUB: 2708.13,
+            PLN: 144.28,
+          },
+        },
+        infants: {
+          fare: {
+            EUR: 65.85,
+            USD: 72.44,
+            RUB: 5649,
+            PLN: 300.96,
+          },
+          tax: {
+            EUR: 24.29,
+            USD: 26.71,
+            RUB: 2083.18,
+            PLN: 110.98,
+          },
+        },
+      },
+      seats: 294,
+      availableSeats: 0,
+      connections: ['ODI', 'GUN'],
+    },
     passengers: {
       adults: 1,
       children: 0,
@@ -145,17 +339,155 @@ export const mockBookingsData: Array<Booking> = [
       },
     },
   },
+
   {
-    flightNumber: 'AR 1936',
     flightType: 'oneway',
-    flightsData: [
-      {
-        departure: 'Paris',
-        arrival: 'Berlin',
-        departureDate: { date: new TuiDay(2023, 5, 28), time: new TuiTime(10, 20) },
-        arrivalDate: { date: new TuiDay(2023, 5, 28), time: new TuiTime(12, 15) },
+    flight: {
+      flightNumber: 'JH 0249',
+      departureAirport: {
+        id: 96,
+        iata_code: 'HND',
+        name: 'Tokyo Intl',
+        city: 'Tokyo',
+        country: 'Japan',
       },
-    ],
+      arrivalAirport: {
+        id: 3,
+        iata_code: 'PEK',
+        name: 'Capital Intl',
+        city: 'Beijing',
+        country: 'China',
+      },
+      departureDate: '2023-06-08T14:45:00.000Z',
+      arrivalDate: '2023-06-08T18:15:00.000Z',
+      flightDuration: 181,
+      price: {
+        total: {
+          EUR: 836.14,
+          USD: 919.76,
+          RUB: 71724.47,
+          PLN: 3821.18,
+        },
+        adults: {
+          fare: {
+            EUR: 164.16,
+            USD: 180.58,
+            RUB: 14081.68,
+            PLN: 750.21,
+          },
+          tax: {
+            EUR: 55.88,
+            USD: 61.47,
+            RUB: 4793.18,
+            PLN: 255.36,
+          },
+        },
+        children: {
+          fare: {
+            EUR: 106.7,
+            USD: 117.37,
+            RUB: 9153.09,
+            PLN: 487.64,
+          },
+          tax: {
+            EUR: 36.32,
+            USD: 39.95,
+            RUB: 3115.57,
+            PLN: 165.98,
+          },
+        },
+        infants: {
+          fare: {
+            EUR: 82.08,
+            USD: 90.29,
+            RUB: 7040.84,
+            PLN: 375.11,
+          },
+          tax: {
+            EUR: 27.94,
+            USD: 30.73,
+            RUB: 2396.59,
+            PLN: 127.68,
+          },
+        },
+      },
+      seats: 266,
+      availableSeats: 0,
+      connections: [],
+    },
+    returnFlight: {
+      flightNumber: 'BO 5339',
+      departureAirport: {
+        id: 3,
+        iata_code: 'PEK',
+        name: 'Capital Intl',
+        city: 'Beijing',
+        country: 'China',
+      },
+      arrivalAirport: {
+        id: 96,
+        iata_code: 'HND',
+        name: 'Tokyo Intl',
+        city: 'Tokyo',
+        country: 'Japan',
+      },
+      departureDate: '2023-06-24T16:05:00.000Z',
+      arrivalDate: '2023-06-24T21:28:00.000Z',
+      flightDuration: 297,
+      price: {
+        total: {
+          EUR: 776.41,
+          USD: 854.06,
+          RUB: 66600.83,
+          PLN: 3548.21,
+        },
+        adults: {
+          fare: {
+            EUR: 147.54,
+            USD: 162.3,
+            RUB: 12656.36,
+            PLN: 674.28,
+          },
+          tax: {
+            EUR: 56.78,
+            USD: 62.45,
+            RUB: 4870.18,
+            PLN: 259.46,
+          },
+        },
+        children: {
+          fare: {
+            EUR: 95.9,
+            USD: 105.49,
+            RUB: 8226.63,
+            PLN: 438.28,
+          },
+          tax: {
+            EUR: 36.9,
+            USD: 40.59,
+            RUB: 3165.61,
+            PLN: 168.65,
+          },
+        },
+        infants: {
+          fare: {
+            EUR: 73.77,
+            USD: 81.15,
+            RUB: 6328.18,
+            PLN: 337.14,
+          },
+          tax: {
+            EUR: 28.39,
+            USD: 31.23,
+            RUB: 2435.09,
+            PLN: 129.73,
+          },
+        },
+      },
+      seats: 252,
+      availableSeats: 61,
+      connections: [],
+    },
     passengers: {
       adults: 1,
       children: 2,
@@ -244,16 +576,80 @@ export const mockBookingsData: Array<Booking> = [
     },
   },
   {
-    flightNumber: 'LL 9012',
     flightType: 'oneway',
-    flightsData: [
-      {
-        departure: 'Warsaw',
-        arrival: 'Oslo',
-        departureDate: { date: new TuiDay(2023, 2, 1), time: new TuiTime(23, 0) },
-        arrivalDate: { date: new TuiDay(2023, 2, 2), time: new TuiTime(1, 10) },
+    flight: {
+      flightNumber: 'WW 9107',
+      departureAirport: {
+        id: 5,
+        iata_code: 'CDG',
+        name: 'Charles De Gaulle',
+        city: 'Paris',
+        country: 'France',
       },
-    ],
+      arrivalAirport: {
+        id: 29,
+        iata_code: 'BRU',
+        name: 'Brussels Natl',
+        city: 'Brussels',
+        country: 'Belgium',
+      },
+      departureDate: '2023-06-08T23:55:00.000Z',
+      arrivalDate: '2023-06-09T03:32:00.000Z',
+      flightDuration: 194,
+      price: {
+        total: {
+          EUR: 994.23,
+          USD: 1093.65,
+          RUB: 85285.16,
+          PLN: 4543.64,
+        },
+        adults: {
+          fare: {
+            EUR: 227.53,
+            USD: 250.29,
+            RUB: 19517.69,
+            PLN: 1039.82,
+          },
+          tax: {
+            EUR: 34.11,
+            USD: 37.52,
+            RUB: 2925.77,
+            PLN: 155.87,
+          },
+        },
+        children: {
+          fare: {
+            EUR: 147.9,
+            USD: 162.69,
+            RUB: 12686.5,
+            PLN: 675.88,
+          },
+          tax: {
+            EUR: 22.17,
+            USD: 24.39,
+            RUB: 1901.75,
+            PLN: 101.32,
+          },
+        },
+        infants: {
+          fare: {
+            EUR: 113.77,
+            USD: 125.14,
+            RUB: 9758.85,
+            PLN: 519.91,
+          },
+          tax: {
+            EUR: 17.05,
+            USD: 18.76,
+            RUB: 1462.88,
+            PLN: 77.94,
+          },
+        },
+      },
+      seats: 297,
+      availableSeats: 116,
+      connections: ['PVG'],
+    },
     passengers: {
       adults: 2,
       children: 1,

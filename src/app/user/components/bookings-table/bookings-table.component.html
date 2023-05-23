@@ -1,4 +1,9 @@
 <table tuiTable [columns]="columns" class="table">
+  <caption class="table-caption">
+    {{
+      caption
+    }}
+  </caption>
   <thead>
     <tr tuiThGroup>
       <th *tuiHead="'number'" [sorter]="null" tuiTh>
@@ -8,45 +13,63 @@
         </div>
       </th>
       <th *tuiHead="'flight'" [sorter]="endpointsSorter" tuiTh>Flight</th>
-      <th *tuiHead="'triptype'" [sorter]="tripTypeSorter" tuiTh>Type trip</th>
-      <th *tuiHead="'dates'" [sorter]="dateSorter" tuiTh>Data & Time</th>
+      <th *tuiHead="'triptype'" [sorter]="tripTypeSorter" tuiTh>Trip type</th>
+      <th *tuiHead="'dates'" [sorter]="dateSorter" tuiTh>Date & Time</th>
       <th *tuiHead="'passengers'" [sorter]="null" tuiTh>Passengers</th>
       <th *tuiHead="'price'" tuiTh>Price</th>
       <th *tuiHead="'actions'" tuiTh [sorter]="null"></th>
     </tr>
   </thead>
+
   <tbody *tuiLet="bookings | tuiTableSort as sortedBookings" tuiTbody [data]="sortedBookings">
-    <tr *ngFor="let item of sortedBookings; let index = index" tuiTr>
+    <tr *ngFor="let booking of sortedBookings; let index = index" tuiTr>
       <td *tuiCell="'number'" tuiTd class="flight-number td">
         <div class="flexbox">
-          <tui-checkbox *ngIf="isEditable" [(ngModel)]="item.isSelected" (change)="isAllSelected()"></tui-checkbox>
-          <a (click)="details(item)">{{ item.flightNumber }}</a>
+          <tui-checkbox *ngIf="isEditable" [(ngModel)]="booking.isSelected" (change)="isAllSelected()"></tui-checkbox>
+          <a (click)="showDetails(booking)">
+            <div class="flight-number-list">
+              <span>{{ booking.flight.flightNumber }}</span>
+              <span *ngIf="booking.returnFlight">{{ booking.returnFlight.flightNumber }}</span>
+            </div>
+          </a>
         </div>
       </td>
       <td *tuiCell="'flight'" tuiTd class="td">
-        <div *ngFor="let flight of item.flightsData; let i = index">{{ flight.departure }} - {{ flight.arrival }}</div>
+        <div class="flights">
+          <span>{{ booking.flight.departureAirport.name }} — {{ booking.flight.arrivalAirport.name }}</span>
+          <span *ngIf="booking.returnFlight"
+            >{{ booking.returnFlight.departureAirport.name }} — {{ booking.returnFlight.arrivalAirport.name }}</span
+          >
+        </div>
       </td>
       <td *tuiCell="'triptype'" tuiTd class="td">
-        {{ item.flightType === 'oneway' ? 'One way' : 'Round trip' }}
+        {{ booking.flightType === 'oneway' ? 'One way' : 'Round trip' }}
       </td>
       <td *tuiCell="'dates'" tuiTd class="td">
-        <div *ngFor="let flight of item.flightsData; let i = index">
-          {{ flight | flightsDates }}
+        <div class="dates">
+          <span
+            >{{ booking.flight.departureDate | date : 'd LLL, yyyy, H:mm' : 'Z' }} —
+            {{ booking.flight.arrivalDate | date : 'H:mm' : 'Z' }}</span
+          >
+          <span *ngIf="booking.returnFlight"
+            >{{ booking.returnFlight.departureDate | date : 'd LLL, yyyy, H:mm' : 'Z' }} —
+            {{ booking.returnFlight.arrivalDate | date : 'H:mm' : 'Z' }}</span
+          >
         </div>
       </td>
       <td *tuiCell="'passengers'" tuiTd class="td">
         <div class="passenger">
-          {{ 'adults' | passengersData : item.passengers.adults }}
+          {{ 'adults' | passengersData : booking.passengers.adults }}
         </div>
         <div class="passenger">
-          {{ 'children' | passengersData : item.passengers.children }}
+          {{ 'children' | passengersData : booking.passengers.children }}
         </div>
         <div class="passenger">
-          {{ 'infants' | passengersData : item.passengers.infants }}
+          {{ 'infants' | passengersData : booking.passengers.infants }}
         </div>
       </td>
       <td *tuiCell="'price'" tuiTd class="price td">
-        {{ item.price.total[preferredCurrency] | currency : preferredCurrency }}
+        {{ booking.price.total[preferredCurrency] | currency : preferredCurrency }}
       </td>
       <td *tuiCell="'actions'" tuiTd>
         <tui-hosted-dropdown tuiDropdownAlign="right" [sided]="true" [content]="dropdown">
@@ -61,9 +84,9 @@
         </tui-hosted-dropdown>
         <ng-template #dropdown let-close="close">
           <tui-data-list>
-            <button *ngIf="isEditable" tuiOption (click)="edit(item)">Edit</button>
-            <button *ngIf="isEditable" tuiOption (click)="remove(item)">Remove</button>
-            <button *ngIf="!isEditable" tuiOption (click)="details(item)">Details</button>
+            <button *ngIf="isEditable" tuiOption (click)="edit(booking)">Edit</button>
+            <button *ngIf="isEditable" tuiOption (click)="remove(booking)">Remove</button>
+            <button *ngIf="!isEditable" tuiOption (click)="showDetails(booking)">Details</button>
           </tui-data-list>
         </ng-template>
       </td>

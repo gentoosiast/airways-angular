@@ -1,23 +1,153 @@
 import { Booking } from '@shared/types/booking';
-import { TuiDay, TuiTime } from '@taiga-ui/cdk';
 
 export const mockBookingData: Booking = {
-  flightNumber: 'FR 1925',
   flightType: 'roundtrip',
-  flightsData: [
-    {
-      departure: 'Dublin',
-      arrival: 'Warsaw',
-      departureDate: { date: new TuiDay(2023, 2, 1), time: new TuiTime(8, 40) },
-      arrivalDate: { date: new TuiDay(2023, 2, 1), time: new TuiTime(12, 0) },
+  flight: {
+    flightNumber: 'TH 7454',
+    departureAirport: {
+      id: 83,
+      iata_code: 'LED',
+      name: 'Pulkovo',
+      city: 'St. Petersburg',
+      country: 'Russia',
     },
-    {
-      departure: 'Modlin',
-      arrival: 'Dublin',
-      departureDate: { date: new TuiDay(2023, 2, 18), time: new TuiTime(7, 40) },
-      arrivalDate: { date: new TuiDay(2023, 2, 18), time: new TuiTime(11, 0) },
+    arrivalAirport: {
+      id: 6,
+      iata_code: 'LAX',
+      name: 'Los Angeles Intl',
+      city: 'Los Angeles',
+      country: 'United States',
     },
-  ],
+    departureDate: '2023-06-08T17:20:00.000Z',
+    arrivalDate: '2023-06-08T22:57:00.000Z',
+    flightDuration: 313,
+    price: {
+      total: {
+        EUR: 1008.18,
+        USD: 1108.99,
+        RUB: 86481.31,
+        PLN: 4607.36,
+      },
+      adults: {
+        fare: {
+          EUR: 235.08,
+          USD: 258.58,
+          RUB: 20164.75,
+          PLN: 1074.29,
+        },
+        tax: {
+          EUR: 30.23,
+          USD: 33.26,
+          RUB: 2593.49,
+          PLN: 138.17,
+        },
+      },
+      children: {
+        fare: {
+          EUR: 152.8,
+          USD: 168.08,
+          RUB: 13107.09,
+          PLN: 698.29,
+        },
+        tax: {
+          EUR: 19.65,
+          USD: 21.62,
+          RUB: 1685.77,
+          PLN: 89.81,
+        },
+      },
+      infants: {
+        fare: {
+          EUR: 117.54,
+          USD: 129.29,
+          RUB: 10082.38,
+          PLN: 537.15,
+        },
+        tax: {
+          EUR: 15.12,
+          USD: 16.63,
+          RUB: 1296.74,
+          PLN: 69.09,
+        },
+      },
+    },
+    seats: 294,
+    availableSeats: 0,
+    connections: [],
+  },
+  returnFlight: {
+    flightNumber: 'KV 7713',
+    departureAirport: {
+      id: 6,
+      iata_code: 'LAX',
+      name: 'Los Angeles Intl',
+      city: 'Los Angeles',
+      country: 'United States',
+    },
+    arrivalAirport: {
+      id: 83,
+      iata_code: 'LED',
+      name: 'Pulkovo',
+      city: 'St. Petersburg',
+      country: 'Russia',
+    },
+    departureDate: '2023-06-25T10:00:00.000Z',
+    arrivalDate: '2023-06-25T14:23:00.000Z',
+    flightDuration: 245,
+    price: {
+      total: {
+        EUR: 813.81,
+        USD: 895.19,
+        RUB: 69808.32,
+        PLN: 3719.1,
+      },
+      adults: {
+        fare: {
+          EUR: 178.9,
+          USD: 196.8,
+          RUB: 15346.45,
+          PLN: 817.59,
+        },
+        tax: {
+          EUR: 35.25,
+          USD: 38.78,
+          RUB: 3024.16,
+          PLN: 161.11,
+        },
+      },
+      children: {
+        fare: {
+          EUR: 116.29,
+          USD: 127.92,
+          RUB: 9975.19,
+          PLN: 531.44,
+        },
+        tax: {
+          EUR: 22.92,
+          USD: 25.21,
+          RUB: 1965.7,
+          PLN: 104.72,
+        },
+      },
+      infants: {
+        fare: {
+          EUR: 89.45,
+          USD: 98.4,
+          RUB: 7673.23,
+          PLN: 408.8,
+        },
+        tax: {
+          EUR: 17.63,
+          USD: 19.39,
+          RUB: 1512.08,
+          PLN: 80.56,
+        },
+      },
+    },
+    seats: 212,
+    availableSeats: 138,
+    connections: ['MEU', 'IRC'],
+  },
   passengers: {
     adults: 2,
     children: 0,

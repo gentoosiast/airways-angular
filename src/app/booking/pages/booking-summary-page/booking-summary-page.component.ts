@@ -24,9 +24,9 @@ export class BookingSummaryPageComponent implements OnInit, OnDestroy {
   private sub = new Subscription();
 
   constructor(
-    private readonly store: Store,
-    private readonly router: Router,
     @Inject(TuiAlertService) private readonly alerts: TuiAlertService,
+    private readonly router: Router,
+    private readonly store: Store,
   ) {}
 
   ngOnInit(): void {

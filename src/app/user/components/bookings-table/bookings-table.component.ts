@@ -8,25 +8,26 @@ import { Booking } from '@shared/types/booking';
   styleUrls: ['./bookings-table.component.scss'],
 })
 export class BookingsTableComponent {
+  @Input() bookings: Array<Booking & { isSelected?: boolean }> | null = [];
+  @Input() caption = '';
   @Input() isEditable = false;
   @Input() preferredCurrency: Currency = Currency.Euro;
-  @Output() removeBooking = new EventEmitter<Booking>();
-  @Output() editBooking = new EventEmitter<Booking>();
   @Output() bookingDetails = new EventEmitter<Booking>();
+  @Output() editBooking = new EventEmitter<Booking>();
+  @Output() removeBooking = new EventEmitter<Booking>();
 
-  @Input() bookings: Array<Booking & { isSelected?: boolean }> | null = [];
   areAllSelected = true;
   readonly columns = ['number', 'flight', 'triptype', 'dates', 'passengers', 'price', 'actions'];
-
-  remove(item: Booking): void {
-    this.removeBooking.emit(item);
-  }
 
   edit(item: Booking): void {
     this.editBooking.emit(item);
   }
 
-  details(item: Booking): void {
+  remove(item: Booking): void {
+    this.removeBooking.emit(item);
+  }
+
+  showDetails(item: Booking): void {
     this.bookingDetails.emit(item);
   }
 
@@ -39,6 +40,10 @@ export class BookingsTableComponent {
     this.bookings?.forEach((value) => (value.isSelected = this.areAllSelected));
   }
 
+  countOfSelectedBookings(): number {
+    return this.bookings?.filter((value) => value.isSelected).length || 0;
+  }
+
   priceOfSelectedBookings(): number {
     return (
       this.bookings
@@ -47,23 +52,15 @@ export class BookingsTableComponent {
     );
   }
 
-  countOfSelectedBookings(): number {
-    return this.bookings?.filter((value) => value.isSelected).length || 0;
+  dateSorter(a: Booking, b: Booking): number {
+    return new Date(a.flight.departureDate).getTime() - new Date(b.flight.departureDate).getTime();
   }
 
   endpointsSorter(a: Booking, b: Booking): number {
-    return a.flightsData[0].departure.localeCompare(b.flightsData[0].departure);
+    return a.flight.departureAirport.name.localeCompare(b.flight.departureAirport.name);
   }
 
   tripTypeSorter(a: Booking, b: Booking): number {
     return a.flightType.localeCompare(b.flightType);
-  }
-
-  dateSorter(a: Booking, b: Booking): number {
-    const aDate = a.flightsData[0].departureDate.date.toUtcNativeDate().getTime();
-    const bDate = b.flightsData[0].departureDate.date.toUtcNativeDate().getTime();
-    const aTimeMs = a.flightsData[0].departureDate.time.toAbsoluteMilliseconds();
-    const bTimeMs = b.flightsData[0].departureDate.time.toAbsoluteMilliseconds();
-    return aDate === bDate ? aTimeMs - bTimeMs : aDate - bDate;
   }
 }

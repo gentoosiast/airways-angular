@@ -1,26 +1,36 @@
 @use 'src/app/shared/styles/colors' as *;
-
-.title {
-  color: var(--tui-primary-active);
-}
+@use 'src/app/shared/styles/typography';
 
 .table {
   margin: 20px auto;
 }
 
+.table-caption {
+  @extend %typo-title-large;
+
+  margin: 0 0 27px 31px;
+  text-align: left;
+  color: var(--tui-primary-active);
+}
+
 th {
-  white-space: nowrap;
-  background: var(--tui-base-03);
+  @extend %typo-subtitle-medium;
+
   border: none;
+  white-space: nowrap;
+  color: $color-neutral-black;
+  background-color: var(--tui-base-03);
 }
 
 td {
-  white-space: nowrap;
-  border-left: none;
-  border-right: none;
+  @extend %typo-body-xlarge;
+
   border-top: none;
+  border-right: none;
   border-bottom: 1px solid var(--tui-base-03);
-  font-weight: 600;
+  border-left: none;
+  white-space: nowrap;
+  color: $color-neutral-black;
 
   &.td {
     padding: 0.5rem 0.75rem;
@@ -32,6 +42,13 @@ td {
   color: var(--tui-primary);
   font-weight: 600;
   cursor: pointer;
+}
+
+.flight-number-list,
+.flights,
+.dates {
+  display: flex;
+  flex-direction: column;
 }
 
 .passenger {
@@ -50,6 +67,8 @@ td {
 }
 
 .total-price {
+  @extend %typo-subtitle-large;
+
   background: linear-gradient(90deg, #11397e 0%, #005abc 100%);
   -webkit-text-fill-color: transparent;
   background-clip: text;

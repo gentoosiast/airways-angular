@@ -29,13 +29,13 @@ export class ShoppingCartPageComponent implements OnInit {
   }
 
   editBooking(booking: Booking) {
-    console.log(`Edit button flight=${booking.flightNumber}`);
+    console.log(`Edit button flight=${booking.flight.flightNumber}`);
     this.router.navigateByUrl('/booking');
     // TODO: pre-fill data on booking page via a service
   }
 
   bookingDetails(booking: Booking) {
-    console.log(`Details button flight=${booking.flightNumber}`);
+    console.log(`Details button flight=${booking.flight.flightNumber}`);
     this.router.navigateByUrl('/booking/step-summary');
     // TODO: pre-fill data on booking summary page via a service
   }
