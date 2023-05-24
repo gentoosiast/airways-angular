@@ -43,6 +43,7 @@ export class BookingsTableComponent {
 
   showDetails(item: Booking): void {
     this.bookingDetails.emit(item);
+    // this.tripTypeSorter.dispatch(item.id)
   }
 
   isAllSelected(): boolean {

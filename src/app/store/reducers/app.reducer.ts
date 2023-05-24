@@ -11,10 +11,12 @@ export const appFeatureKey = 'app';
 const initalState: AppState = {
   flightSearchData: null,
   flights: null,
+  selectedFlights: {},
   passengersInfo: null,
   user: null,
   userSettings: { dateFormat: DateFormat.DD_MM_YYYY, currency: Currency.Euro },
   currentOrder: [],
+  idForDetails: null,
 };
 
 export const appReducer = createReducer(
@@ -78,6 +80,22 @@ export const appReducer = createReducer(
     }),
   ),
 
+  on(FlightDataActions.saveSelectedFlights, (state, { flight, returnFlight }): AppState => {
+    if (flight) {
+      return {
+        ...state,
+        selectedFlights: { ...state.selectedFlights, flight },
+      };
+    }
+    if (returnFlight) {
+      return {
+        ...state,
+        selectedFlights: { ...state.selectedFlights, returnFlight },
+      };
+    }
+    return state;
+  }),
+
   on(BookingsActions.addBooking, (state, { booking }): AppState => {
     return {
       ...state,
@@ -90,6 +108,14 @@ export const appReducer = createReducer(
     (state, { id }): AppState => ({
       ...state,
       currentOrder: state.currentOrder.filter((item) => item.id !== id),
+    }),
+  ),
+
+  on(
+    BookingsActions.storeIdForDetails,
+    (state, { id }): AppState => ({
+      ...state,
+      idForDetails: id,
     }),
   ),
 );

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectFlights } from '@store/selectors/flight-data.selectors';
 import { Flights } from '@shared/types/flights';
 import { selectUserSettings } from '@store/selectors/user-settings.selectors';
+import { saveSelectedFlights } from '@store/actions/flight-data.actions';
 
 @Component({
   selector: 'air-booking-flights-page',
@@ -35,10 +36,30 @@ export class BookingFlightsPageComponent implements OnInit {
 
   onConfirmDepartureFlight(isConfirmed: boolean): void {
     this.isDepartureConfirmed = isConfirmed;
+    this.flightsData$
+      ?.pipe(
+        tap((flightsData) => {
+          if (this.departureFlightIdx) {
+            this.store.dispatch(saveSelectedFlights({ flight: flightsData?.flights[this.departureFlightIdx] }));
+          }
+        }),
+      )
+      .subscribe();
   }
 
   onConfirmArrivalFlight(isConfirmed: boolean): void {
     this.isArrivalConfirmed = isConfirmed;
+    this.flightsData$
+      ?.pipe(
+        tap((flightsData) => {
+          if (this.arrivalFlightIdx && flightsData?.returnFlights) {
+            this.store.dispatch(
+              saveSelectedFlights({ returnFlight: flightsData?.returnFlights[this.arrivalFlightIdx] }),
+            );
+          }
+        }),
+      )
+      .subscribe();
   }
 
   onSelectDepartureFlight(flightIdx: number): void {

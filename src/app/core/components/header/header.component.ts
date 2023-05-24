@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   dateFormats = Object.values(DateFormat);
   flightSearchData$?: Observable<FlightSearchData | null>;
   showEditButton = false;
-  showProgressBar = false;
+  showBookingDetails = false;
   userSettings$: Observable<UserSettings> = this.store.select(selectUserSettings);
   user$?: Observable<User | null>;
 
@@ -51,9 +51,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.showEditButton = '/booking/step-flights' === this.router.url;
 
       if (['/booking/step-flights', '/booking/step-passengers', '/booking/step-summary'].includes(this.router.url)) {
-        this.showProgressBar = true;
+        this.showBookingDetails = true;
       } else {
-        this.showProgressBar = false;
+        this.showBookingDetails = false;
       }
     }),
   );

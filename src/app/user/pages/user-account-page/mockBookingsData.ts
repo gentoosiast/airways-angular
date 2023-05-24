@@ -2,6 +2,8 @@ import { Booking } from '@shared/types/booking';
 
 export const mockBookingsData: Array<Booking> = [
   {
+    id: '1',
+    isCompleted: true,
     flightType: 'roundtrip',
     flight: {
       flightNumber: 'IQ 9463',
@@ -208,6 +210,8 @@ export const mockBookingsData: Array<Booking> = [
   },
 
   {
+    id: '2',
+    isCompleted: true,
     flightType: 'oneway',
     flight: {
       flightNumber: 'LI 5121',
@@ -341,6 +345,8 @@ export const mockBookingsData: Array<Booking> = [
   },
 
   {
+    id: '3',
+    isCompleted: true,
     flightType: 'oneway',
     flight: {
       flightNumber: 'JH 0249',
@@ -576,6 +582,8 @@ export const mockBookingsData: Array<Booking> = [
     },
   },
   {
+    id: '4',
+    isCompleted: true,
     flightType: 'oneway',
     flight: {
       flightNumber: 'WW 9107',

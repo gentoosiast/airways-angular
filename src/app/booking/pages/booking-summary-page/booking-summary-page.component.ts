@@ -1,13 +1,14 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Booking } from '@shared/types/booking';
+import { Observable, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { TuiAlertService, TuiNotification } from '@taiga-ui/core';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
 import { nanoid } from 'nanoid';
-import { mockBookingData } from './mockBookingData';
 import { PassengerCategory, Passengers } from '@shared/types/passengers';
 import { addBooking } from '@store/actions/current-order.actions';
 import { selectUserSettings } from '@store/selectors/user-settings.selectors';
+import { selectBooking } from '@store/selectors/bookings.selector';
 import { Currency, DateFormat } from '@core/types/user-settings';
 
 @Component({
@@ -16,9 +17,10 @@ import { Currency, DateFormat } from '@core/types/user-settings';
   styleUrls: ['./booking-summary-page.component.scss'],
 })
 export class BookingSummaryPageComponent implements OnInit, OnDestroy {
-  booking = mockBookingData;
+  booking$: Observable<Booking | null> = this.store.select(selectBooking);
+  booking?: Booking | null = null;
+  passengerCategories = [] as Array<PassengerCategory>;
   dateFormat: DateFormat = DateFormat.DD_MM_YYYY;
-  passengerCategories = Object.keys(this.booking.passengers) as Array<PassengerCategory>;
   preferredCurrency: Currency = Currency.Euro;
   userSettings$ = this.store.select(selectUserSettings);
 
@@ -32,26 +34,43 @@ export class BookingSummaryPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.monitorCurrencySettings();
+    this.sub.add(
+      this.booking$.subscribe((booking: Booking | null) => {
+        if (booking) {
+          this.booking = booking;
+          this.passengerCategories = Object.keys(booking.passengers) as Array<PassengerCategory>;
+        }
+      }),
+    );
+    console.log(this.booking);
   }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
 
+  getCategoryCount(category: keyof Passengers): number {
+    return this.booking?.passengerData.filter((pas) => pas.category === category).length || 0;
+  }
+
   getPriceForPassengerCategory(category: keyof Passengers): number {
-    return (
-      this.booking.passengers[category] *
-      (this.booking.price[category].fare[this.preferredCurrency] +
-        this.booking.price[category].tax[this.preferredCurrency])
-    );
+    return this.booking
+      ? this.booking?.passengers[category] *
+          (this.booking.price[category].fare[this.preferredCurrency] +
+            this.booking.price[category].tax[this.preferredCurrency])
+      : 0;
   }
 
   getFareForPassengerCategory(category: keyof Passengers): number {
-    return this.booking.passengers[category] * this.booking.price[category].fare[this.preferredCurrency];
+    return this.booking
+      ? this.booking.passengers[category] * this.booking.price[category].fare[this.preferredCurrency]
+      : 0;
   }
 
   getTaxForPassengerCategory(category: keyof Passengers): number {
-    return this.booking.passengers[category] * this.booking.price[category].tax[this.preferredCurrency];
+    return this.booking
+      ? this.booking.passengers[category] * this.booking.price[category].tax[this.preferredCurrency]
+      : 0;
   }
 
   getTotalPrice(): number {
@@ -73,9 +92,13 @@ export class BookingSummaryPageComponent implements OnInit, OnDestroy {
   }
 
   private addBookingToCart() {
+    if (!this.booking) {
+      return;
+    }
     if (!this.booking.id) {
       this.booking.id = nanoid();
     }
+    console.log(this.booking);
     this.store.dispatch(addBooking({ booking: this.booking }));
   }
 
