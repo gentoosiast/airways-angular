@@ -40,7 +40,7 @@
     </div>
   </div>
 
-  <div class="buttons-wrapper">
+  <div class="buttons-wrapper" *ngIf="!booking?.isCompleted">
     <button tuiButton appearance="flat" type="button" (click)="onBackButton()">Back</button>
     <button tuiButton type="button" appearance="outline" (click)="onAddToCart()">Add to order cart</button>
     <button tuiButton type="button" appearance="primary" (click)="onBuyNow()">Buy now</button>

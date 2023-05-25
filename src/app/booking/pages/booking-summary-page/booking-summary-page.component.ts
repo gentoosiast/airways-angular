@@ -6,7 +6,7 @@ import { TuiAlertService, TuiNotification } from '@taiga-ui/core';
 import { Store } from '@ngrx/store';
 import { nanoid } from 'nanoid';
 import { PassengerCategory, Passengers } from '@shared/types/passengers';
-import { addBooking } from '@store/actions/current-order.actions';
+import { addBooking, storeIdForDetails } from '@store/actions/current-order.actions';
 import { selectUserSettings } from '@store/selectors/user-settings.selectors';
 import { selectBooking } from '@store/selectors/bookings.selector';
 import { Currency, DateFormat } from '@core/types/user-settings';
@@ -42,11 +42,11 @@ export class BookingSummaryPageComponent implements OnInit, OnDestroy {
         }
       }),
     );
-    console.log(this.booking);
   }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
+    this.store.dispatch(storeIdForDetails({ id: null }));
   }
 
   getCategoryCount(category: keyof Passengers): number {
@@ -98,7 +98,6 @@ export class BookingSummaryPageComponent implements OnInit, OnDestroy {
     if (!this.booking.id) {
       this.booking.id = nanoid();
     }
-    console.log(this.booking);
     this.store.dispatch(addBooking({ booking: this.booking }));
   }
 

@@ -16,6 +16,6 @@ export interface AppState {
   passengersInfo: PassengersInfo | null;
   user: User | null;
   userSettings: UserSettings;
-  currentOrder: Array<Booking & { isSelected: boolean }>;
+  bookings: Array<Booking & { isSelected: boolean }>;
   idForDetails: string | null;
 }

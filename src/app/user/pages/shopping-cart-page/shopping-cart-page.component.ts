@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Booking } from '@shared/types/booking';
-import { removeBooking } from '@store/actions/current-order.actions';
-import { selectCurrentOrder } from 'src/app/store/selectors/bookings.selector';
+import { removeBooking, storeIdForDetails } from '@store/actions/current-order.actions';
+import { selectCurrentBookings } from 'src/app/store/selectors/bookings.selector';
 import { selectUserSettings } from '@store/selectors/user-settings.selectors';
 
 @Component({
@@ -19,7 +19,7 @@ export class ShoppingCartPageComponent implements OnInit {
   constructor(private router: Router, private readonly store: Store) {}
 
   ngOnInit(): void {
-    this.bookings$ = this.store.select(selectCurrentOrder);
+    this.bookings$ = this.store.select(selectCurrentBookings);
   }
 
   removeBooking(booking: Booking) {
@@ -35,8 +35,10 @@ export class ShoppingCartPageComponent implements OnInit {
   }
 
   bookingDetails(booking: Booking) {
-    console.log(`Details button flight=${booking.flight.flightNumber}`);
+    if (!booking.id) {
+      return;
+    }
+    this.store.dispatch(storeIdForDetails({ id: booking.id }));
     this.router.navigateByUrl('/booking/step-summary');
-    // TODO: pre-fill data on booking summary page via a service
   }
 }

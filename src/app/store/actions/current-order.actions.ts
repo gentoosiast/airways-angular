@@ -7,4 +7,4 @@ export const removeBooking = createAction('[Booking] Remove booking', props<{ id
 
 export const editBooking = createAction('[Booking] Edit booking', props<{ id: string }>());
 
-export const storeIdForDetails = createAction('[Booking] Store id for details', props<{ id: string }>());
+export const storeIdForDetails = createAction('[Booking] Store id for details', props<{ id: string | null }>());

@@ -3,7 +3,7 @@ import { Booking } from '@shared/types/booking';
 export const mockBookingsData: Array<Booking> = [
   {
     id: '1',
-    isCompleted: true,
+    isCompleted: false,
     flightType: 'roundtrip',
     flight: {
       flightNumber: 'IQ 9463',
