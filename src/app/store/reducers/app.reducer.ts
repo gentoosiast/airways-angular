@@ -1,8 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
 import { AppState } from '../state.model';
 import * as UserActions from '../actions/user.actions';
+import * as UserSettingsActions from '../actions/user-settings.actions';
 import * as FlightDataActions from '../actions/flight-data.actions';
 import * as BookingsActions from '../actions/current-order.actions';
+import { Currency, DateFormat } from '@core/types/user-settings';
 
 export const appFeatureKey = 'app';
 
@@ -11,6 +13,7 @@ const initalState: AppState = {
   flights: null,
   passengersInfo: null,
   user: null,
+  userSettings: { dateFormat: DateFormat.DD_MM_YYYY, currency: Currency.Euro },
   currentOrder: [],
 };
 
@@ -31,6 +34,23 @@ export const appReducer = createReducer(
     (state): AppState => ({
       ...state,
       user: null,
+    }),
+  ),
+
+  on(
+    UserSettingsActions.saveUserSettings,
+    UserSettingsActions.loadUserSettingsSuccess,
+    (state, { userSettings }): AppState => ({
+      ...state,
+      userSettings,
+    }),
+  ),
+
+  on(
+    UserSettingsActions.loadUserSettingsFail,
+    (state): AppState => ({
+      ...state,
+      userSettings: initalState.userSettings,
     }),
   ),
 

@@ -14,15 +14,20 @@
           <air-flight-carousel
             [flights]="flightsData.flights"
             [isVisible]="!isDepartureConfirmed"
+            [userSettings$]="userSettings$"
             (selectFlight)="onSelectDepartureFlight($event)"
           ></air-flight-carousel>
 
-          <air-flight-details
-            *ngIf="departureFlightIdx !== null"
-            [flight]="flightsData.flights[departureFlightIdx]"
-            [isFlightSelected]="isDepartureConfirmed"
-            (confirmFlight)="onConfirmDepartureFlight($event)"
-          ></air-flight-details>
+          <ng-container *ngIf="userSettings$ | async as userSettings">
+            <air-flight-details
+              *ngIf="departureFlightIdx !== null"
+              [flight]="flightsData.flights[departureFlightIdx]"
+              [isFlightSelected]="isDepartureConfirmed"
+              [dateFormat]="userSettings.dateFormat"
+              [preferredCurrency]="userSettings.currency"
+              (confirmFlight)="onConfirmDepartureFlight($event)"
+            ></air-flight-details>
+          </ng-container>
         </div>
       </div>
 
@@ -39,16 +44,21 @@
           <air-flight-carousel
             [flights]="flightsData.returnFlights"
             [isVisible]="!isArrivalConfirmed"
+            [userSettings$]="userSettings$"
             (selectFlight)="onSelectArrivalFlight($event)"
           ></air-flight-carousel>
 
-          <air-flight-details
-            *ngIf="arrivalFlightIdx !== null"
-            [flight]="flightsData.returnFlights[arrivalFlightIdx]"
-            [isFlightSelected]="isArrivalConfirmed"
-            [isDeparture]="false"
-            (confirmFlight)="onConfirmArrivalFlight($event)"
-          ></air-flight-details>
+          <ng-container *ngIf="userSettings$ | async as userSettings">
+            <air-flight-details
+              *ngIf="arrivalFlightIdx !== null"
+              [flight]="flightsData.returnFlights[arrivalFlightIdx]"
+              [isFlightSelected]="isArrivalConfirmed"
+              [isDeparture]="false"
+              [dateFormat]="userSettings.dateFormat"
+              [preferredCurrency]="userSettings.currency"
+              (confirmFlight)="onConfirmArrivalFlight($event)"
+            ></air-flight-details>
+          </ng-container>
         </div>
       </div>
     </div>

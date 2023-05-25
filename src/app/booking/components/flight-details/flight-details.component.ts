@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Currency, DateFormat } from '@core/types/user-settings';
 import { Flight } from '@shared/types/flight';
 
 @Component({
@@ -8,8 +9,10 @@ import { Flight } from '@shared/types/flight';
 })
 export class FlightDetailsComponent {
   @Input() flight?: Flight;
-  @Input() isFlightSelected = false;
   @Input() isDeparture = true;
+  @Input() isFlightSelected = false;
+  @Input() dateFormat: DateFormat = DateFormat.DD_MM_YYYY;
+  @Input() preferredCurrency: Currency = Currency.Euro;
   @Output() confirmFlight = new EventEmitter<boolean>();
 
   getFlightIcon(): string {

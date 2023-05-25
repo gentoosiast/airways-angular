@@ -1,8 +1,11 @@
 <div class="wrapper">
-  <div class="title">Cart</div>
   <air-bookings-table
+    *ngIf="userSettings$ | async as userSettings"
     [bookings]="bookings$ | async"
+    caption="Shopping cart"
+    [dateFormat]="userSettings.dateFormat"
     [isEditable]="true"
+    [preferredCurrency]="userSettings.currency"
     (removeBooking)="removeBooking($event)"
     (editBooking)="editBooking($event)"
     (bookingDetails)="bookingDetails($event)"

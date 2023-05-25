@@ -1,5 +1,5 @@
 <div class="date-time" [ngClass]="{ departure: isDeparture, arrival: !isDeparture }">
-  <span class="date">{{ date | date : 'EEE, d MMM yyyy' }}</span>
+  <span class="date">{{ date | date : getFormatForDatePipe(dateFormat) }}</span>
   <div class="time-timezone">
     <span class="time">{{ date | date : 'H:mm' }}</span>
     <span class="timezone">{{ date | date : 'zzz' }}</span>

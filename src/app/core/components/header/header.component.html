@@ -7,9 +7,18 @@
       <air-progress-bar *ngIf="showProgressBar"></air-progress-bar>
       <div class="buttons-wrapper">
         <form class="form" [formGroup]="userSettingsForm">
-          <tui-select tuiTextfieldSize="s" formControlName="dateFormat" class="date-format">
+          <tui-select
+            tuiTextfieldSize="s"
+            [valueContent]="stringify | tuiStringifyContent"
+            formControlName="dateFormat"
+            class="date-format"
+          >
             Date format
-            <tui-data-list-wrapper *tuiDataList [items]="dateFormats"></tui-data-list-wrapper>
+            <tui-data-list-wrapper
+              *tuiDataList
+              [items]="dateFormats"
+              [itemContent]="stringify | tuiStringifyContent"
+            ></tui-data-list-wrapper>
           </tui-select>
 
           <tui-select tuiTextfieldSize="s" formControlName="currency" class="currency">
@@ -57,15 +66,17 @@
           <span>{{ flightSearchData.arrival.name }}</span>
         </div>
 
-        <div class="flight-info">
+        <div *ngIf="userSettings$ | async as userSettings" class="flight-info">
           <span>{{ flightSearchData.flightType | titlecase }}</span>
           <span class="bullet"></span>
           <span *ngIf="flightSearchData.returnDate; else oneway"
-            >{{ flightSearchData.flightDate | date : 'd LLL' }} -
-            {{ flightSearchData.returnDate | date : 'd LLL' }}</span
+            >{{ flightSearchData.flightDate | date : getDateFormatForPipe(userSettings.dateFormat) }} -
+            {{ flightSearchData.returnDate | date : getDateFormatForPipe(userSettings.dateFormat) }}</span
           >
           <ng-template #oneway
-            ><span>{{ flightSearchData.flightDate | date : 'd LLL' }}</span></ng-template
+            ><span>{{
+              flightSearchData.flightDate | date : getDateFormatForPipe(userSettings.dateFormat)
+            }}</span></ng-template
           >
           <span class="bullet"></span>
           <div class="passengers">

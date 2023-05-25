@@ -1,19 +1,21 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
-import { filter, Observable, startWith, Subscription, tap } from 'rxjs';
+import { filter, Observable, Subscription, take, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { TuiDialogService, TuiAlertService, TuiNotification } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 import { FlightSearchPopupComponent } from '../flight-search-popup/flight-search-popup.component';
 import { TabbedFormsComponent } from '../tabbed-forms/tabbed-forms.component';
-import { UserSettingsService } from '@core/services/user-settings.service';
 import { Currency, DateFormat } from '@core/types/user-settings';
 import { selectUser } from '@store/selectors/user.selectors';
 import { User } from '@core/types/user';
 import { logoutUser } from '@store/actions/user.actions';
 import { FlightSearchData } from '@shared/types/flight-data';
 import { selectFlightSearchData } from '@store/selectors/flight-data.selectors';
+import { saveUserSettings } from '@store/actions/user-settings.actions';
+import { UserSettings } from '@shared/types/user-settings';
+import { selectUserSettings } from '@store/selectors/user-settings.selectors';
 
 @Component({
   selector: 'air-header',
@@ -26,17 +28,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
   flightSearchData$?: Observable<FlightSearchData | null>;
   showEditButton = false;
   showProgressBar = false;
+  userSettings$: Observable<UserSettings> = this.store.select(selectUserSettings);
   user$?: Observable<User | null>;
 
   userSettingsForm = new FormGroup({
-    dateFormat: new FormControl(this.dateFormats[0]),
-    currency: new FormControl(this.currencies[0]),
+    dateFormat: new FormControl<DateFormat | null>(null),
+    currency: new FormControl<Currency | null>(null),
   });
 
   private sub = new Subscription();
-  private userSettings$ = this.userSettingsForm.valueChanges.pipe(
-    startWith(this.userSettingsForm.value),
-    tap((value) => this.userSettingsService.setUserSettings(value)),
+  private userSettingsForm$ = this.userSettingsForm.valueChanges.pipe(
+    tap(({ currency, dateFormat }) => {
+      if (!currency || !dateFormat) {
+        return;
+      }
+      this.store.dispatch(saveUserSettings({ userSettings: { currency, dateFormat } }));
+    }),
   );
   private showProgressBar$ = this.router.events.pipe(
     filter((event) => event instanceof NavigationEnd),
@@ -56,14 +63,29 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private alertService: TuiAlertService,
     private router: Router,
     private store: Store,
-    private userSettingsService: UserSettingsService,
   ) {}
 
   ngOnInit(): void {
     this.sub.add(this.showProgressBar$.subscribe());
-    this.sub.add(this.userSettings$.subscribe());
+    this.sub.add(this.userSettingsForm$.subscribe());
+    this.sub.add(
+      this.userSettings$.pipe(take(1)).subscribe((userSettings) => this.userSettingsForm.setValue(userSettings)),
+    );
     this.flightSearchData$ = this.store.select(selectFlightSearchData);
     this.user$ = this.store.select(selectUser);
+  }
+
+  getDateFormatForPipe(dateFormat: DateFormat): string {
+    switch (dateFormat) {
+      case DateFormat.MM_DD_YYYY:
+        return 'LLL d';
+      case DateFormat.DD_MM_YYYY:
+        return 'd LLL';
+      case DateFormat.YYYY_MM_DD:
+        return 'LLL d';
+      default:
+        return 'd LLL';
+    }
   }
 
   ngOnDestroy(): void {
@@ -86,5 +108,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
         },
       }),
     );
+  }
+
+  stringify(item: DateFormat): string {
+    return item.toUpperCase();
   }
 }

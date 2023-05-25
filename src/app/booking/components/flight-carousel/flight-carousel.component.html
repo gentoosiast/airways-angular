@@ -12,13 +12,17 @@
 
   <tui-carousel #carousel [duration]="0" [itemsCount]="displayItemsCount" [(index)]="index">
     <ng-container *ngFor="let flight of flights; index as i">
-      <air-flight-card
-        *tuiItem
-        [flight]="flight"
-        [index]="i"
-        [isSelected]="i === selectedIndex"
-        (flightSelect)="onSelectFlight($event)"
-      ></air-flight-card>
+      <ng-container *ngIf="userSettings$ | async as userSettings">
+        <air-flight-card
+          *tuiItem
+          [flight]="flight"
+          [index]="i"
+          [isSelected]="i === selectedIndex"
+          [dateFormat]="userSettings.dateFormat"
+          [preferredCurrency]="userSettings.currency"
+          (flightSelect)="onSelectFlight($event)"
+        ></air-flight-card>
+      </ng-container>
     </ng-container>
   </tui-carousel>
 

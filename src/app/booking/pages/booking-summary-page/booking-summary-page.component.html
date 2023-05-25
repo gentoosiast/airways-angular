@@ -1,25 +1,17 @@
 <div class="wrapper">
   <h1 class="title"><tui-svg src="/assets/icons/preview.svg"></tui-svg> Summary</h1>
   <div class="grid">
-    <div class="card" *ngFor="let flight of booking.flightsData">
-      <div class="card-header">
-        <div class="flight">
-          <span class="flight-number">{{ booking.flightNumber }}</span>
-          <span>{{ flight.departure }} - {{ flight.arrival }}</span>
-        </div>
-        <div class="date">
-          {{ flight | flightsDates }}
-        </div>
-      </div>
-      <div class="card-content" *ngFor="let passenger of booking.passengerData">
-        <div class="passenger">{{ passenger.firstName | uppercase }} {{ passenger.lastName | uppercase }}</div>
-        <div class="baggage">
-          <div *ngIf="passenger.baggageCount">{{ passenger.baggageCount }} checked bag (total 23 kg) included</div>
-          <div *ngIf="passenger.category !== 'infants'">1 cabin bag + 1 personal item (max. 8 kg) included</div>
-          <div *ngIf="passenger.category !== 'infants'">Seat {{ passenger.seat }}</div>
-        </div>
-      </div>
-    </div>
+    <air-summary-flight-card
+      [dateFormat]="dateFormat"
+      [flight]="booking.flight"
+      [passengerData]="booking.passengerData"
+    ></air-summary-flight-card>
+    <air-summary-flight-card
+      *ngIf="booking.returnFlight"
+      [dateFormat]="dateFormat"
+      [flight]="booking.returnFlight"
+      [passengerData]="booking.passengerData"
+    ></air-summary-flight-card>
     <div class="payment-wrapper">
       <div class="card">
         <div class="category" *ngFor="let passenger of passengerCategories; index as i">
@@ -27,22 +19,22 @@
             <div class="category-title">
               <span> {{ booking.passengers[passenger] }} x {{ passenger | titlecase }} Fare </span>
               <span>
-                {{ getPriceForPassengerCategory(passenger) | number | currency }}
+                {{ getPriceForPassengerCategory(passenger) | currency : preferredCurrency }}
               </span>
             </div>
             <div class="details">
               <span>Fare</span>
-              <span>{{ getFareForPassengerCategory(passenger) | number | currency }}</span>
+              <span>{{ getFareForPassengerCategory(passenger) | currency : preferredCurrency }}</span>
             </div>
             <div class="details">
               <span>Tax & Service Charge</span>
-              <span>{{ getTaxForPassengerCategory(passenger) | number | currency }}</span>
+              <span>{{ getTaxForPassengerCategory(passenger) | currency : preferredCurrency }}</span>
             </div>
           </div>
         </div>
         <div class="total">
           <span>TOTAL:</span>
-          <span class="total-price">{{ getTotalPrice() | number | currency }}</span>
+          <span class="total-price">{{ getTotalPrice() | currency : preferredCurrency }}</span>
         </div>
       </div>
     </div>

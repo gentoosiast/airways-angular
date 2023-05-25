@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Booking } from '@shared/types/booking';
 import { removeBooking } from '@store/actions/current-order.actions';
 import { selectCurrentOrder } from 'src/app/store/selectors/bookings.selector';
+import { selectUserSettings } from '@store/selectors/user-settings.selectors';
 
 @Component({
   selector: 'air-shopping-cart-page',
@@ -13,6 +14,7 @@ import { selectCurrentOrder } from 'src/app/store/selectors/bookings.selector';
 })
 export class ShoppingCartPageComponent implements OnInit {
   bookings$!: Observable<Array<Booking & { isSelected?: boolean }>>;
+  userSettings$ = this.store.select(selectUserSettings);
 
   constructor(private router: Router, private readonly store: Store) {}
 
@@ -27,13 +29,13 @@ export class ShoppingCartPageComponent implements OnInit {
   }
 
   editBooking(booking: Booking) {
-    console.log(`Edit button flight=${booking.flightNumber}`);
+    console.log(`Edit button flight=${booking.flight.flightNumber}`);
     this.router.navigateByUrl('/booking');
     // TODO: pre-fill data on booking page via a service
   }
 
   bookingDetails(booking: Booking) {
-    console.log(`Details button flight=${booking.flightNumber}`);
+    console.log(`Details button flight=${booking.flight.flightNumber}`);
     this.router.navigateByUrl('/booking/step-summary');
     // TODO: pre-fill data on booking summary page via a service
   }

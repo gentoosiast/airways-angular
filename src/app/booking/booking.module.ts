@@ -34,6 +34,7 @@ import { DateTimeWidgetComponent } from './components/date-time-widget/date-time
 import { BookingSummaryPageComponent } from './pages/booking-summary-page/booking-summary-page.component';
 import { SharedModule } from '../shared/shared.module';
 import { PluralizePipe } from './pipes/pluralize.pipe';
+import { SummaryFlightCardComponent } from './components/summary-flight-card/summary-flight-card.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { PluralizePipe } from './pipes/pluralize.pipe';
     DateTimeWidgetComponent,
     BookingSummaryPageComponent,
     PluralizePipe,
+    SummaryFlightCardComponent,
   ],
   imports: [
     CommonModule,

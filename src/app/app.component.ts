@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { loadUser } from '@store/actions/user.actions';
+import { appLoaded } from '@store/actions/app.actions';
 
 @Component({
   selector: 'air-root',
@@ -11,6 +11,6 @@ export class AppComponent implements OnInit {
   constructor(private store: Store) {}
 
   ngOnInit(): void {
-    this.store.dispatch(loadUser());
+    this.store.dispatch(appLoaded());
   }
 }

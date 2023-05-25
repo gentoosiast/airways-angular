@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectFlights } from '@store/selectors/flight-data.selectors';
 import { Flights } from '@shared/types/flights';
+import { selectUserSettings } from '@store/selectors/user-settings.selectors';
 
 @Component({
   selector: 'air-booking-flights-page',
@@ -16,6 +17,7 @@ export class BookingFlightsPageComponent implements OnInit {
   arrivalFlightIdx: number | null = null;
   isDepartureConfirmed = false;
   isArrivalConfirmed = false;
+  userSettings$ = this.store.select(selectUserSettings);
 
   constructor(private router: Router, private store: Store) {}
 
