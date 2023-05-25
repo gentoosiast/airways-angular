@@ -12,7 +12,7 @@ import {
   filter,
   switchMap,
 } from 'rxjs';
-import { TuiDay, TuiDayRange } from '@taiga-ui/cdk';
+import { TUI_DATE_FORMAT, TUI_DATE_SEPARATOR, TuiDay, TuiDayRange } from '@taiga-ui/cdk';
 import { TuiAlertService, TuiNotification } from '@taiga-ui/core';
 import { Store } from '@ngrx/store';
 import { AirportsService } from '@core/services/airports.service';
@@ -27,11 +27,24 @@ import { selectFlightSearchData } from '@store/selectors/flight-data.selectors';
 import { FlightsRequest } from '@shared/types/flights-request';
 import { FlightsService } from '@core/services/flights.service';
 import { ALERT_DISPLAY_DURATION } from '@core/constants/alerts.constants';
+import { taigaDateFormat } from '@shared/factories/taiga-date-format.factory';
+import { UserSettingsService } from '@core/services/user-settings.service';
 
 @Component({
   selector: 'air-flight-search-page',
   templateUrl: './flight-search-page.component.html',
   styleUrls: ['./flight-search-page.component.scss'],
+  providers: [
+    {
+      provide: TUI_DATE_FORMAT,
+      useFactory: taigaDateFormat,
+      deps: [UserSettingsService],
+    },
+    {
+      provide: TUI_DATE_SEPARATOR,
+      useValue: '/',
+    },
+  ],
 })
 export class FlightSearchPageComponent implements OnInit, OnDestroy {
   airportForm = this.fb.group({

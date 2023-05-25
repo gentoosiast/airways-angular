@@ -1,16 +1,25 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
-import { TuiDay } from '@taiga-ui/cdk';
+import { TUI_DATE_FORMAT, TuiDay } from '@taiga-ui/cdk';
 import { TuiCountryIsoCode, TUI_ENGLISH_LANGUAGE_COUNTRIES } from '@taiga-ui/i18n';
 import { User } from '@core/types/user';
 import { Gender } from '@core/types/social-data';
 import { SignupData } from '@core/types/login-signup';
 import { MINIMUM_PASSWORD_LENGTH } from '@core/constants/signup.constants';
+import { taigaDateFormat } from '@shared/factories/taiga-date-format.factory';
+import { UserSettingsService } from '@core/services/user-settings.service';
 
 @Component({
   selector: 'air-signup-form',
   templateUrl: './signup-form.component.html',
   styleUrls: ['./signup-form.component.scss'],
+  providers: [
+    {
+      provide: TUI_DATE_FORMAT,
+      useFactory: taigaDateFormat,
+      deps: [UserSettingsService],
+    },
+  ],
 })
 export class SignupFormComponent {
   @Output() private formSubmit = new EventEmitter<SignupData>();
