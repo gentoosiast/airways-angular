@@ -2,7 +2,7 @@ export enum Currency {
   Ruble = 'RUB',
   Euro = 'EUR',
   Dollar = 'USD',
-  Pound = 'PLN',
+  PolishZloty = 'PLN',
 }
 
 export enum DateFormat {
