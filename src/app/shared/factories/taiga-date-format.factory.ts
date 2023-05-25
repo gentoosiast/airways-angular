@@ -2,7 +2,6 @@ import { UserSettingsService } from '@core/services/user-settings.service';
 import { DateFormat } from '@core/types/user-settings';
 
 export const taigaDateFormat = (userSettingsService: UserSettingsService) => {
-  console.log('taigaDateFormat runs');
   const { dateFormat } = userSettingsService.load() ?? { dateFormat: DateFormat.DD_MM_YYYY };
 
   switch (dateFormat) {
