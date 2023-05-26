@@ -2,6 +2,8 @@ import { Booking } from '@shared/types/booking';
 
 export const mockBookingsData: Array<Booking> = [
   {
+    id: '1',
+    isCompleted: false,
     flightType: 'roundtrip',
     flight: {
       flightNumber: 'IQ 9463',
@@ -154,7 +156,37 @@ export const mockBookingsData: Array<Booking> = [
       children: 1,
       infants: 1,
     },
-    passengerData: [],
+    passengerData: [
+      {
+        firstName: 'Lili',
+        lastName: 'Potter',
+        gender: 'female',
+        birthDate: '1960-07-31',
+        baggageCount: 1,
+        isAssistanceNeeded: false,
+        seat: '19E',
+        category: 'adults',
+      },
+      {
+        firstName: 'James',
+        lastName: 'Potter',
+        gender: 'male',
+        birthDate: '1960-10-01',
+        baggageCount: 1,
+        isAssistanceNeeded: false,
+        seat: '20E',
+        category: 'children',
+      },
+      {
+        firstName: 'Harry',
+        lastName: 'Potter',
+        gender: 'male',
+        birthDate: '1980-06-31',
+        baggageCount: 0,
+        isAssistanceNeeded: false,
+        category: 'infants',
+      },
+    ],
     price: {
       total: {
         EUR: 547.43,
@@ -208,6 +240,8 @@ export const mockBookingsData: Array<Booking> = [
   },
 
   {
+    id: '2',
+    isCompleted: true,
     flightType: 'oneway',
     flight: {
       flightNumber: 'LI 5121',
@@ -287,7 +321,18 @@ export const mockBookingsData: Array<Booking> = [
       children: 0,
       infants: 0,
     },
-    passengerData: [],
+    passengerData: [
+      {
+        firstName: 'Lili',
+        lastName: 'Potter',
+        gender: 'female',
+        birthDate: '1960-07-31',
+        baggageCount: 1,
+        isAssistanceNeeded: false,
+        seat: '19E',
+        category: 'adults',
+      },
+    ],
     price: {
       total: {
         EUR: 1030.16,
@@ -341,6 +386,8 @@ export const mockBookingsData: Array<Booking> = [
   },
 
   {
+    id: '3',
+    isCompleted: true,
     flightType: 'oneway',
     flight: {
       flightNumber: 'JH 0249',
@@ -512,7 +559,7 @@ export const mockBookingsData: Array<Booking> = [
         baggageCount: 1,
         isAssistanceNeeded: false,
         seat: '20E',
-        category: 'adults',
+        category: 'children',
       },
       {
         firstName: 'Harry',
@@ -521,7 +568,7 @@ export const mockBookingsData: Array<Booking> = [
         birthDate: '1980-06-31',
         baggageCount: 0,
         isAssistanceNeeded: false,
-        category: 'infants',
+        category: 'children',
       },
     ],
     price: {
@@ -576,6 +623,8 @@ export const mockBookingsData: Array<Booking> = [
     },
   },
   {
+    id: '4',
+    isCompleted: true,
     flightType: 'oneway',
     flight: {
       flightNumber: 'WW 9107',
@@ -655,7 +704,56 @@ export const mockBookingsData: Array<Booking> = [
       children: 1,
       infants: 2,
     },
-    passengerData: [],
+    passengerData: [
+      {
+        firstName: 'Lili',
+        lastName: 'Potter',
+        gender: 'female',
+        birthDate: '1960-07-31',
+        baggageCount: 1,
+        isAssistanceNeeded: false,
+        seat: '19E',
+        category: 'adults',
+      },
+      {
+        firstName: 'Lili',
+        lastName: 'Potter',
+        gender: 'female',
+        birthDate: '1960-07-31',
+        baggageCount: 1,
+        isAssistanceNeeded: false,
+        seat: '19E',
+        category: 'adults',
+      },
+      {
+        firstName: 'James',
+        lastName: 'Potter',
+        gender: 'male',
+        birthDate: '1960-10-01',
+        baggageCount: 1,
+        isAssistanceNeeded: false,
+        seat: '20E',
+        category: 'children',
+      },
+      {
+        firstName: 'Harry',
+        lastName: 'Potter',
+        gender: 'male',
+        birthDate: '1980-06-31',
+        baggageCount: 0,
+        isAssistanceNeeded: false,
+        category: 'infants',
+      },
+      {
+        firstName: 'Harry',
+        lastName: 'Potter',
+        gender: 'male',
+        birthDate: '1980-06-31',
+        baggageCount: 0,
+        isAssistanceNeeded: false,
+        category: 'infants',
+      },
+    ],
     price: {
       total: {
         EUR: 942.97,

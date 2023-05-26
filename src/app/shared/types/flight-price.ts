@@ -1,11 +1,11 @@
-interface Price {
+export interface Price {
   EUR: number;
   USD: number;
   RUB: number;
   PLN: number;
 }
 
-interface PriceComponents {
+export interface PriceComponents {
   fare: Price;
   tax: Price;
 }

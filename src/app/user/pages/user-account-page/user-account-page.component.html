@@ -1,7 +1,7 @@
 <div class="wrapper">
   <air-bookings-table
     *ngIf="userSettings$ | async as userSettings"
-    [bookings]="bookings"
+    [bookings]="bookings$ | async"
     caption="Completed orders"
     [dateFormat]="userSettings.dateFormat"
     [isEditable]="false"
