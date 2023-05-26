@@ -5,6 +5,7 @@ import { BookingPassengersPageComponent } from './pages/booking-passengers-page/
 import { BookingSummaryPageComponent } from './pages/booking-summary-page/booking-summary-page.component';
 import { authGuardFn } from '@user/guards/auth.guard';
 import { bookingPassengersGuardFn } from './guards/booking-passengers.guard';
+import { bookingSummaryGuardFn } from './guards/booking-summary.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'step-flights', pathMatch: 'full' },
@@ -14,7 +15,7 @@ const routes: Routes = [
     component: BookingPassengersPageComponent,
     canMatch: [authGuardFn, bookingPassengersGuardFn],
   },
-  { path: 'step-summary', component: BookingSummaryPageComponent },
+  { path: 'step-summary', component: BookingSummaryPageComponent, canMatch: [authGuardFn, bookingSummaryGuardFn] },
 ];
 
 @NgModule({
