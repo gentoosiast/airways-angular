@@ -62,6 +62,6 @@ export const selectBooking = createSelector(
   selectIdForDetails,
   selectBookings,
   (booking, id, bookings) => {
-    return (id ? bookings.filter((val) => val.id === id)[0] : booking) as Booking;
+    return (id ? bookings.find((val) => val.id === id) : booking) as Booking;
   },
 );
