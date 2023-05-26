@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { Booking } from '@shared/types/booking';
 import { selectUserSettings } from '@store/selectors/user-settings.selectors';
 import { storeIdForDetails } from '@store/actions/current-order.actions';
-import { Observable } from 'rxjs';
 import { selectCompletedBookings } from '@store/selectors/bookings.selector';
 
 @Component({

@@ -18,7 +18,6 @@ import { Currency, DateFormat } from '@core/types/user-settings';
 })
 export class BookingSummaryPageComponent implements OnInit, OnDestroy {
   booking$: Observable<Booking | null> = this.store.select(selectBooking);
-  booking?: Booking | null = null;
   passengerCategories = [] as Array<PassengerCategory>;
   dateFormat: DateFormat = DateFormat.DD_MM_YYYY;
   preferredCurrency: Currency = Currency.Euro;
@@ -37,7 +36,6 @@ export class BookingSummaryPageComponent implements OnInit, OnDestroy {
     this.sub.add(
       this.booking$.subscribe((booking: Booking | null) => {
         if (booking) {
-          this.booking = booking;
           this.passengerCategories = Object.keys(booking.passengers) as Array<PassengerCategory>;
         }
       }),
@@ -49,56 +47,51 @@ export class BookingSummaryPageComponent implements OnInit, OnDestroy {
     this.store.dispatch(storeIdForDetails({ id: null }));
   }
 
-  getCategoryCount(category: keyof Passengers): number {
-    return this.booking?.passengerData.filter((pas) => pas.category === category).length || 0;
+  getCategoryCount(booking: Booking, category: keyof Passengers): number {
+    return booking.passengerData.filter((pas) => pas.category === category).length;
   }
 
-  getPriceForPassengerCategory(category: keyof Passengers): number {
-    return this.booking
-      ? this.booking?.passengers[category] *
-          (this.booking.price[category].fare[this.preferredCurrency] +
-            this.booking.price[category].tax[this.preferredCurrency])
-      : 0;
+  getPriceForPassengerCategory(booking: Booking, category: keyof Passengers): number {
+    return (
+      booking.passengers[category] *
+      (booking.price[category].fare[this.preferredCurrency] + booking.price[category].tax[this.preferredCurrency])
+    );
   }
 
-  getFareForPassengerCategory(category: keyof Passengers): number {
-    return this.booking
-      ? this.booking.passengers[category] * this.booking.price[category].fare[this.preferredCurrency]
-      : 0;
+  getFareForPassengerCategory(booking: Booking, category: keyof Passengers): number {
+    return booking.passengers[category] * booking.price[category].fare[this.preferredCurrency];
   }
 
-  getTaxForPassengerCategory(category: keyof Passengers): number {
-    return this.booking
-      ? this.booking.passengers[category] * this.booking.price[category].tax[this.preferredCurrency]
-      : 0;
+  getTaxForPassengerCategory(booking: Booking, category: keyof Passengers): number {
+    return booking.passengers[category] * booking.price[category].tax[this.preferredCurrency];
   }
 
-  getTotalPrice(): number {
-    return this.passengerCategories.reduce((sum, category) => sum + this.getPriceForPassengerCategory(category), 0);
+  getTotalPrice(booking: Booking): number {
+    return this.passengerCategories.reduce(
+      (sum, category) => sum + this.getPriceForPassengerCategory(booking, category),
+      0,
+    );
   }
 
   onBackButton() {
     this.router.navigateByUrl('/booking/step-passengers');
   }
 
-  onAddToCart() {
-    this.addBookingToCart();
+  onAddToCart(booking: Booking) {
+    this.addBookingToCart(booking);
     this.showAddToCartAlert();
   }
 
-  onBuyNow() {
-    this.addBookingToCart();
+  onBuyNow(booking: Booking) {
+    this.addBookingToCart(booking);
     this.router.navigateByUrl('/user/cart');
   }
 
-  private addBookingToCart() {
-    if (!this.booking) {
-      return;
+  private addBookingToCart(booking: Booking) {
+    if (!booking.id) {
+      booking.id = nanoid();
     }
-    if (!this.booking.id) {
-      this.booking.id = nanoid();
-    }
-    this.store.dispatch(addBooking({ booking: this.booking }));
+    this.store.dispatch(addBooking({ booking }));
   }
 
   private monitorCurrencySettings(): void {

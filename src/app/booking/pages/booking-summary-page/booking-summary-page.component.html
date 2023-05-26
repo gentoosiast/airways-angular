@@ -1,48 +1,48 @@
-<div class="wrapper">
+<div class="wrapper" *ngIf="booking$ | async as booking">
   <h1 class="title"><tui-svg src="/assets/icons/preview.svg"></tui-svg> Summary</h1>
   <div class="grid">
     <air-summary-flight-card
       [dateFormat]="dateFormat"
-      [flight]="booking?.flight"
-      [passengerData]="booking?.passengerData || []"
+      [flight]="booking.flight"
+      [passengerData]="booking.passengerData"
     ></air-summary-flight-card>
     <air-summary-flight-card
-      *ngIf="booking?.returnFlight"
+      *ngIf="booking.returnFlight"
       [dateFormat]="dateFormat"
-      [flight]="booking?.returnFlight"
-      [passengerData]="booking?.passengerData || []"
+      [flight]="booking.returnFlight"
+      [passengerData]="booking.passengerData"
     ></air-summary-flight-card>
     <div class="payment-wrapper">
       <div class="card">
         <div class="category" *ngFor="let category of passengerCategories; index as i">
-          <div class="category-wrapper" *ngIf="this.getCategoryCount(category)">
+          <div class="category-wrapper" *ngIf="this.getCategoryCount(booking, category)">
             <div class="category-title">
-              <span> {{ this.getCategoryCount(category) }} x {{ category | titlecase }} Fare </span>
+              <span> {{ this.getCategoryCount(booking, category) }} x {{ category | titlecase }} Fare </span>
               <span>
-                {{ getPriceForPassengerCategory(category) | currency : preferredCurrency }}
+                {{ getPriceForPassengerCategory(booking, category) | currency : preferredCurrency }}
               </span>
             </div>
             <div class="details">
               <span>Fare</span>
-              <span>{{ getFareForPassengerCategory(category) | currency : preferredCurrency }}</span>
+              <span>{{ getFareForPassengerCategory(booking, category) | currency : preferredCurrency }}</span>
             </div>
             <div class="details">
               <span>Tax & Service Charge</span>
-              <span>{{ getTaxForPassengerCategory(category) | currency : preferredCurrency }}</span>
+              <span>{{ getTaxForPassengerCategory(booking, category) | currency : preferredCurrency }}</span>
             </div>
           </div>
         </div>
         <div class="total">
           <span>TOTAL:</span>
-          <span class="total-price">{{ getTotalPrice() | currency : preferredCurrency }}</span>
+          <span class="total-price">{{ getTotalPrice(booking) | currency : preferredCurrency }}</span>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="buttons-wrapper" *ngIf="!booking?.isCompleted">
+  <div class="buttons-wrapper" *ngIf="!booking.isCompleted">
     <button tuiButton appearance="flat" type="button" (click)="onBackButton()">Back</button>
-    <button tuiButton type="button" appearance="outline" (click)="onAddToCart()">Add to order cart</button>
-    <button tuiButton type="button" appearance="primary" (click)="onBuyNow()">Buy now</button>
+    <button tuiButton type="button" appearance="outline" (click)="onAddToCart(booking)">Add to order cart</button>
+    <button tuiButton type="button" appearance="primary" (click)="onBuyNow(booking)">Buy now</button>
   </div>
 </div>

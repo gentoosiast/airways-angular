@@ -5,7 +5,8 @@ import { selectPassengersInfo, selectSelectedFlights } from './flight-data.selec
 import { FlightType } from '@shared/types/flight-type';
 import { Passenger, Passengers } from '@shared/types/passengers';
 import { Booking } from '@shared/types/booking';
-import { FlightPrice, sumFlightPrices } from '@shared/types/flight-price';
+import { FlightPrice } from '@shared/types/flight-price';
+import { sumFlightPrices } from '../utils/sum-prices';
 
 export const selectFeature = createFeatureSelector<AppState>(appFeatureKey);
 
