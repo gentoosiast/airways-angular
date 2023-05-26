@@ -3,12 +3,14 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { Router } from '@angular/router';
 import { Subscription, combineLatest } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { TuiDay } from '@taiga-ui/cdk';
+import { TUI_DATE_FORMAT, TuiDay } from '@taiga-ui/cdk';
 import { Gender } from '@core/types/social-data';
 import { Passenger, PassengerCategory, PassengerContacts, Passengers, PassengersInfo } from '@shared/types/passengers';
 import { savePassengersInfo } from '@store/actions/flight-data.actions';
 import { selectFlightSearchData, selectPassengersInfo } from '@store/selectors/flight-data.selectors';
 import { generateRandomSeatLetter, generateRandomSeatNumber } from './random-generator';
+import { taigaDateFormat } from '@shared/factories/taiga-date-format.factory';
+import { UserSettingsService } from '@core/services/user-settings.service';
 
 interface PassengerFormGroup {
   firstName: FormControl<string | null>;
@@ -24,6 +26,13 @@ interface PassengerFormGroup {
   selector: 'air-booking-passengers-page',
   templateUrl: './booking-passengers-page.component.html',
   styleUrls: ['./booking-passengers-page.component.scss'],
+  providers: [
+    {
+      provide: TUI_DATE_FORMAT,
+      useFactory: taigaDateFormat,
+      deps: [UserSettingsService],
+    },
+  ],
 })
 export class BookingPassengersPageComponent implements OnInit, OnDestroy {
   maxAllowedDate = TuiDay.currentLocal();

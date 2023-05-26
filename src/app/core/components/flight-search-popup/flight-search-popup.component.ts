@@ -13,7 +13,7 @@ import {
   take,
 } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { TuiDay, TuiDayRange } from '@taiga-ui/cdk';
+import { TUI_DATE_FORMAT, TuiDay, TuiDayRange } from '@taiga-ui/cdk';
 import { TuiAlertService, TuiDialogContext, TuiNotification } from '@taiga-ui/core';
 import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
 import { AirportsService } from '@core/services/airports.service';
@@ -28,11 +28,20 @@ import { FlightSearchData } from '@shared/types/flight-data';
 import { FlightsRequest } from '@shared/types/flights-request';
 import { FLIGHT_SEARCH_DEBOUNCE_TIME, FLIGHT_SEARCH_MINIMUM_QUERY_LENGTH } from '@flight-search/constants';
 import { ALERT_DISPLAY_DURATION } from '@core/constants/alerts.constants';
+import { taigaDateFormat } from '@shared/factories/taiga-date-format.factory';
+import { UserSettingsService } from '@core/services/user-settings.service';
 
 @Component({
   selector: 'air-flight-search-popup',
   templateUrl: './flight-search-popup.component.html',
   styleUrls: ['./flight-search-popup.component.scss'],
+  providers: [
+    {
+      provide: TUI_DATE_FORMAT,
+      useFactory: taigaDateFormat,
+      deps: [UserSettingsService],
+    },
+  ],
 })
 export class FlightSearchPopupComponent implements OnInit, OnDestroy {
   airportForm = this.fb.group({

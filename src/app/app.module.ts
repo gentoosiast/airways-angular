@@ -2,6 +2,7 @@ import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { TUI_DATE_SEPARATOR } from '@taiga-ui/cdk';
 import { TuiRootModule, TuiDialogModule, TuiAlertModule, TUI_SANITIZER } from '@taiga-ui/core';
 import { TuiMobileCalendarDialogModule } from '@taiga-ui/addon-mobile';
 import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
@@ -35,6 +36,10 @@ import * as userSettingsEffects from './store/effects/user-settings.effects';
     {
       provide: TUI_SANITIZER,
       useClass: NgDompurifySanitizer,
+    },
+    {
+      provide: TUI_DATE_SEPARATOR,
+      useValue: '/',
     },
   ],
   bootstrap: [AppComponent],
