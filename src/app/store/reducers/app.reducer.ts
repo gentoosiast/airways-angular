@@ -80,17 +80,17 @@ export const appReducer = createReducer(
     }),
   ),
 
-  on(FlightDataActions.saveSelectedFlights, (state, { flight, returnFlight }): AppState => {
-    if (flight) {
+  on(FlightDataActions.saveSelectedFlights, (state, { flightIdx, returnFlightIdx }): AppState => {
+    if (flightIdx) {
       return {
         ...state,
-        selectedFlights: { ...state.selectedFlights, flight },
+        selectedFlights: { ...state.selectedFlights, flightIdx },
       };
     }
-    if (returnFlight) {
+    if (returnFlightIdx) {
       return {
         ...state,
-        selectedFlights: { ...state.selectedFlights, returnFlight },
+        selectedFlights: { ...state.selectedFlights, returnFlightIdx },
       };
     }
     return state;
@@ -126,8 +126,8 @@ export const appReducer = createReducer(
       flightSearchData: booking.flightSearchData,
       flights: booking.flights,
       selectedFlights: {
-        flight: booking.flight,
-        returnFlight: booking.returnFlight,
+        flightIdx: booking.flightIdx,
+        returnFlightIdx: booking.returnFlightIdx,
       },
       passengersInfo: {
         passengers: booking.passengerData,

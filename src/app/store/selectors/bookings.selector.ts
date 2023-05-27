@@ -34,7 +34,7 @@ export const selectBookingFromPrevSteps = createSelector(
   selectFlights,
   selectCurrentBookingId,
   (selectedFlights, passengers, flightSearchData, flights, id) => {
-    if (!selectedFlights || !passengers || !flightSearchData) {
+    if (!selectedFlights.flightIdx || !passengers || !flightSearchData || !flights) {
       return null;
     }
     const bookingPassengers: Passengers = passengers.passengers.reduce(
@@ -48,19 +48,22 @@ export const selectBookingFromPrevSteps = createSelector(
       },
       { adults: 0, children: 0, infants: 0 },
     );
-    const totalPrice: FlightPrice | null = selectedFlights.flight
-      ? selectedFlights.returnFlight
-        ? sumFlightPrices(selectedFlights.flight.price, selectedFlights.returnFlight.price)
-        : selectedFlights.flight.price
-      : null;
+    const flight = flights.flights[selectedFlights.flightIdx];
+    const returnFlight =
+      selectedFlights && selectedFlights.returnFlightIdx && flights.returnFlights
+        ? flights.returnFlights[selectedFlights.returnFlightIdx]
+        : undefined;
+    const totalPrice: FlightPrice = returnFlight ? sumFlightPrices(flight.price, returnFlight.price) : flight.price;
     return {
       id: id,
       isCompleted: false,
-      flightType: selectedFlights.flight && selectedFlights.returnFlight ? 'roundtrip' : ('oneway' as FlightType),
+      flightType: selectedFlights.flightIdx && selectedFlights.returnFlightIdx ? 'roundtrip' : ('oneway' as FlightType),
       flightSearchData: flightSearchData,
       flights: flights,
-      flight: selectedFlights.flight,
-      returnFlight: selectedFlights.returnFlight,
+      flight: flight,
+      flightIdx: selectedFlights.flightIdx,
+      returnFlight: returnFlight,
+      returnFlightIdx: selectedFlights.returnFlightIdx,
       passengers: bookingPassengers,
       passengerData: passengers?.passengers as Array<Passenger>,
       passengersContacts: passengers.contacts,

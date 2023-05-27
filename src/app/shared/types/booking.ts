@@ -12,7 +12,9 @@ export interface Booking {
   flightSearchData: FlightSearchData;
   flights: Flights;
   flight: Flight;
+  flightIdx: number;
   returnFlight?: Flight;
+  returnFlightIdx: number;
   passengers: Passengers;
   passengerData: Array<Passenger>;
   passengersContacts: PassengerContacts;

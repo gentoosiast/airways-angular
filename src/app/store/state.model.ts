@@ -4,14 +4,13 @@ import { Flights } from '@shared/types/flights';
 import { PassengersInfo } from '@shared/types/passengers';
 import { Booking } from '@shared/types/booking';
 import { UserSettings } from '@shared/types/user-settings';
-import { Flight } from '@shared/types/flight';
 
 export interface AppState {
   flightSearchData: FlightSearchData | null;
   flights: Flights | null;
   selectedFlights: {
-    flight?: Flight;
-    returnFlight?: Flight;
+    flightIdx?: number;
+    returnFlightIdx?: number;
   };
   passengersInfo: PassengersInfo | null;
   user: User | null;

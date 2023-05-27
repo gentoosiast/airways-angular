@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subscription, tap } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { selectFlights } from '@store/selectors/flight-data.selectors';
+import { selectFlights, selectSelectedFlights } from '@store/selectors/flight-data.selectors';
 import { Flights } from '@shared/types/flights';
 import { selectUserSettings } from '@store/selectors/user-settings.selectors';
 import { saveSelectedFlights } from '@store/actions/flight-data.actions';
@@ -14,6 +14,7 @@ import { saveSelectedFlights } from '@store/actions/flight-data.actions';
 })
 export class BookingFlightsPageComponent implements OnInit, OnDestroy {
   flightsData$?: Observable<Flights | null>;
+  selectedFlights$?: Observable<{ flightIdx?: number; returnFlightIdx?: number } | null>;
   departureFlightIdx: number | null = null;
   arrivalFlightIdx: number | null = null;
   isDepartureConfirmed = false;
@@ -26,6 +27,14 @@ export class BookingFlightsPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.flightsData$ = this.store.select(selectFlights);
+    this.selectedFlights$ = this.store.select(selectSelectedFlights);
+
+    this.sub.add(
+      this.selectedFlights$.subscribe((selectedFlights) => {
+        this.departureFlightIdx = selectedFlights?.flightIdx || null;
+        this.arrivalFlightIdx = selectedFlights?.returnFlightIdx || null;
+      }),
+    );
   }
 
   ngOnDestroy(): void {
@@ -42,34 +51,16 @@ export class BookingFlightsPageComponent implements OnInit, OnDestroy {
 
   onConfirmDepartureFlight(isConfirmed: boolean): void {
     this.isDepartureConfirmed = isConfirmed;
-    this.sub.add(
-      this.flightsData$
-        ?.pipe(
-          tap((flightsData) => {
-            if (this.departureFlightIdx) {
-              this.store.dispatch(saveSelectedFlights({ flight: flightsData?.flights[this.departureFlightIdx] }));
-            }
-          }),
-        )
-        .subscribe(),
-    );
+    if (this.departureFlightIdx) {
+      this.store.dispatch(saveSelectedFlights({ flightIdx: this.departureFlightIdx }));
+    }
   }
 
   onConfirmArrivalFlight(isConfirmed: boolean): void {
     this.isArrivalConfirmed = isConfirmed;
-    this.sub.add(
-      this.flightsData$
-        ?.pipe(
-          tap((flightsData) => {
-            if (this.arrivalFlightIdx && flightsData?.returnFlights) {
-              this.store.dispatch(
-                saveSelectedFlights({ returnFlight: flightsData?.returnFlights[this.arrivalFlightIdx] }),
-              );
-            }
-          }),
-        )
-        .subscribe(),
-    );
+    if (this.arrivalFlightIdx) {
+      this.store.dispatch(saveSelectedFlights({ returnFlightIdx: this.arrivalFlightIdx }));
+    }
   }
 
   onSelectDepartureFlight(flightIdx: number): void {

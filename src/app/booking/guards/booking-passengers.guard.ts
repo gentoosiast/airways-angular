@@ -9,8 +9,8 @@ export const bookingPassengersGuardFn = () => {
   const store = inject(Store);
 
   return store.select(selectSelectedFlights).pipe(
-    tap(({ flight }) => {
-      if (!flight) {
+    tap(({ flightIdx }) => {
+      if (!flightIdx) {
         router.navigateByUrl('/');
       }
     }),
