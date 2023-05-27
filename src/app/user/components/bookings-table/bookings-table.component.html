@@ -1,119 +1,121 @@
-<table tuiTable [columns]="columns" class="table">
-  <caption class="table-caption">
-    {{
-      caption
-    }}
-  </caption>
-  <thead>
-    <tr tuiThGroup>
-      <th *tuiHead="'number'" [sorter]="null" tuiTh>
-        <div class="flexbox">
-          <tui-checkbox *ngIf="isEditable" [(ngModel)]="areAllSelected" (change)="selectAll()"></tui-checkbox>
-          <span>No.</span>
-        </div>
-      </th>
-      <th *tuiHead="'flight'" [sorter]="endpointsSorter" tuiTh>Flight</th>
-      <th *tuiHead="'triptype'" [sorter]="tripTypeSorter" tuiTh>Trip type</th>
-      <th *tuiHead="'dates'" [sorter]="dateSorter" tuiTh>Date & Time</th>
-      <th *tuiHead="'passengers'" [sorter]="null" tuiTh>Passengers</th>
-      <th *tuiHead="'price'" tuiTh>Price</th>
-      <th *tuiHead="'actions'" tuiTh [sorter]="null"></th>
-    </tr>
-  </thead>
-
-  <tbody *tuiLet="bookings | tuiTableSort as sortedBookings" tuiTbody [data]="sortedBookings">
-    <tr *ngFor="let booking of sortedBookings; let index = index" tuiTr>
-      <td *tuiCell="'number'" tuiTd class="flight-number td">
-        <div class="flexbox">
-          <tui-checkbox *ngIf="isEditable" [(ngModel)]="booking.isSelected" (change)="isAllSelected()"></tui-checkbox>
-          <a (click)="showDetails(booking)">
-            <div class="flight-number-list">
-              <span>{{ booking.flight.flightNumber }}</span>
-              <span *ngIf="booking.returnFlight">{{ booking.returnFlight.flightNumber }}</span>
-            </div>
-          </a>
-        </div>
-      </td>
-      <td *tuiCell="'flight'" tuiTd class="td">
-        <div class="flights">
-          <span>{{ booking.flight.departureAirport.name }} — {{ booking.flight.arrivalAirport.name }}</span>
-          <span *ngIf="booking.returnFlight"
-            >{{ booking.returnFlight.departureAirport.name }} — {{ booking.returnFlight.arrivalAirport.name }}</span
-          >
-        </div>
-      </td>
-      <td *tuiCell="'triptype'" tuiTd class="td">
-        {{ booking.flightType === 'oneway' ? 'One way' : 'Round trip' }}
-      </td>
-      <td *tuiCell="'dates'" tuiTd class="td">
-        <div class="dates">
-          <span
-            >{{ booking.flight.departureDate | date : getFormatForDatePipe(dateFormat) : 'Z' }} —
-            {{ booking.flight.arrivalDate | date : 'H:mm' : 'Z' }}</span
-          >
-          <span *ngIf="booking.returnFlight"
-            >{{ booking.returnFlight.departureDate | date : getFormatForDatePipe(dateFormat) : 'Z' }} —
-            {{ booking.returnFlight.arrivalDate | date : 'H:mm' : 'Z' }}</span
-          >
-        </div>
-      </td>
-      <td *tuiCell="'passengers'" tuiTd class="td">
-        <div class="passenger">
-          {{ 'adults' | passengersData : booking.passengers.adults }}
-        </div>
-        <div class="passenger">
-          {{ 'children' | passengersData : booking.passengers.children }}
-        </div>
-        <div class="passenger">
-          {{ 'infants' | passengersData : booking.passengers.infants }}
-        </div>
-      </td>
-      <td *tuiCell="'price'" tuiTd class="price td">
-        {{ booking.price.total[preferredCurrency] | currency : preferredCurrency }}
-      </td>
-      <td *tuiCell="'actions'" tuiTd>
-        <tui-hosted-dropdown tuiDropdownAlign="right" [sided]="true" [content]="dropdown">
-          <button
-            tuiIconButton
-            appearance="icon"
-            icon="tuiIconMoreVertical"
-            type="button"
-            size="xs"
-            class="menu-button"
-          ></button>
-        </tui-hosted-dropdown>
-        <ng-template #dropdown let-close="close">
-          <tui-data-list>
-            <button *ngIf="isEditable" tuiOption (click)="edit(booking)">Edit</button>
-            <button *ngIf="isEditable" tuiOption (click)="remove(booking)">Remove</button>
-            <button *ngIf="!isEditable" tuiOption (click)="showDetails(booking)">Details</button>
-          </tui-data-list>
-        </ng-template>
-      </td>
-    </tr>
-    <tr *ngIf="isEditable" class="tui-table__tr">
-      <td colspan="8" class="tui-table__td">
-        <div class="total">
-          <button tuiButton appearance="secondary" size="s" routerLink="/">+ Add new trip</button>
-          <div class="total">
-            <div class="tui-text_h6">Total</div>
-            <div class="tui-text_h5 total-price">{{ priceOfSelectedBookings() | currency : preferredCurrency }}</div>
-          </div>
-        </div>
-      </td>
-    </tr>
-    <tr *ngIf="isEditable" class="tui-table__tr">
-      <td colspan="8" class="tui-table__td">
-        <div class="total">
-          <div class="promo">
-            <!-- TODO: add promocode-input -->
-          </div>
+<tui-scrollbar [hidden]="true">
+  <table tuiTable [columns]="columns" class="table">
+    <caption class="table-caption">
+      {{
+        caption
+      }}
+    </caption>
+    <thead>
+      <tr tuiThGroup>
+        <th *tuiHead="'number'" [sorter]="null" tuiTh>
           <div class="flexbox">
-            <div class="tui-text_body-m">{{ countOfSelectedBookings() }} selected</div>
-            <button tuiButton size="m">Continue</button>
+            <tui-checkbox *ngIf="isEditable" [(ngModel)]="areAllSelected" (change)="selectAll()"></tui-checkbox>
+            <span>No.</span>
           </div>
-        </div>
-      </td>
-    </tr>
-  </tbody>
-</table>
+        </th>
+        <th *tuiHead="'flight'" [sorter]="endpointsSorter" tuiTh>Flight</th>
+        <th *tuiHead="'triptype'" [sorter]="tripTypeSorter" tuiTh>Trip type</th>
+        <th *tuiHead="'dates'" [sorter]="dateSorter" tuiTh>Date & Time</th>
+        <th *tuiHead="'passengers'" [sorter]="null" tuiTh>Passengers</th>
+        <th *tuiHead="'price'" tuiTh>Price</th>
+        <th *tuiHead="'actions'" tuiTh [sorter]="null"></th>
+      </tr>
+    </thead>
+
+    <tbody *tuiLet="bookings | tuiTableSort as sortedBookings" tuiTbody [data]="sortedBookings">
+      <tr *ngFor="let booking of sortedBookings; let index = index" tuiTr>
+        <td *tuiCell="'number'" tuiTd class="flight-number td">
+          <div class="flexbox">
+            <tui-checkbox *ngIf="isEditable" [(ngModel)]="booking.isSelected" (change)="isAllSelected()"></tui-checkbox>
+            <a (click)="showDetails(booking)">
+              <div class="flight-number-list">
+                <span>{{ booking.flight.flightNumber }}</span>
+                <span *ngIf="booking.returnFlight">{{ booking.returnFlight.flightNumber }}</span>
+              </div>
+            </a>
+          </div>
+        </td>
+        <td *tuiCell="'flight'" tuiTd class="td">
+          <div class="flights">
+            <span>{{ booking.flight.departureAirport.name }} — {{ booking.flight.arrivalAirport.name }}</span>
+            <span *ngIf="booking.returnFlight"
+              >{{ booking.returnFlight.departureAirport.name }} — {{ booking.returnFlight.arrivalAirport.name }}</span
+            >
+          </div>
+        </td>
+        <td *tuiCell="'triptype'" tuiTd class="td">
+          {{ booking.flightType === 'oneway' ? 'One way' : 'Round trip' }}
+        </td>
+        <td *tuiCell="'dates'" tuiTd class="td">
+          <div class="dates">
+            <span
+              >{{ booking.flight.departureDate | date : getFormatForDatePipe(dateFormat) : 'Z' }} —
+              {{ booking.flight.arrivalDate | date : 'H:mm' : 'Z' }}</span
+            >
+            <span *ngIf="booking.returnFlight"
+              >{{ booking.returnFlight.departureDate | date : getFormatForDatePipe(dateFormat) : 'Z' }} —
+              {{ booking.returnFlight.arrivalDate | date : 'H:mm' : 'Z' }}</span
+            >
+          </div>
+        </td>
+        <td *tuiCell="'passengers'" tuiTd class="td">
+          <div class="passenger">
+            {{ 'adults' | passengersData : booking.passengers.adults }}
+          </div>
+          <div class="passenger">
+            {{ 'children' | passengersData : booking.passengers.children }}
+          </div>
+          <div class="passenger">
+            {{ 'infants' | passengersData : booking.passengers.infants }}
+          </div>
+        </td>
+        <td *tuiCell="'price'" tuiTd class="price td">
+          {{ booking.price.total[preferredCurrency] | currency : preferredCurrency }}
+        </td>
+        <td *tuiCell="'actions'" tuiTd>
+          <tui-hosted-dropdown tuiDropdownAlign="right" [sided]="true" [content]="dropdown">
+            <button
+              tuiIconButton
+              appearance="icon"
+              icon="tuiIconMoreVertical"
+              type="button"
+              size="xs"
+              class="menu-button"
+            ></button>
+          </tui-hosted-dropdown>
+          <ng-template #dropdown let-close="close">
+            <tui-data-list>
+              <button *ngIf="isEditable" tuiOption (click)="edit(booking)">Edit</button>
+              <button *ngIf="isEditable" tuiOption (click)="remove(booking)">Remove</button>
+              <button *ngIf="!isEditable" tuiOption (click)="showDetails(booking)">Details</button>
+            </tui-data-list>
+          </ng-template>
+        </td>
+      </tr>
+      <tr *ngIf="isEditable" class="tui-table__tr">
+        <td colspan="8" class="tui-table__td">
+          <div class="total">
+            <button tuiButton appearance="secondary" size="s" routerLink="/">+ Add new trip</button>
+            <div class="total">
+              <div class="tui-text_h6">Total</div>
+              <div class="tui-text_h5 total-price">{{ priceOfSelectedBookings() | currency : preferredCurrency }}</div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr *ngIf="isEditable" class="tui-table__tr">
+        <td colspan="8" class="tui-table__td">
+          <div class="total">
+            <div class="promo">
+              <!-- TODO: add promocode-input -->
+            </div>
+            <div class="flexbox">
+              <div class="tui-text_body-m">{{ countOfSelectedBookings() }} selected</div>
+              <button tuiButton size="m">Continue</button>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</tui-scrollbar>
