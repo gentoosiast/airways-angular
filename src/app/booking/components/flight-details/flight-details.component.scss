@@ -3,6 +3,7 @@
 
 .flight-details {
   display: flex;
+  flex-wrap: wrap;
   border-radius: 5px;
   background-color: colors.$color-neutral-100;
   box-shadow: 0 1px 4px rgba(0 0 0 / 20%);
@@ -11,23 +12,47 @@
 .flight-details-left {
   padding: 27px 35px 27px 40px;
   display: flex;
+  justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   gap: 30px;
+  flex: 1 0 auto;
 }
 
 .flight-details-right {
+  @media screen and (width < 767px) {
+    border-left: none;
+  }
+
   padding: 27px 40px 27px 28px;
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 32px;
   border-left: 2px dashed colors.$color-secondary-40;
+  flex: 1 0 auto;
 }
 
 .selected > .flight-details-right {
   border-left: 2px solid transparent;
 }
 
+.flight-date-duration {
+  @media screen and (width < 767px) {
+    flex-direction: column;
+    gap: 35px;
+  }
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  flex: 1 0 auto;
+}
+
 .flight-duration {
+  max-width: 150px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -43,13 +68,14 @@
 }
 
 .flight-icon {
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
 .flight-icon-line {
-  width: 118px;
+  width: 100%;
   height: 2px;
   background-color: colors.$color-secondary-40;
 }

@@ -15,6 +15,7 @@
 .date {
   @extend %typo-label-large;
 
+  white-space: nowrap;
   color: colors.$color-neutral-30;
 }
 
