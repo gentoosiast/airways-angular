@@ -1,5 +1,4 @@
 import { createAction, props } from '@ngrx/store';
-import { Flight } from '@shared/types/flight';
 import { FlightSearchData } from '@shared/types/flight-data';
 import { Flights } from '@shared/types/flights';
 import { PassengersInfo } from '@shared/types/passengers';
@@ -13,7 +12,7 @@ export const saveFlights = createAction('[Flights] Save flights', props<{ flight
 
 export const saveSelectedFlights = createAction(
   '[Flights] Save selected flights',
-  props<{ flight?: Flight; returnFlight?: Flight }>(),
+  props<{ flightIdx?: number; returnFlightIdx?: number }>(),
 );
 
 export const savePassengersInfo = createAction(
