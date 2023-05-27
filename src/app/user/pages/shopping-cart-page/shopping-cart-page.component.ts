@@ -1,9 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Booking } from '@shared/types/booking';
-import { prefillBookingData, removeBooking, storeCurrentBookingId } from '@store/actions/current-order.actions';
+import {
+  addBooking,
+  prefillBookingData,
+  removeBooking,
+  storeCurrentBookingId,
+} from '@store/actions/current-order.actions';
 import { selectCurrentBookings } from 'src/app/store/selectors/bookings.selector';
 import { selectUserSettings } from '@store/selectors/user-settings.selectors';
 
@@ -12,15 +17,21 @@ import { selectUserSettings } from '@store/selectors/user-settings.selectors';
   templateUrl: './shopping-cart-page.component.html',
   styleUrls: ['./shopping-cart-page.component.scss'],
 })
-export class ShoppingCartPageComponent implements OnInit {
+export class ShoppingCartPageComponent implements OnInit, OnDestroy {
   bookings$!: Observable<Array<Booking>>;
   userSettings$ = this.store.select(selectUserSettings);
+
+  private sub = new Subscription();
 
   constructor(private router: Router, private readonly store: Store) {}
 
   ngOnInit(): void {
     this.bookings$ = this.store.select(selectCurrentBookings);
     this.store.dispatch(storeCurrentBookingId({ id: null }));
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
   removeBooking(booking: Booking) {
@@ -42,11 +53,14 @@ export class ShoppingCartPageComponent implements OnInit {
     this.router.navigateByUrl('/booking/step-summary');
   }
 
-  checkout() {
-    this.bookings$.subscribe((bookings) => {
-      bookings.forEach((booking) => {
-        booking.isCompleted = true;
-      });
-    });
+  checkout(id: string) {
+    this.sub.add(
+      this.bookings$.subscribe((bookings) => {
+        const booking = bookings.find((booking) => booking.id === id);
+        if (booking) {
+          this.store.dispatch(addBooking({ booking: { ...booking, isCompleted: true } }));
+        }
+      }),
+    );
   }
 }

@@ -16,7 +16,7 @@ export class BookingsTableComponent implements OnInit {
   @Output() bookingDetails = new EventEmitter<Booking>();
   @Output() editBooking = new EventEmitter<Booking>();
   @Output() removeBooking = new EventEmitter<Booking>();
-  @Output() checkout = new EventEmitter<void>();
+  @Output() checkout = new EventEmitter<string>();
 
   selectedBookings = new Map<string, boolean>();
   areAllSelected = true;
@@ -95,6 +95,10 @@ export class BookingsTableComponent implements OnInit {
   }
 
   onContinue() {
-    this.checkout.emit();
+    this.selectedBookings.forEach((value, key) => {
+      if (value) {
+        this.checkout.emit(key);
+      }
+    });
   }
 }
