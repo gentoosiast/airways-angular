@@ -13,7 +13,7 @@ import { selectUserSettings } from '@store/selectors/user-settings.selectors';
   styleUrls: ['./shopping-cart-page.component.scss'],
 })
 export class ShoppingCartPageComponent implements OnInit {
-  bookings$!: Observable<Array<Booking & { isSelected?: boolean }>>;
+  bookings$!: Observable<Array<Booking>>;
   userSettings$ = this.store.select(selectUserSettings);
 
   constructor(private router: Router, private readonly store: Store) {}
@@ -40,5 +40,13 @@ export class ShoppingCartPageComponent implements OnInit {
     }
     this.store.dispatch(prefillBookingData({ booking }));
     this.router.navigateByUrl('/booking/step-summary');
+  }
+
+  checkout() {
+    this.bookings$.subscribe((bookings) => {
+      bookings.forEach((booking) => {
+        booking.isCompleted = true;
+      });
+    });
   }
 }

@@ -99,7 +99,7 @@ export const appReducer = createReducer(
   on(BookingsActions.addBooking, (state, { booking }): AppState => {
     return {
       ...state,
-      bookings: [...state.bookings.filter((item) => item.id !== booking.id), { ...booking, isSelected: true }],
+      bookings: [...state.bookings.filter((item) => item.id !== booking.id), booking],
     };
   }),
 
