@@ -5,6 +5,6 @@ export const addBooking = createAction('[Booking] Add booking', props<{ booking:
 
 export const removeBooking = createAction('[Booking] Remove booking', props<{ id: string }>());
 
-export const editBooking = createAction('[Booking] Edit booking', props<{ id: string }>());
+export const storeCurrentBookingId = createAction('[Booking] Store current booking id', props<{ id: string | null }>());
 
-export const storeIdForDetails = createAction('[Booking] Store id for details', props<{ id: string | null }>());
+export const prefillBookingData = createAction('[Booking] Prefill booking data', props<{ booking: Booking }>());

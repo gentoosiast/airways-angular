@@ -1,7 +1,12 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 import { AppState } from '../state.model';
 import { appFeatureKey } from '../reducers/app.reducer';
-import { selectPassengersInfo, selectSelectedFlights } from './flight-data.selectors';
+import {
+  selectFlightSearchData,
+  selectFlights,
+  selectPassengersInfo,
+  selectSelectedFlights,
+} from './flight-data.selectors';
 import { FlightType } from '@shared/types/flight-type';
 import { Passenger, Passengers } from '@shared/types/passengers';
 import { Booking } from '@shared/types/booking';
@@ -20,12 +25,17 @@ export const selectCompletedBookings = createSelector(selectFeature, (state) =>
 
 export const selectBookings = createSelector(selectFeature, (state) => state.bookings);
 
+export const selectCurrentBookingId = createSelector(selectFeature, (state) => state.currentBookingId);
+
 export const selectBookingFromPrevSteps = createSelector(
   selectSelectedFlights,
   selectPassengersInfo,
-  (flights, passengers) => {
-    if (!flights || !passengers) {
-      return;
+  selectFlightSearchData,
+  selectFlights,
+  selectCurrentBookingId,
+  (selectedFlights, passengers, flightSearchData, flights, id) => {
+    if (!selectedFlights || !passengers || !flightSearchData) {
+      return null;
     }
     const bookingPassengers: Passengers = passengers.passengers.reduce(
       (acc, cur) => {
@@ -38,30 +48,23 @@ export const selectBookingFromPrevSteps = createSelector(
       },
       { adults: 0, children: 0, infants: 0 },
     );
-    const totalPrice: FlightPrice | null = flights.flight
-      ? flights.returnFlight
-        ? sumFlightPrices(flights.flight.price, flights.returnFlight.price)
-        : flights.flight.price
+    const totalPrice: FlightPrice | null = selectedFlights.flight
+      ? selectedFlights.returnFlight
+        ? sumFlightPrices(selectedFlights.flight.price, selectedFlights.returnFlight.price)
+        : selectedFlights.flight.price
       : null;
     return {
+      id: id,
       isCompleted: false,
-      flightType: flights.flight && flights.returnFlight ? 'roundtrip' : ('oneway' as FlightType),
-      flight: flights.flight,
-      returnFlight: flights.returnFlight,
+      flightType: selectedFlights.flight && selectedFlights.returnFlight ? 'roundtrip' : ('oneway' as FlightType),
+      flightSearchData: flightSearchData,
+      flights: flights,
+      flight: selectedFlights.flight,
+      returnFlight: selectedFlights.returnFlight,
       passengers: bookingPassengers,
       passengerData: passengers?.passengers as Array<Passenger>,
+      passengersContacts: passengers.contacts,
       price: totalPrice,
-    };
-  },
-);
-
-export const selectIdForDetails = createSelector(selectFeature, (state) => state.idForDetails);
-
-export const selectBooking = createSelector(
-  selectBookingFromPrevSteps,
-  selectIdForDetails,
-  selectBookings,
-  (booking, id, bookings) => {
-    return (id ? bookings.find((val) => val.id === id) : booking) as Booking;
+    } as Booking;
   },
 );
