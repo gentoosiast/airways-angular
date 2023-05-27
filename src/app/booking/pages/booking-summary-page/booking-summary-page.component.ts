@@ -76,6 +76,10 @@ export class BookingSummaryPageComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/booking/step-passengers');
   }
 
+  onReturnToAccount() {
+    this.router.navigateByUrl('/user/account');
+  }
+
   onAddToCart(booking: Booking) {
     this.addBookingToCart(booking);
     this.showAddToCartAlert();
