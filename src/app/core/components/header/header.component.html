@@ -44,18 +44,25 @@
               (click)="logout()"
             ></button>
           </div>
-          <button
-            *ngIf="user"
-            tuiIconButton
-            routerLink="/user/cart"
-            size="m"
-            shape="rounded"
-            type="button"
-            appearance="icon"
-            icon="tuiIconShoppingBagLarge"
-            aria-label="Shopping cart"
-            class="shopping-bag"
-          ></button>
+          <ng-container *tuiLet="cartBookings$ | async as cartBookings">
+            <tui-badged-content
+              *ngIf="user"
+              [contentTop]="cartBookings?.length"
+              [colorTop]="cartBookings?.length ? 'var(--tui-error-fill)' : ''"
+            >
+              <button
+                tuiIconButton
+                routerLink="/user/cart"
+                size="m"
+                shape="rounded"
+                type="button"
+                appearance="icon"
+                icon="tuiIconShoppingBagLarge"
+                aria-label="Shopping bag"
+                class="shopping-bag"
+              ></button>
+            </tui-badged-content>
+          </ng-container>
         </ng-container>
       </div>
     </div>
