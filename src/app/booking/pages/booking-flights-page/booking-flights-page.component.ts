@@ -31,8 +31,8 @@ export class BookingFlightsPageComponent implements OnInit, OnDestroy {
 
     this.sub.add(
       this.selectedFlights$.subscribe((selectedFlights) => {
-        this.departureFlightIdx = selectedFlights?.flightIdx || null;
-        this.arrivalFlightIdx = selectedFlights?.returnFlightIdx || null;
+        this.departureFlightIdx = selectedFlights?.flightIdx ?? null;
+        this.arrivalFlightIdx = selectedFlights?.returnFlightIdx ?? null;
       }),
     );
   }
