@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { Booking } from '@shared/types/booking';
 import {
-  addBooking,
+  checkoutBooking,
   prefillBookingData,
   removeBooking,
   storeCurrentBookingId,
@@ -54,13 +54,6 @@ export class ShoppingCartPageComponent implements OnInit, OnDestroy {
   }
 
   checkout(id: string) {
-    this.sub.add(
-      this.bookings$.subscribe((bookings) => {
-        const booking = bookings.find((booking) => booking.id === id);
-        if (booking) {
-          this.store.dispatch(addBooking({ booking: { ...booking, isCompleted: true } }));
-        }
-      }),
-    );
+    this.store.dispatch(checkoutBooking({ id }));
   }
 }

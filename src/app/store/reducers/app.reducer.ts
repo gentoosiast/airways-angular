@@ -111,6 +111,17 @@ export const appReducer = createReducer(
     }),
   ),
 
+  on(BookingsActions.checkoutBooking, (state, { id }): AppState => {
+    const booking = state.bookings.find((booking) => booking.id === id);
+    if (!booking) {
+      return state;
+    }
+    return {
+      ...state,
+      bookings: [...state.bookings.filter((item) => item.id !== id), { ...booking, isCompleted: true }],
+    };
+  }),
+
   on(
     BookingsActions.storeCurrentBookingId,
     (state, { id }): AppState => ({

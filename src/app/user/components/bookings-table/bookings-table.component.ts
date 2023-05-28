@@ -56,11 +56,13 @@ export class BookingsTableComponent implements OnInit {
   }
 
   isAllSelected(): boolean {
-    let areAllSelected = true;
-    this.selectedBookings.forEach((value) => {
-      areAllSelected = areAllSelected && value;
-    });
-    this.areAllSelected = areAllSelected;
+    for (const isSelected of this.selectedBookings.values()) {
+      if (!isSelected) {
+        this.areAllSelected = false;
+        return this.areAllSelected;
+      }
+    }
+    this.areAllSelected = true;
     return this.areAllSelected;
   }
 
