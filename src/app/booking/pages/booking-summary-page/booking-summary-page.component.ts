@@ -8,7 +8,7 @@ import { nanoid } from 'nanoid';
 import { PassengerCategory, Passengers } from '@shared/types/passengers';
 import { addBooking } from '@store/actions/current-order.actions';
 import { selectUserSettings } from '@store/selectors/user-settings.selectors';
-import { selectBookingFromPrevSteps } from '@store/selectors/bookings.selector';
+import { selectBooking } from '@store/selectors/bookings.selector';
 import { Currency, DateFormat } from '@core/types/user-settings';
 
 @Component({
@@ -17,7 +17,7 @@ import { Currency, DateFormat } from '@core/types/user-settings';
   styleUrls: ['./booking-summary-page.component.scss'],
 })
 export class BookingSummaryPageComponent implements OnInit, OnDestroy {
-  booking$: Observable<Booking | null> = this.store.select(selectBookingFromPrevSteps);
+  booking$: Observable<Booking | null> = this.store.select(selectBooking);
   passengerCategories = [] as Array<PassengerCategory>;
   dateFormat: DateFormat = DateFormat.DD_MM_YYYY;
   preferredCurrency: Currency = Currency.Euro;
