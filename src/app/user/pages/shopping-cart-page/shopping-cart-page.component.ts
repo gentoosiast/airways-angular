@@ -1,7 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
+import { TuiAlertService, TuiNotification } from '@taiga-ui/core';
 import { Booking } from '@shared/types/booking';
 import {
   checkoutBooking,
@@ -23,7 +24,11 @@ export class ShoppingCartPageComponent implements OnInit, OnDestroy {
 
   private sub = new Subscription();
 
-  constructor(private router: Router, private readonly store: Store) {}
+  constructor(
+    private router: Router,
+    private readonly store: Store,
+    @Inject(TuiAlertService) private readonly alerts: TuiAlertService,
+  ) {}
 
   ngOnInit(): void {
     this.bookings$ = this.store.select(selectCurrentBookings);
@@ -55,5 +60,13 @@ export class ShoppingCartPageComponent implements OnInit, OnDestroy {
 
   checkout(id: string) {
     this.store.dispatch(checkoutBooking({ id }));
+  }
+
+  showCheckoutAlert(): void {
+    this.sub.add(
+      this.alerts
+        .open('Selected bookings are paid and available on the User Acccount page', { status: TuiNotification.Success })
+        .subscribe(),
+    );
   }
 }
