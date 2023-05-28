@@ -59,6 +59,12 @@ td {
   }
 }
 
+.table-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .flight-number {
   color: var(--tui-primary);
   font-weight: 600;

@@ -98,7 +98,7 @@
       </tbody>
     </table>
   </tui-scrollbar>
-  <div *ngIf="isEditable">
+  <div *ngIf="isEditable" class="table-footer">
     <div class="total">
       <button tuiButton appearance="secondary" size="s" routerLink="/">+ Add new trip</button>
       <div class="total">
@@ -106,8 +106,6 @@
         <div class="tui-text_h5 total-price">{{ priceOfSelectedBookings() | currency : preferredCurrency }}</div>
       </div>
     </div>
-  </div>
-  <div *ngIf="isEditable">
     <div class="total">
       <div class="promo">
         <!-- TODO: add promocode-input -->
