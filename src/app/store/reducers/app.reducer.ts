@@ -99,7 +99,7 @@ export const appReducer = createReducer(
   on(BookingsActions.addBooking, (state, { booking }): AppState => {
     return {
       ...state,
-      bookings: [...state.bookings.filter((item) => item.id !== booking.id), { ...booking, isSelected: true }],
+      bookings: [...state.bookings.filter((item) => item.id !== booking.id), booking],
     };
   }),
 
@@ -110,6 +110,17 @@ export const appReducer = createReducer(
       bookings: state.bookings.filter((item) => item.id !== id),
     }),
   ),
+
+  on(BookingsActions.checkoutBooking, (state, { id }): AppState => {
+    const booking = state.bookings.find((booking) => booking.id === id);
+    if (!booking) {
+      return state;
+    }
+    return {
+      ...state,
+      bookings: [...state.bookings.filter((item) => item.id !== id), { ...booking, isCompleted: true }],
+    };
+  }),
 
   on(
     BookingsActions.storeCurrentBookingId,

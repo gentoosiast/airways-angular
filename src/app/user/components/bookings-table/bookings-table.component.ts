@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Currency, DateFormat } from '@core/types/user-settings';
 import { Booking } from '@shared/types/booking';
 
@@ -7,8 +7,8 @@ import { Booking } from '@shared/types/booking';
   templateUrl: './bookings-table.component.html',
   styleUrls: ['./bookings-table.component.scss'],
 })
-export class BookingsTableComponent {
-  @Input() bookings: Array<Booking & { isSelected?: boolean }> | null = [];
+export class BookingsTableComponent implements OnInit {
+  @Input() bookings: Array<Booking> | null = [];
   @Input() caption = '';
   @Input() dateFormat: DateFormat = DateFormat.DD_MM_YYYY;
   @Input() isEditable = false;
@@ -16,9 +16,19 @@ export class BookingsTableComponent {
   @Output() bookingDetails = new EventEmitter<Booking>();
   @Output() editBooking = new EventEmitter<Booking>();
   @Output() removeBooking = new EventEmitter<Booking>();
+  @Output() checkout = new EventEmitter<string>();
 
+  selectedBookings = new Map<string, boolean>();
   areAllSelected = true;
   readonly columns = ['number', 'flight', 'triptype', 'dates', 'passengers', 'price', 'actions'];
+
+  ngOnInit(): void {
+    this.bookings?.forEach((booking) => {
+      if (booking.id) {
+        this.selectedBookings.set(booking.id, true);
+      }
+    });
+  }
 
   getFormatForDatePipe(dateFormat: DateFormat): string {
     switch (dateFormat) {
@@ -46,22 +56,30 @@ export class BookingsTableComponent {
   }
 
   isAllSelected(): boolean {
-    this.areAllSelected = !!this.bookings?.every((value) => value.isSelected);
+    for (const isSelected of this.selectedBookings.values()) {
+      if (!isSelected) {
+        this.areAllSelected = false;
+        return this.areAllSelected;
+      }
+    }
+    this.areAllSelected = true;
     return this.areAllSelected;
   }
 
   selectAll(): void {
-    this.bookings?.forEach((value) => (value.isSelected = this.areAllSelected));
+    this.selectedBookings.forEach((_value, key) => this.selectedBookings.set(key, this.areAllSelected));
   }
 
   countOfSelectedBookings(): number {
-    return this.bookings?.filter((value) => value.isSelected).length || 0;
+    let cnt = 0;
+    this.selectedBookings.forEach((value) => (cnt += value ? 1 : 0));
+    return cnt;
   }
 
   priceOfSelectedBookings(): number {
     return (
       this.bookings
-        ?.filter((value) => value.isSelected)
+        ?.filter((value) => value.id && this.selectedBookings.get(value.id))
         .reduce((acc, cur) => acc + cur.price.total[this.preferredCurrency], 0) || 0
     );
   }
@@ -76,5 +94,13 @@ export class BookingsTableComponent {
 
   tripTypeSorter(a: Booking, b: Booking): number {
     return a.flightType.localeCompare(b.flightType);
+  }
+
+  onContinue() {
+    this.selectedBookings.forEach((value, key) => {
+      if (value) {
+        this.checkout.emit(key);
+      }
+    });
   }
 }

@@ -25,7 +25,12 @@
     <tr *ngFor="let booking of sortedBookings; let index = index" tuiTr>
       <td *tuiCell="'number'" tuiTd class="flight-number td">
         <div class="flexbox">
-          <tui-checkbox *ngIf="isEditable" [(ngModel)]="booking.isSelected" (change)="isAllSelected()"></tui-checkbox>
+          <tui-checkbox
+            *ngIf="isEditable"
+            [ngModel]="selectedBookings.get(booking.id)"
+            (ngModelChange)="selectedBookings.set(booking.id, $event)"
+            (change)="isAllSelected()"
+          ></tui-checkbox>
           <a (click)="showDetails(booking)">
             <div class="flight-number-list">
               <span>{{ booking.flight.flightNumber }}</span>
@@ -110,7 +115,7 @@
           </div>
           <div class="flexbox">
             <div class="tui-text_body-m">{{ countOfSelectedBookings() }} selected</div>
-            <button tuiButton size="m">Continue</button>
+            <button tuiButton size="m" (click)="onContinue()">Continue</button>
           </div>
         </div>
       </td>
