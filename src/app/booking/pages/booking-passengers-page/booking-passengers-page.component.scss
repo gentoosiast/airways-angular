@@ -1,8 +1,12 @@
 @use '/src/app/shared/styles/colors';
 
 :host {
-  padding: 8px;
-  margin: 0 auto;
+  @media (width <= 768px) {
+    margin-top: 25px;
+  }
+
+  margin: 50px auto;
+  padding: 0 1.5rem;
   max-width: 1130px;
   display: flex;
   flex-direction: column;
@@ -48,6 +52,10 @@
 }
 
 .form-row {
+  @media screen and (width < 768px) {
+    justify-content: center;
+  }
+
   display: flex;
   justify-content: stretch;
   align-items: flex-start;

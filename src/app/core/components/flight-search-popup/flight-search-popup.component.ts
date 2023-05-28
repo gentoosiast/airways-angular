@@ -73,6 +73,7 @@ export class FlightSearchPopupComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.seedFormFromStore();
+    this.monitorFlightTypeChanges();
     this.monitorFormChanges();
   }
 
@@ -186,6 +187,18 @@ export class FlightSearchPopupComponent implements OnInit, OnDestroy {
               this.store.dispatch(saveFlights({ flights }));
             }),
         );
+      }),
+    );
+  }
+
+  private monitorFlightTypeChanges(): void {
+    // we need to reset 'date' value if `flightType` was switched
+    this.sub.add(
+      this.flightType?.valueChanges.subscribe(() => {
+        this.airportForm.patchValue({
+          date: null,
+        });
+        this.date?.markAsUntouched();
       }),
     );
   }

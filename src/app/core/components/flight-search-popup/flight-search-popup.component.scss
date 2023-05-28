@@ -1,35 +1,39 @@
 @use '/src/app/shared/styles/colors';
 
+$min-control-width: 260px;
+
 .popup {
+  margin: 0 auto;
   min-width: fit-content;
-  max-width: 1128px;
+  max-width: 500px;
   display: flex;
+  flex-flow: column wrap;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
   gap: 20px;
 }
 
-.departure-combo-box,
-.arrival-combo-box {
-  min-width: 200px;
+.flight-radios {
+  width: 100%;
+  min-width: $min-control-width;
+  display: flex;
+  gap: 30px;
 }
 
-.input-date-range {
-  min-width: 240px;
-}
-
-.input-date {
-  min-width: 140px;
+.flight-radio {
+  color: colors.$color-primary;
 }
 
 .passengers-select {
-  min-width: 260px;
+  width: 100%;
+  min-width: $min-control-width;
 }
 
 .departure-block,
 .arrival-block,
 .date-block {
+  width: 100%;
+  min-width: $min-control-width;
   display: flex;
   flex-direction: column;
 }

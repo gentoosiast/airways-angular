@@ -12,8 +12,8 @@ export class FlightCarouselComponent implements OnInit {
   @Input() flights: Flight[] = [];
   @Input() isVisible = true;
   @Input() userSettings$: Observable<UserSettings> = EMPTY;
+  @Input() displayItemsCount = 0;
   @Output() selectFlight = new EventEmitter<number>();
-  displayItemsCount = 5; // TODO: value will depend on available screen space
   index = 0;
   selectedIndex?: number;
 

@@ -14,6 +14,7 @@ import {
   TUI_SANITIZER,
 } from '@taiga-ui/core';
 import {
+  TuiBadgedContentModule,
   TuiCheckboxLabeledModule,
   TuiComboBoxModule,
   TuiDataListWrapperModule,
@@ -24,6 +25,7 @@ import {
   TuiInputPhoneInternationalModule,
   TuiMarkerIconModule,
   TuiRadioBlockModule,
+  TuiRadioLabeledModule,
   TuiSelectModule,
   TuiSortCountriesPipeModule,
   TuiStringifyContentPipeModule,
@@ -64,6 +66,7 @@ import { SharedModule } from '@shared/shared.module';
     SharedModule,
     TuiLetModule,
     TuiButtonModule,
+    TuiBadgedContentModule,
     TuiCheckboxLabeledModule,
     TuiComboBoxModule,
     TuiDataListModule,
@@ -77,6 +80,7 @@ import { SharedModule } from '@shared/shared.module';
     TuiLinkModule,
     TuiMarkerIconModule,
     TuiRadioBlockModule,
+    TuiRadioLabeledModule,
     TuiSelectModule,
     TuiSortCountriesPipeModule,
     TuiStringifyContentPipeModule,

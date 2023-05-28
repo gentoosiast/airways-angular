@@ -1,4 +1,13 @@
 <div class="popup" [formGroup]="airportForm">
+  <div class="flight-radios">
+    <tui-radio-labeled class="flight-radio" formControlName="flightType" item="roundtrip" size="l"
+      >Round Trip</tui-radio-labeled
+    >
+    <tui-radio-labeled class="flight-radio" formControlName="flightType" item="oneway" size="l"
+      >One Way</tui-radio-labeled
+    >
+  </div>
+
   <div class="departure-block">
     <tui-combo-box
       *tuiLet="airportsDeparture$ | async as airportsDeparture"

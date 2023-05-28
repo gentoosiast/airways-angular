@@ -2,8 +2,13 @@
 @use 'src/app/shared/styles/typography';
 
 .page {
+  @media (width <= 768px) {
+    margin-top: 25px;
+  }
+
   max-width: 1130px;
   margin: 50px auto 20px;
+  padding: 0 1.5rem;
 }
 
 .flights {

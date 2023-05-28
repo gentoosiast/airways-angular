@@ -2,7 +2,7 @@
 @use 'src/app/shared/styles/typography';
 
 .card {
-  width: 225px;
+  max-width: 225px;
   height: 70px;
   padding-top: 4px;
   display: flex;
