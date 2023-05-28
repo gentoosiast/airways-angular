@@ -27,7 +27,8 @@
             <div class="flexbox">
               <tui-checkbox
                 *ngIf="isEditable"
-                [(ngModel)]="booking.isSelected"
+                [ngModel]="selectedBookings.get(booking.id)"
+                (ngModelChange)="selectedBookings.set(booking.id, $event)"
                 (change)="isAllSelected()"
               ></tui-checkbox>
               <a (click)="showDetails(booking)">
@@ -112,7 +113,7 @@
       </div>
       <div class="flexbox">
         <div class="tui-text_body-m">{{ countOfSelectedBookings() }} selected</div>
-        <button tuiButton size="m">Continue</button>
+        <button tuiButton size="m" type="button" (click)="onContinue()">Continue</button>
       </div>
     </div>
   </div>
