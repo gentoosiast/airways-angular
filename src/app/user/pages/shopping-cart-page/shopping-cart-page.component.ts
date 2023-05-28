@@ -6,9 +6,9 @@ import { TuiAlertService, TuiNotification } from '@taiga-ui/core';
 import { Booking } from '@shared/types/booking';
 import {
   checkoutBooking,
+  clearBookingData,
   prefillBookingData,
   removeBooking,
-  storeCurrentBookingId,
 } from '@store/actions/current-order.actions';
 import { selectCurrentBookings } from 'src/app/store/selectors/bookings.selector';
 import { selectUserSettings } from '@store/selectors/user-settings.selectors';
@@ -31,8 +31,8 @@ export class ShoppingCartPageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.store.dispatch(clearBookingData());
     this.bookings$ = this.store.select(selectCurrentBookings);
-    this.store.dispatch(storeCurrentBookingId({ id: null }));
   }
 
   ngOnDestroy(): void {

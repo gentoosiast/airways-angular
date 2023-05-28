@@ -10,3 +10,5 @@ export const checkoutBooking = createAction('[Booking] Checkout booking', props<
 export const storeCurrentBookingId = createAction('[Booking] Store current booking id', props<{ id: string | null }>());
 
 export const prefillBookingData = createAction('[Booking] Prefill booking data', props<{ booking: Booking }>());
+
+export const clearBookingData = createAction('[Booking] Clear booking data');

@@ -71,3 +71,15 @@ export const selectBookingFromPrevSteps = createSelector(
     } as Booking;
   },
 );
+
+export const selectBooking = createSelector(
+  selectCurrentBookingId,
+  selectBookingFromPrevSteps,
+  selectBookings,
+  (id, booking, bookings) => {
+    if (!id) {
+      return booking;
+    }
+    return bookings.find((booking) => booking.id === id) || null;
+  },
+);

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Booking } from '@shared/types/booking';
 import { selectUserSettings } from '@store/selectors/user-settings.selectors';
 import { selectCompletedBookings } from '@store/selectors/bookings.selector';
-import { prefillBookingData, storeCurrentBookingId } from '@store/actions/current-order.actions';
+import { prefillBookingData, clearBookingData } from '@store/actions/current-order.actions';
 
 @Component({
   selector: 'air-user-account-page',
@@ -19,7 +19,7 @@ export class UserAccountPageComponent implements OnInit {
   constructor(private router: Router, private store: Store) {}
 
   ngOnInit(): void {
-    this.store.dispatch(storeCurrentBookingId({ id: null }));
+    this.store.dispatch(clearBookingData());
   }
 
   bookingDetails(booking: Booking) {
