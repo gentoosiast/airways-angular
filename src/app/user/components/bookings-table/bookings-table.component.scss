@@ -1,15 +1,20 @@
 @use 'src/app/shared/styles/colors' as *;
 @use 'src/app/shared/styles/typography';
 
+.wrapper {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1130px;
+}
+
 .table {
+  width: 100%;
   margin: 20px auto;
 }
 
 .table-caption {
   @extend %typo-title-large;
 
-  margin: 0 0 27px 31px;
-  text-align: left;
   color: var(--tui-primary-active);
 }
 
