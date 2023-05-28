@@ -2,7 +2,7 @@
   <h1 class="table-caption">
     {{ caption }}
   </h1>
-  <tui-scrollbar [hidden]="true">
+  <tui-scrollbar *ngIf="bookings && bookings.length > 0; else noBookings" [hidden]="true">
     <table tuiTable [columns]="columns" class="table">
       <thead>
         <tr tuiThGroup>
@@ -117,3 +117,7 @@
     </div>
   </div>
 </div>
+
+<ng-template #noBookings>
+  <p class="no-bookings">No bookings found</p>
+</ng-template>
