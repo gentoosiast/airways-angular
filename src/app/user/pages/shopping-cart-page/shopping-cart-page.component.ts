@@ -5,9 +5,9 @@ import { Observable, Subscription } from 'rxjs';
 import { Booking } from '@shared/types/booking';
 import {
   checkoutBooking,
+  clearBookingData,
   prefillBookingData,
   removeBooking,
-  storeCurrentBookingId,
 } from '@store/actions/current-order.actions';
 import { selectCurrentBookings } from 'src/app/store/selectors/bookings.selector';
 import { selectUserSettings } from '@store/selectors/user-settings.selectors';
@@ -26,8 +26,8 @@ export class ShoppingCartPageComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private readonly store: Store) {}
 
   ngOnInit(): void {
+    this.store.dispatch(clearBookingData());
     this.bookings$ = this.store.select(selectCurrentBookings);
-    this.store.dispatch(storeCurrentBookingId({ id: null }));
   }
 
   ngOnDestroy(): void {

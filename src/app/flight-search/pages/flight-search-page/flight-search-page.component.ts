@@ -29,7 +29,7 @@ import { FlightsService } from '@core/services/flights.service';
 import { ALERT_DISPLAY_DURATION } from '@core/constants/alerts.constants';
 import { taigaDateFormat } from '@shared/factories/taiga-date-format.factory';
 import { UserSettingsService } from '@core/services/user-settings.service';
-import { storeCurrentBookingId } from '@store/actions/current-order.actions';
+import { clearBookingData } from '@store/actions/current-order.actions';
 
 @Component({
   selector: 'air-flight-search-page',
@@ -76,7 +76,7 @@ export class FlightSearchPageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(storeCurrentBookingId({ id: null }));
+    this.store.dispatch(clearBookingData());
     this.seedFormFromStore();
     this.monitorFlightTypeChanges();
   }

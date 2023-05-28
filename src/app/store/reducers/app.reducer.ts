@@ -147,4 +147,14 @@ export const appReducer = createReducer(
       currentBookingId: booking.id || null,
     }),
   ),
+
+  on(
+    BookingsActions.clearBookingData,
+    (state): AppState => ({
+      ...state,
+      flights: null,
+      selectedFlights: {},
+      currentBookingId: null,
+    }),
+  ),
 );
