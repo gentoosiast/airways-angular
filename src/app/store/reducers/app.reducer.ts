@@ -5,7 +5,6 @@ import * as UserSettingsActions from '../actions/user-settings.actions';
 import * as FlightDataActions from '../actions/flight-data.actions';
 import * as BookingsActions from '../actions/current-order.actions';
 import { Currency, DateFormat } from '@core/types/user-settings';
-import { mockBookingsData } from '@user/pages/user-account-page/mockBookingsData';
 
 export const appFeatureKey = 'app';
 
@@ -16,10 +15,8 @@ const initalState: AppState = {
   passengersInfo: null,
   user: null,
   userSettings: { dateFormat: DateFormat.DD_MM_YYYY, currency: Currency.Euro },
-  bookings: mockBookingsData.map((booking) => {
-    return { ...booking, isSelected: true };
-  }),
-  idForDetails: null,
+  bookings: [],
+  currentBookingId: null,
 };
 
 export const appReducer = createReducer(
@@ -83,17 +80,17 @@ export const appReducer = createReducer(
     }),
   ),
 
-  on(FlightDataActions.saveSelectedFlights, (state, { flight, returnFlight }): AppState => {
-    if (flight) {
+  on(FlightDataActions.saveSelectedFlights, (state, { flightIdx, returnFlightIdx }): AppState => {
+    if (flightIdx) {
       return {
         ...state,
-        selectedFlights: { ...state.selectedFlights, flight },
+        selectedFlights: { ...state.selectedFlights, flightIdx },
       };
     }
-    if (returnFlight) {
+    if (returnFlightIdx) {
       return {
         ...state,
-        selectedFlights: { ...state.selectedFlights, returnFlight },
+        selectedFlights: { ...state.selectedFlights, returnFlightIdx },
       };
     }
     return state;
@@ -102,7 +99,7 @@ export const appReducer = createReducer(
   on(BookingsActions.addBooking, (state, { booking }): AppState => {
     return {
       ...state,
-      bookings: [...state.bookings.filter((item) => item.id !== booking.id), { ...booking, isSelected: true }],
+      bookings: [...state.bookings.filter((item) => item.id !== booking.id), booking],
     };
   }),
 
@@ -114,11 +111,40 @@ export const appReducer = createReducer(
     }),
   ),
 
+  on(BookingsActions.checkoutBooking, (state, { id }): AppState => {
+    const booking = state.bookings.find((booking) => booking.id === id);
+    if (!booking) {
+      return state;
+    }
+    return {
+      ...state,
+      bookings: [...state.bookings.filter((item) => item.id !== id), { ...booking, isCompleted: true }],
+    };
+  }),
+
   on(
-    BookingsActions.storeIdForDetails,
+    BookingsActions.storeCurrentBookingId,
     (state, { id }): AppState => ({
       ...state,
-      idForDetails: id,
+      currentBookingId: id,
+    }),
+  ),
+
+  on(
+    BookingsActions.prefillBookingData,
+    (state, { booking }): AppState => ({
+      ...state,
+      flightSearchData: booking.flightSearchData,
+      flights: booking.flights,
+      selectedFlights: {
+        flightIdx: booking.flightIdx,
+        returnFlightIdx: booking.returnFlightIdx,
+      },
+      passengersInfo: {
+        passengers: booking.passengerData,
+        contacts: booking.passengersContacts,
+      },
+      currentBookingId: booking.id || null,
     }),
   ),
 );

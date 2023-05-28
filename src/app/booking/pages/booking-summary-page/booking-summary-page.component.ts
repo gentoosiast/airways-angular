@@ -6,9 +6,9 @@ import { TuiAlertService, TuiNotification } from '@taiga-ui/core';
 import { Store } from '@ngrx/store';
 import { nanoid } from 'nanoid';
 import { PassengerCategory, Passengers } from '@shared/types/passengers';
-import { addBooking, storeIdForDetails } from '@store/actions/current-order.actions';
+import { addBooking } from '@store/actions/current-order.actions';
 import { selectUserSettings } from '@store/selectors/user-settings.selectors';
-import { selectBooking } from '@store/selectors/bookings.selector';
+import { selectBookingFromPrevSteps } from '@store/selectors/bookings.selector';
 import { Currency, DateFormat } from '@core/types/user-settings';
 
 @Component({
@@ -17,7 +17,7 @@ import { Currency, DateFormat } from '@core/types/user-settings';
   styleUrls: ['./booking-summary-page.component.scss'],
 })
 export class BookingSummaryPageComponent implements OnInit, OnDestroy {
-  booking$: Observable<Booking | null> = this.store.select(selectBooking);
+  booking$: Observable<Booking | null> = this.store.select(selectBookingFromPrevSteps);
   passengerCategories = [] as Array<PassengerCategory>;
   dateFormat: DateFormat = DateFormat.DD_MM_YYYY;
   preferredCurrency: Currency = Currency.Euro;
@@ -44,7 +44,6 @@ export class BookingSummaryPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
-    this.store.dispatch(storeIdForDetails({ id: null }));
   }
 
   getCategoryCount(booking: Booking, category: keyof Passengers): number {
@@ -75,6 +74,10 @@ export class BookingSummaryPageComponent implements OnInit, OnDestroy {
 
   onBackButton() {
     this.router.navigateByUrl('/booking/step-passengers');
+  }
+
+  onReturnToAccount() {
+    this.router.navigateByUrl('/user/account');
   }
 
   onAddToCart(booking: Booking) {
