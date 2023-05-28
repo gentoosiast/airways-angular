@@ -12,6 +12,7 @@
 
         <div class="flight-select">
           <air-flight-carousel
+            [displayItemsCount]="carouselItemsCount"
             [flights]="flightsData.flights"
             [isVisible]="!isDepartureConfirmed"
             [userSettings$]="userSettings$"
@@ -42,6 +43,7 @@
 
         <div class="flight-select">
           <air-flight-carousel
+            [displayItemsCount]="carouselItemsCount"
             [flights]="flightsData.returnFlights"
             [isVisible]="!isArrivalConfirmed"
             [userSettings$]="userSettings$"

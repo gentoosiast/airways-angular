@@ -16,6 +16,7 @@ import { selectFlightSearchData } from '@store/selectors/flight-data.selectors';
 import { saveUserSettings } from '@store/actions/user-settings.actions';
 import { UserSettings } from '@shared/types/user-settings';
 import { selectUserSettings } from '@store/selectors/user-settings.selectors';
+import { selectCurrentBookings } from '@store/selectors/bookings.selector';
 
 @Component({
   selector: 'air-header',
@@ -23,6 +24,7 @@ import { selectUserSettings } from '@store/selectors/user-settings.selectors';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+  cartBookings$ = this.store.select(selectCurrentBookings);
   currencies = Object.values(Currency);
   dateFormats = Object.values(DateFormat);
   flightSearchData$?: Observable<FlightSearchData | null>;

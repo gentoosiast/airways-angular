@@ -1,7 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { TuiBreakpointService } from '@taiga-ui/core';
 import { selectFlights, selectSelectedFlights } from '@store/selectors/flight-data.selectors';
 import { Flights } from '@shared/types/flights';
 import { selectUserSettings } from '@store/selectors/user-settings.selectors';
@@ -19,14 +20,21 @@ export class BookingFlightsPageComponent implements OnInit, OnDestroy {
   arrivalFlightIdx: number | null = null;
   isDepartureConfirmed = false;
   isArrivalConfirmed = false;
+  carouselItemsCount = 0;
   userSettings$ = this.store.select(selectUserSettings);
 
   private sub = new Subscription();
 
-  constructor(private router: Router, private store: Store) {}
+  constructor(
+    @Inject(TuiBreakpointService)
+    private readonly breakpoint$: TuiBreakpointService,
+    private router: Router,
+    private store: Store,
+  ) {}
 
   ngOnInit(): void {
     this.flightsData$ = this.store.select(selectFlights);
+    this.reactToBreakpointChange();
     this.selectedFlights$ = this.store.select(selectSelectedFlights);
 
     this.sub.add(
@@ -69,5 +77,24 @@ export class BookingFlightsPageComponent implements OnInit, OnDestroy {
 
   onSelectArrivalFlight(flightIdx: number): void {
     this.arrivalFlightIdx = flightIdx;
+  }
+
+  private reactToBreakpointChange() {
+    this.sub.add(
+      this.breakpoint$.subscribe((breakpoint) => {
+        switch (breakpoint) {
+          case 'desktopLarge':
+            this.carouselItemsCount = 6;
+            break;
+          case 'desktopSmall':
+            this.carouselItemsCount = 4;
+            break;
+          case 'mobile':
+            this.carouselItemsCount = 3;
+            break;
+          default:
+        }
+      }),
+    );
   }
 }

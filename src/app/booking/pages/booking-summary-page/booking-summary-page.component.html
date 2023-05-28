@@ -6,12 +6,14 @@
       [flight]="booking.flight"
       [passengerData]="booking.passengerData"
     ></air-summary-flight-card>
+
     <air-summary-flight-card
       *ngIf="booking.returnFlight"
       [dateFormat]="dateFormat"
       [flight]="booking.returnFlight"
       [passengerData]="booking.passengerData"
     ></air-summary-flight-card>
+
     <div class="payment-wrapper">
       <div class="card">
         <div class="category" *ngFor="let category of passengerCategories; index as i">
