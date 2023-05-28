@@ -1,4 +1,4 @@
-<ng-container *ngIf="flight">
+<ng-container *ngIf="flight && flight.availableSeats > 0">
   <div class="flight-details" [ngClass]="{ selected: isFlightSelected }">
     <div class="flight-details-left">
       <air-date-time-widget
