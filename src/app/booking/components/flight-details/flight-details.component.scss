@@ -2,6 +2,10 @@
 @use 'src/app/shared/styles/typography';
 
 .flight-details {
+  @media screen and (width < 777px) {
+    flex-direction: column;
+  }
+
   display: flex;
   flex-wrap: wrap;
   border-radius: 5px;
@@ -10,6 +14,10 @@
 }
 
 .flight-details-left {
+  @media screen and (width < 950px) {
+    flex-direction: column;
+  }
+
   padding: 27px 35px 27px 40px;
   display: flex;
   justify-content: center;
@@ -20,7 +28,7 @@
 }
 
 .flight-details-right {
-  @media screen and (width < 767px) {
+  @media screen and (width < 777px) {
     border-left: none;
   }
 
@@ -38,11 +46,6 @@
 }
 
 .flight-date-duration {
-  @media screen and (width < 767px) {
-    flex-direction: column;
-    gap: 35px;
-  }
-
   display: flex;
   justify-content: center;
   align-items: center;
