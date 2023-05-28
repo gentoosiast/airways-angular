@@ -17,6 +17,7 @@ export class BookingsTableComponent implements OnInit {
   @Output() editBooking = new EventEmitter<Booking>();
   @Output() removeBooking = new EventEmitter<Booking>();
   @Output() checkout = new EventEmitter<string>();
+  @Output() checkoutCompleted = new EventEmitter<void>();
 
   selectedBookings = new Map<string, boolean>();
   areAllSelected = true;
@@ -96,11 +97,14 @@ export class BookingsTableComponent implements OnInit {
     return a.flightType.localeCompare(b.flightType);
   }
 
-  onContinue() {
-    this.selectedBookings.forEach((value, key) => {
-      if (value) {
-        this.checkout.emit(key);
-      }
-    });
+  onContinue(): void {
+    if (this.countOfSelectedBookings()) {
+      this.selectedBookings.forEach((value, key) => {
+        if (value) {
+          this.checkout.emit(key);
+        }
+      });
+      this.checkoutCompleted.emit();
+    }
   }
 }
