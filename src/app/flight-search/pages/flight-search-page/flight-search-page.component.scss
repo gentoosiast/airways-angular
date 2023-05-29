@@ -1,0 +1,65 @@
+@use '/src/app/shared/styles/colors';
+
+.form {
+  margin: 65px auto;
+  padding: 25px;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-radius: 8px;
+  background-color: colors.$color-form-background;
+}
+
+.flight-radios {
+  display: flex;
+  gap: 50px;
+}
+
+.flight-radio {
+  color: colors.$color-primary;
+}
+
+.airport-label {
+  display: flex;
+  gap: 1ch;
+}
+
+.airport-code {
+  color: colors.$color-neutral-30;
+}
+
+.airport-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.airport-item-subheading {
+  font-size: 14px;
+  color: colors.$color-neutral-30;
+}
+
+.cities-combo-boxes {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.cities-swapbutton {
+  position: absolute;
+  left: calc(100% - 120px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.date-passengers-block {
+  display: flex;
+  justify-content: stretch;
+  gap: 20px;
+}
+
+.date-block,
+.passengers-block {
+  flex: 1;
+}

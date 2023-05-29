@@ -1,0 +1,80 @@
+<ng-container *tuiLet="flightsData$ | async as flightsData">
+  <div *ngIf="flightsData" class="page">
+    <div class="flights">
+      <div class="flight">
+        <div class="heading">
+          <tui-svg src="/assets/icons/plane-right.svg"></tui-svg>
+          <span class="heading-text"
+            >{{ flightsData.flights[0].departureAirport.name }} to
+            {{ flightsData.flights[0].arrivalAirport.name }}</span
+          >
+        </div>
+
+        <div class="flight-select">
+          <air-flight-carousel
+            [displayItemsCount]="carouselItemsCount"
+            [flights]="flightsData.flights"
+            [isVisible]="!isDepartureConfirmed"
+            [userSettings$]="userSettings$"
+            (selectFlight)="onSelectDepartureFlight($event)"
+          ></air-flight-carousel>
+
+          <ng-container *ngIf="userSettings$ | async as userSettings">
+            <air-flight-details
+              *ngIf="departureFlightIdx !== null"
+              [flight]="flightsData.flights[departureFlightIdx]"
+              [isFlightSelected]="isDepartureConfirmed"
+              [dateFormat]="userSettings.dateFormat"
+              [preferredCurrency]="userSettings.currency"
+              (confirmFlight)="onConfirmDepartureFlight($event)"
+            ></air-flight-details>
+          </ng-container>
+        </div>
+      </div>
+
+      <div *ngIf="flightsData.returnFlights" class="flight">
+        <div class="heading">
+          <tui-svg src="/assets/icons/plane-left.svg"></tui-svg>
+          <span class="heading-text"
+            >{{ flightsData.flights[0].arrivalAirport.name }} to
+            {{ flightsData.flights[0].departureAirport.name }}</span
+          >
+        </div>
+
+        <div class="flight-select">
+          <air-flight-carousel
+            [displayItemsCount]="carouselItemsCount"
+            [flights]="flightsData.returnFlights"
+            [isVisible]="!isArrivalConfirmed"
+            [userSettings$]="userSettings$"
+            (selectFlight)="onSelectArrivalFlight($event)"
+          ></air-flight-carousel>
+
+          <ng-container *ngIf="userSettings$ | async as userSettings">
+            <air-flight-details
+              *ngIf="arrivalFlightIdx !== null"
+              [flight]="flightsData.returnFlights[arrivalFlightIdx]"
+              [isFlightSelected]="isArrivalConfirmed"
+              [isDeparture]="false"
+              [dateFormat]="userSettings.dateFormat"
+              [preferredCurrency]="userSettings.currency"
+              (confirmFlight)="onConfirmArrivalFlight($event)"
+            ></air-flight-details>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button tuiButton appearance="flat" type="button" (click)="onBackButton()">Back</button>
+      <button
+        tuiButton
+        type="button"
+        [disabled]="!isDepartureConfirmed || (!!flightsData.returnFlights && !isArrivalConfirmed)"
+        (click)="onContinueButton()"
+      >
+        Continue
+      </button>
+    </div>
+  </div>
+</ng-container>

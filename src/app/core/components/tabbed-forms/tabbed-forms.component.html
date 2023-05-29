@@ -1,0 +1,14 @@
+<div class="content">
+  <tui-tabs class="tab-bar" [(activeItemIndex)]="activeTabIdx">
+    <button class="tab-button" tuiTab>Log in</button>
+    <button class="tab-button" tuiTab>Sign up</button>
+  </tui-tabs>
+
+  <ng-container *ngIf="activeTabIdx === 0; else signup">
+    <air-login-form (formSubmit)="onLoginFormSubmit($event)"></air-login-form>
+  </ng-container>
+
+  <ng-template #signup>
+    <air-signup-form (formSubmit)="onSignupFormSubmit($event)"></air-signup-form>
+  </ng-template>
+</div>

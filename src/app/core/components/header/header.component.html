@@ -1,0 +1,110 @@
+<header class="header">
+  <div class="content">
+    <div class="content-wrapper">
+      <a routerLink="/" class="logo-link">
+        <img src="assets/logo.svg" alt="Logo" class="logo" />
+      </a>
+      <air-progress-bar *ngIf="showBookingDetails"></air-progress-bar>
+      <div class="buttons-wrapper">
+        <form class="form" [formGroup]="userSettingsForm">
+          <tui-select
+            tuiTextfieldSize="s"
+            [valueContent]="stringify | tuiStringifyContent"
+            formControlName="dateFormat"
+            class="date-format"
+          >
+            Date format
+            <tui-data-list-wrapper
+              *tuiDataList
+              [items]="dateFormats"
+              [itemContent]="stringify | tuiStringifyContent"
+            ></tui-data-list-wrapper>
+          </tui-select>
+
+          <tui-select tuiTextfieldSize="s" formControlName="currency" class="currency">
+            Currency
+            <tui-data-list-wrapper *tuiDataList [items]="currencies"></tui-data-list-wrapper>
+          </tui-select>
+        </form>
+
+        <ng-container *tuiLet="user$ | async as user">
+          <button *ngIf="!user" tuiButton size="s" type="button" icon="tuiIconUser" (click)="openLoginModal()">
+            Sign in
+          </button>
+          <div *ngIf="user" class="user-buttons">
+            <button tuiButton size="s" type="button" icon="tuiIconUser" routerLink="/user/account">
+              {{ user.firstName }} {{ user.lastName }}
+            </button>
+            <button
+              tuiIconButton
+              size="s"
+              type="button"
+              icon="tuiIconLogOut"
+              aria-label="Sign out"
+              (click)="logout()"
+            ></button>
+          </div>
+          <ng-container *tuiLet="cartBookings$ | async as cartBookings">
+            <tui-badged-content
+              *ngIf="user"
+              [contentTop]="cartBookings?.length"
+              [colorTop]="cartBookings?.length ? 'var(--tui-error-fill)' : ''"
+            >
+              <button
+                tuiIconButton
+                routerLink="/user/cart"
+                size="m"
+                shape="rounded"
+                type="button"
+                appearance="icon"
+                icon="tuiIconShoppingBagLarge"
+                aria-label="Shopping bag"
+                class="shopping-bag"
+              ></button>
+            </tui-badged-content>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+
+    <ng-container *tuiLet="flightSearchData$ | async as flightSearchData">
+      <div *ngIf="flightSearchData && showBookingDetails" class="flight-content-wrapper">
+        <div class="airports">
+          <span>{{ flightSearchData.departure.name }}</span>
+          <tui-svg src="/assets/icons/plane-directions.svg"></tui-svg>
+          <span>{{ flightSearchData.arrival.name }}</span>
+        </div>
+
+        <div *ngIf="userSettings$ | async as userSettings" class="flight-info">
+          <span>{{ flightSearchData.flightType | titlecase }}</span>
+          <span class="bullet"></span>
+          <span *ngIf="flightSearchData.returnDate; else oneway"
+            >{{ flightSearchData.flightDate | date : getDateFormatForPipe(userSettings.dateFormat) }} -
+            {{ flightSearchData.returnDate | date : getDateFormatForPipe(userSettings.dateFormat) }}</span
+          >
+          <ng-template #oneway
+            ><span>{{
+              flightSearchData.flightDate | date : getDateFormatForPipe(userSettings.dateFormat)
+            }}</span></ng-template
+          >
+          <span class="bullet"></span>
+          <div class="passengers">
+            <span>{{ flightSearchData.passengers | countPassengers }}</span>
+            <tui-svg class="passengers-icon" src="/assets/icons/person.svg"></tui-svg>
+          </div>
+        </div>
+
+        <button
+          *ngIf="showEditButton"
+          tuiButton
+          type="button"
+          size="s"
+          appearance="secondary"
+          (click)="openFlightSearchModal()"
+        >
+          Edit
+        </button>
+      </div>
+    </ng-container>
+  </div>
+</header>

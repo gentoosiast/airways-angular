@@ -1,0 +1,83 @@
+@use 'src/app/shared/styles/colors' as *;
+@use 'src/app/shared/styles/typography';
+
+* {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.wrapper {
+  margin: 20px auto;
+  padding: 1.5rem;
+  max-width: 1130px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.title {
+  @extend %typo-title-large;
+
+  display: flex;
+  gap: 0.75rem;
+  color: $color-primary;
+}
+
+.flights-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.buttons-wrapper {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.category-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 2rem 0;
+}
+
+.details {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0 0 3rem;
+}
+
+.total {
+  display: flex;
+  padding: 2rem;
+  justify-content: space-between;
+  font-weight: 600;
+}
+
+.total-price {
+  color: $color-primary;
+}
+
+.category-title {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+
+  @media (width <= 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.payment-wrapper {
+  @media (width <= 768px) {
+    grid-column-start: auto;
+  }
+
+  grid-column-start: 2;
+}

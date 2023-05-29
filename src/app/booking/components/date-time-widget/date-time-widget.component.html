@@ -1,0 +1,8 @@
+<div class="date-time" [ngClass]="{ departure: isDeparture, arrival: !isDeparture }">
+  <span class="date">{{ date | date : getFormatForDatePipe(dateFormat) : 'Z' }}</span>
+  <div class="time-timezone">
+    <span class="time">{{ date | date : 'H:mm' : 'Z' }}</span>
+    <span class="timezone">{{ date | date : 'zzz' : 'Z' }}</span>
+  </div>
+  <span class="airport-name">{{ airportName }}</span>
+</div>

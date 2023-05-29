@@ -1,0 +1,58 @@
+@use '/src/app/shared/styles/colors';
+
+$min-control-width: 260px;
+
+.popup {
+  margin: 0 auto;
+  min-width: fit-content;
+  max-width: 500px;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.flight-radios {
+  width: 100%;
+  min-width: $min-control-width;
+  display: flex;
+  gap: 30px;
+}
+
+.flight-radio {
+  color: colors.$color-primary;
+}
+
+.passengers-select {
+  width: 100%;
+  min-width: $min-control-width;
+}
+
+.departure-block,
+.arrival-block,
+.date-block {
+  width: 100%;
+  min-width: $min-control-width;
+  display: flex;
+  flex-direction: column;
+}
+
+.airport-label {
+  display: flex;
+  gap: 1ch;
+}
+
+.airport-code {
+  color: colors.$color-neutral-30;
+}
+
+.airport-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.airport-item-subheading {
+  font-size: 14px;
+  color: colors.$color-neutral-30;
+}

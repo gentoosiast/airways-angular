@@ -1,0 +1,11 @@
+<div class="wrapper">
+  <air-bookings-table
+    *ngIf="userSettings$ | async as userSettings"
+    [bookings]="bookings$ | async"
+    caption="Completed orders"
+    [dateFormat]="userSettings.dateFormat"
+    [isEditable]="false"
+    [preferredCurrency]="userSettings.currency"
+    (bookingDetails)="bookingDetails($event)"
+  ></air-bookings-table>
+</div>

@@ -1,0 +1,18 @@
+<ng-container *ngIf="flight">
+  <div
+    class="card"
+    [airSeats]="[flight.seats, flight.availableSeats]"
+    [ngClass]="{ 'no-flight': isDisabled, selected: isSelected }"
+    (click)="onSelectFlight()"
+  >
+    <span class="date">{{ flight.departureDate | date : getDateFormatForPipe(dateFormat) : 'Z' }}</span>
+    <span class="weekday">{{ flight.departureDate | date : 'EEEE' : 'Z' }}</span>
+    <span *ngIf="!isDisabled; else noflight" class="price">{{
+      flight.price.total[preferredCurrency] | currency : preferredCurrency
+    }}</span>
+  </div>
+
+  <ng-template #noflight>
+    <tui-svg src="/assets/icons/no-flight.svg"></tui-svg>
+  </ng-template>
+</ng-container>

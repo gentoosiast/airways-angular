@@ -1,0 +1,15 @@
+<div class="wrapper">
+  <air-bookings-table
+    *ngIf="userSettings$ | async as userSettings"
+    [bookings]="bookings$ | async"
+    caption="Shopping cart"
+    [dateFormat]="userSettings.dateFormat"
+    [isEditable]="true"
+    [preferredCurrency]="userSettings.currency"
+    (removeBooking)="removeBooking($event)"
+    (editBooking)="editBooking($event)"
+    (bookingDetails)="bookingDetails($event)"
+    (checkout)="checkout($event)"
+    (checkoutCompleted)="showCheckoutAlert()"
+  ></air-bookings-table>
+</div>

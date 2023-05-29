@@ -1,0 +1,77 @@
+@use 'src/app/shared/styles/colors';
+@use 'src/app/shared/styles/typography';
+
+.card {
+  max-width: 225px;
+  height: 70px;
+  padding-top: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: colors.$color-neutral-100;
+  border-top: 13px transparent;
+  border-left: 1px solid colors.$color-neutral-60;
+  cursor: pointer;
+}
+
+.date {
+  @extend %typo-label-medium;
+
+  color: colors.$color-secondary-0;
+}
+
+.weekday {
+  @extend %typo-body-small;
+
+  margin-bottom: 6px;
+  color: colors.$color-neutral-30;
+}
+
+.price {
+  @extend %typo-subtitle-medium;
+
+  color: colors.$color-primary;
+}
+
+.no-flight {
+  pointer-events: none;
+  cursor: default;
+}
+
+.no-flight > .date {
+  color: colors.$color-secondary-40;
+}
+
+.selected {
+  height: 83px;
+  border-top: none;
+  border-bottom: 4px solid transparent;
+}
+
+.selected.seats-almost-full {
+  border-bottom-color: colors.$color-error;
+}
+
+.selected.seats-less-than-half {
+  border-bottom-color: colors.$color-highlight-yellow0;
+}
+
+.selected.seats-more-than-half {
+  border-bottom-color: colors.$color-highlight-green0;
+}
+
+.selected > .date {
+  @extend %typo-subtitle-medium;
+
+  color: colors.$color-primary;
+}
+
+.selected > .weekday {
+  @extend %typo-body-medium;
+
+  margin-bottom: 0;
+}
+
+.selected > .price {
+  @extend %typo-subtitle-large;
+}

@@ -1,0 +1,44 @@
+@use 'src/app/shared/styles/colors';
+@use 'src/app/shared/styles/typography';
+
+.page {
+  @media (width <= 768px) {
+    margin-top: 25px;
+  }
+
+  max-width: 1130px;
+  margin: 50px auto 20px;
+  padding: 0 1.5rem;
+}
+
+.flights {
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.heading {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.heading-text {
+  @extend %typo-title-large;
+
+  color: colors.$color-primary;
+}
+
+.flight-select {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 40px;
+}

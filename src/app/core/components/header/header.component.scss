@@ -1,0 +1,110 @@
+@use 'src/app/shared/styles/colors' as *;
+@use 'src/app/shared/styles/typography';
+
+:host {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header {
+  width: 100%;
+  background: $color-neutral-100;
+}
+
+.content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.content-wrapper {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1130px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: 1.5rem;
+  row-gap: 1rem;
+}
+
+.flight-content-wrapper {
+  margin: 0 auto;
+  padding: 22px 0 0;
+  display: flex;
+  max-width: 1130px;
+  justify-content: flex-start;
+  align-items: center;
+  column-gap: 1.5rem;
+}
+
+.buttons-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  column-gap: 1rem;
+}
+
+.logo-link {
+  line-height: 0;
+}
+
+.form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.date-format {
+  width: 135px;
+}
+
+.currency {
+  width: 80px;
+}
+
+.user-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.airports {
+  @extend %typo-title-xsmall;
+
+  @media screen and (width <= 768px) {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: $color-neutral-black;
+}
+
+.flight-info {
+  @extend %typo-label-medium;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: $color-neutral-30;
+}
+
+.passengers {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.bullet {
+  display: block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: $color-secondary-0;
+}

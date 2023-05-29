@@ -1,0 +1,48 @@
+@use 'src/app/shared/styles/colors';
+@use 'src/app/shared/styles/typography';
+
+.date-time {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+
+  &.arrival {
+    align-items: flex-end;
+  }
+}
+
+.date {
+  @extend %typo-label-large;
+
+  white-space: nowrap;
+  color: colors.$color-neutral-30;
+}
+
+.time-timezone {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.time {
+  @extend %typo-subtitle-large;
+
+  color: colors.$color-neutral-black;
+}
+
+.timezone {
+  @extend %typo-body-xsmall;
+
+  color: colors.$color-neutral-30;
+}
+
+.arrival .timezone {
+  order: -1;
+}
+
+.airport-name {
+  @extend %typo-label-small;
+
+  color: colors.$color-neutral-30;
+}

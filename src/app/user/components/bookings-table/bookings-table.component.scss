@@ -1,0 +1,112 @@
+@use 'src/app/shared/styles/colors' as *;
+@use 'src/app/shared/styles/typography';
+
+.wrapper {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1130px;
+}
+
+.table {
+  width: 100%;
+  margin: 20px auto;
+}
+
+.table-caption {
+  @extend %typo-title-large;
+
+  color: var(--tui-primary-active);
+}
+
+th {
+  @media screen and (width <= 1200px) {
+    font-size: 16px;
+  }
+
+  @media screen and (width <= 1000px) {
+    font-size: 14px;
+  }
+
+  @extend %typo-subtitle-medium;
+
+  border: none;
+  white-space: nowrap;
+  color: $color-neutral-black;
+  background-color: var(--tui-base-03);
+}
+
+td {
+  @media screen and (width <= 1200px) {
+    font-size: 16px;
+  }
+
+  @media screen and (width <= 1000px) {
+    font-size: 14px;
+  }
+
+  @extend %typo-body-xlarge;
+
+  border-top: none;
+  border-right: none;
+  border-bottom: 1px solid var(--tui-base-03);
+  border-left: none;
+  white-space: nowrap;
+  color: $color-neutral-black;
+
+  &.td {
+    padding: 0.5rem 0.75rem;
+    vertical-align: middle;
+  }
+}
+
+.table-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.flight-number {
+  color: var(--tui-primary);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.flight-number-list,
+.flights,
+.dates {
+  display: flex;
+  flex-direction: column;
+}
+
+.passenger {
+  vertical-align: middle;
+}
+
+.price {
+  color: $color-highlight-green0;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.total-price {
+  @extend %typo-subtitle-large;
+
+  background: linear-gradient(90deg, #11397e 0%, #005abc 100%);
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.flexbox {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.no-bookings {
+  font-size: 20px;
+}

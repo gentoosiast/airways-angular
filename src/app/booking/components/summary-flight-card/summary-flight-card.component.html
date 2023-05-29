@@ -1,0 +1,29 @@
+<div class="card" *ngIf="flight">
+  <div class="card-header">
+    <div class="flight">
+      <span class="flight-number">{{ flight.flightNumber }}</span>
+      <span>{{ flight.departureAirport.name }} — {{ flight.arrivalAirport.name }}</span>
+    </div>
+    <div class="date">
+      <span class="date-date">
+        {{ flight.departureDate | date : getFormatForDatePipe(dateFormat) : 'Z' }}
+      </span>
+      <span class="date-time">
+        {{ flight.departureDate | date : 'H:mm' : 'Z' }}
+        —
+        {{ flight.arrivalDate | date : 'H:mm' : 'Z' }}
+      </span>
+    </div>
+  </div>
+  <div class="card-content" *ngFor="let passenger of passengerData">
+    <div class="passenger">{{ passenger.firstName | uppercase }} {{ passenger.lastName | uppercase }}</div>
+    <div class="baggage">
+      <div *ngIf="passenger.baggageCount">
+        {{ passenger.baggageCount }} checked {{ 'bag' | pluralize : passenger.baggageCount }} (total
+        {{ passenger.baggageCount * baggageItemWeight }} kg) included
+      </div>
+      <div *ngIf="passenger.category !== 'infants'">1 cabin bag + 1 personal item (max. 8 kg) included</div>
+      <div *ngIf="passenger.category !== 'infants'">Seat {{ passenger.seat }}</div>
+    </div>
+  </div>
+</div>
